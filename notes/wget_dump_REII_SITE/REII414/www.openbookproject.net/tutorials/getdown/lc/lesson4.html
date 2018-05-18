@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson 4</title>
+<style type="text/css">
+@import url(gdw.css);
+@import url(lesson.css);
+</style>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body onload="addHeader(); addFooter()">
+<div id="head"></div>
+
+
+<h1>Lesson 4: Half Adders</h1>
+
+<h3>Halfway to Full Adders</h3>
+
+<p>Half Adders are the next step to understanding full adders (actually, they
+are the last step, because once you understand half adders, the rest is easy).
+A half adder is simply an exclusive OR gate (as seen in the previous lesson) and
+an AND gate.  Notice how the wires are connected together; if the wires were
+not connected properly, then the logic circuit would not work.</p>
+
+<p><img src="images/pic4.gif" alt="Half Adder" /></p>
+
+<p>As you can see in Figure 4 above, a half adder also has its own unique
+symbol, represented by the drawing at the bottom right of the picture.  The half
+adder has 2 inputs and 2 outputs.</p>
+
+<p>Now it is time to learn binary mathematics.  In the chart below are the rules
+of binary addition:</p>
+
+<pre style='text-align: center'>
+A + B = S  and Cout is -
+0 + 0 = 0  and Cout is 0
+0 + 1 = 1  and Cout is 0
+1 + 0 = 1  and Cout is 0
+1 + 1 = 0  and Cout is 1
+</pre>
+
+<p>You also need to know that "1" equals an electrical charge.  Now when you
+are building one with real transistors, you can understand what the circuit is
+doing.</p>
+
+
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+Try all the input combinations in your head or on a piece of paper, and track
+the way the inputs are changed.  Also, pay attention to the outputs.  This
+exercise will help you later as the logic circuits become more complicated.
+</li>
+
+<li>
+</li>
+</ol>
+</div>
+
+<footer>
+<hr>
+<p>Congratulations, you have finished Lesson 4;</p>
+<p><a href="lesson5.html">next lesson</a> |
+<a href="index.html">home page</a></p>
+<div id="foot"></div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+REII414 EXAM 2017
+-----------------
+
+Good luck with tomorrow's exam.
+
+A convenient reminder for those who forgot - the exam is tomorrow, 20 June 2017.
+
+It would pay off greatly if you were fluent in SQL and E-R diagrams.
+
+However, no HTML/PHP/Javascript/CSS coding would be directly, as in pen on paper, required from you - only a solid understanding of how the Web environment works and how it integrates with database systems.
+
+Further, all the theory covered in class up to the last one is relevant.
+
+Please note that my last e-mail was my response on the fake one, I did not mail you since and do not intend to before the exam.
+
+

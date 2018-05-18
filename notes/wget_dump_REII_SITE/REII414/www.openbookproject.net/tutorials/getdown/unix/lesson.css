@@ -1,0 +1,50 @@
+/* Lessons */
+body > h2 {
+    margin-top: 50px;
+}
+cite {
+    display: block;
+    margin-top: 5px;
+}
+.source a, .source a:visited {
+    color: #CCF;
+    text-decoration: none;
+}
+.source a:hover {
+    color: #FF0;
+    text-decoration: none;
+}
+/* Exercises */
+div#exercises {
+    margin-left: 25px;
+}
+div#exercises h2 {
+    margin-left: -25px;
+    text-align: left;
+}
+div#exercises li {
+    margin-bottom: 20px;
+}
+div#exercises li ol li {
+    margin-bottom: 10px;
+    list-style-type: lower-roman;
+}
+div#exercises li ul li {
+    margin-bottom: 10px;
+    list-style-type: square;
+}
+div#exercises li ol>li, div#exercises li ul>li {
+    margin-top: 10px;
+}
+
+/* Source Examples */
+.source {
+    color: #FFF;
+    background-color: #36C;
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 12pt;
+}

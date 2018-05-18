@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 1 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 2 Exercise Set 1" href="../ch02/ch02s01.html" />
+    <link rel="prev" title="License" href="../../ccby3.0.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch02/ch02s01.html" title="Chapter 2 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../../ccby3.0.html" title="License"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-1-exercise-set-1">
+<span id="ch01s01"></span><h1>Chapter 1 Exercise Set 1<a class="headerlink" href="#chapter-1-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="modulus-practice">
+<h2>Modulus practice<a class="headerlink" href="#modulus-practice" title="Permalink to this headline">¶</a></h2>
+<p>Evaluate the following modulus expressions in your head, then use a JavaScript
+console to check their values:</p>
+<ol class="loweralpha simple">
+<li><tt class="docutils literal"><span class="pre">5</span> <span class="pre">%</span> <span class="pre">2</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">9</span> <span class="pre">%</span> <span class="pre">5</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">6</span> <span class="pre">%</span> <span class="pre">6</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">15</span> <span class="pre">%</span> <span class="pre">12</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">12</span> <span class="pre">%</span> <span class="pre">15</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">0</span> <span class="pre">%</span> <span class="pre">7</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">7</span> <span class="pre">%</span> <span class="pre">0</span></tt></li>
+</ol>
+</div>
+<div class="section" id="boolean-values">
+<h2>Boolean values<a class="headerlink" href="#boolean-values" title="Permalink to this headline">¶</a></h2>
+<p>Determine whether the following expressions are true or false:</p>
+<ol class="loweralpha">
+<li><div class="first highlight-javascript"><div class="highlight"><pre><span class="o">!</span><span class="kc">true</span> <span class="o">||</span> <span class="o">!</span><span class="kc">false</span>
+</pre></div>
+</div>
+</li>
+<li><div class="first highlight-javascript"><div class="highlight"><pre><span class="p">(</span><span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="kc">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="kc">false</span> <span class="o">||</span> <span class="o">!</span><span class="kc">true</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><div class="first highlight-javascript"><div class="highlight"><pre><span class="p">(</span><span class="mi">4</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">||</span> <span class="kc">true</span>
+</pre></div>
+</div>
+</li>
+<li><div class="first highlight-javascript"><div class="highlight"><pre><span class="p">(</span><span class="s2">&quot;this&quot;</span> <span class="o">!=</span> <span class="s2">&quot;that&quot;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="s2">&quot;zebra&quot;</span> <span class="o">&gt;</span> <span class="s2">&quot;aardvark&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><div class="first highlight-javascript"><div class="highlight"><pre><span class="p">((</span><span class="mi">4</span> <span class="o">&gt;=</span> <span class="mi">6</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="s2">&quot;grass&quot;</span> <span class="o">!=</span> <span class="s2">&quot;green&quot;</span><span class="p">))</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="p">(((</span><span class="mi">12</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="mi">144</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="kc">true</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="while-loop-1">
+<h2><tt class="docutils literal"><span class="pre">while</span></tt> loop 1<a class="headerlink" href="#while-loop-1" title="Permalink to this headline">¶</a></h2>
+<p>Use a <tt class="docutils literal"><span class="pre">while</span></tt> loop to write a program that calculates and shows the value of
+2<sup>10</sup> (2 to the 10th power).</p>
+</div>
+<div class="section" id="for-loop-1">
+<h2><tt class="docutils literal"><span class="pre">for</span></tt> loop 1<a class="headerlink" href="#for-loop-1" title="Permalink to this headline">¶</a></h2>
+<p>Rewrite the solution of the previous exercise using a <tt class="docutils literal"><span class="pre">for</span></tt> loop instead of a
+<tt class="docutils literal"><span class="pre">while</span></tt> loop.</p>
+</div>
+<div class="section" id="math-floor-n-d">
+<h2><tt class="docutils literal"><span class="pre">Math.floor(n.d)</span></tt><a class="headerlink" href="#math-floor-n-d" title="Permalink to this headline">¶</a></h2>
+<p>Run the following and record the result:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="mf">3.25</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Invesigate the function <tt class="docutils literal"><span class="pre">Math.floor(...)</span></tt> by conducting a series of
+&#8220;experiments&#8221;, calling it with different arguments until you can describe what
+it does.</p>
+</div>
+<div class="section" id="math-random">
+<h2><tt class="docutils literal"><span class="pre">Math.random()</span></tt><a class="headerlink" href="#math-random" title="Permalink to this headline">¶</a></h2>
+<p>Run the following several times, recording the result after each &#8220;experiment&#8221;:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>Compare your results with those of your classmates.  Are your results the same
+or different?  Keep running new experiments until you think you understand what
+<tt class="docutils literal"><span class="pre">Math.random()</span></tt> does.  Write a sentence that describes what this function
+does.</p>
+</div>
+<div class="section" id="random-between-low-and-high">
+<span id="random-between-low-and-high-exercise"></span><h2>Random between low and high<a class="headerlink" href="#random-between-low-and-high" title="Permalink to this headline">¶</a></h2>
+<p>Combine what you learned from the previous two exercise to create an expression
+using both <tt class="docutils literal"><span class="pre">Math.random</span></tt> and <tt class="docutils literal"><span class="pre">Math.floor</span></tt> to generate a random integer
+between two variables, <tt class="docutils literal"><span class="pre">high</span></tt> and <tt class="docutils literal"><span class="pre">low</span></tt>, where <tt class="docutils literal"><span class="pre">high</span></tt> is greater than
+<tt class="docutils literal"><span class="pre">low</span></tt>.</p>
+</div>
+<div class="section" id="what-s-2-2">
+<span id="what-is-2-plus-2-exercise"></span><h2>What&#8217;s 2 + 2?<a class="headerlink" href="#what-s-2-2" title="Permalink to this headline">¶</a></h2>
+<p>Use the expression you created in the previous exercise to generate two random
+integers, <tt class="docutils literal"><span class="pre">opr1</span></tt> and <tt class="docutils literal"><span class="pre">opr2</span></tt> (short for &#8220;operand&#8221;).  Then use these two new
+variables to modify the program in the <a class="reference internal" href="../../ch01.html#break-statement-section"><em>break statement</em></a> section
+to use your new random integers instead of <tt class="docutils literal"><span class="pre">2</span> <span class="pre">+</span> <span class="pre">2</span></tt>.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch02/ch02s01.html" title="Chapter 2 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../../ccby3.0.html" title="License"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+Tutorial 3 solution:
+
+
+Dependencies:
+INV_NUM + PROD_NUM : SALE_DATE, PROD_LABEL, VEND_CODE, VEND_NAME, QUANT_SOLD, PROD_PRICE
+INV_NUM            : SALE_DATE
+PROD_NUM           : PROD_LABEL, VEND_CODE, VEND_NAME, PROD_PRICE
+VEND_CODE          : VEND_NAME
+
+
+2NF:
+(INV_NUM + PROD_NUM) : QUANT_SOLD, PROD_PRICE
+(INV_NUM)            : SALE_DATE
+(PROD_NUM)           : PROD_LABEL, VEND_CODE, VEND_NAME, PROD_PRICE
+
+I choose to record the PROD_PRICE in the combined table as well, since this represents the price at which the specific transaction took place, even after the price of the product changes in future.
+
+
+3NF:
+(INV_NUM + PROD_NUM) : QUANT_SOLD, PROD_PRICE
+(INV_NUM)            : SALE_DATE
+(PROD_NUM)           : PROD_LABEL, VEND_CODE, PROD_PRICE
+(VEND_CODE)          : VEND_NAME

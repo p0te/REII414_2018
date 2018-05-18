@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 10 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 11 Exercise Set 1" href="../ch11/ch11s01.html" />
+    <link rel="prev" title="Chapter 9 Exercise Set 1" href="../ch09/ch09s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch11/ch11s01.html" title="Chapter 11 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch09/ch09s01.html" title="Chapter 9 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-10-exercise-set-1">
+<span id="ch10s01"></span><h1>Chapter 10 Exercise Set 1<a class="headerlink" href="#chapter-10-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">In the above description, the string <tt class="docutils literal"><span class="pre">&quot;Point</span> <span class="pre">Kiukiu&quot;</span></tt> still occurs three
+times in a row. We could make our description even more succinct by allowing
+multiple roads to be specified in one line.</p>
+<p>Write a function <tt class="docutils literal"><span class="pre">makeRoads</span></tt> that takes any uneven number of arguments.
+The first argument is always the starting point of the roads, and every pair
+of arguments after that gives an ending point and a distance.</p>
+<p>Do not duplicate the functionality of <tt class="docutils literal"><span class="pre">makeRoad</span></tt>, but have <tt class="docutils literal"><span class="pre">makeRoads</span></tt>
+call <tt class="docutils literal"><span class="pre">makeRoad</span></tt> to do the actual road-making.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">makeRoads</span><span class="p">(</span><span class="nx">start</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="nx">makeRoad</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This function uses one named parameter, <tt class="docutils literal"><span class="pre">start</span></tt>, and gets the other
+parameters from the <tt class="docutils literal"><span class="pre">arguments</span></tt> (quasi-) array. <tt class="docutils literal"><span class="pre">i</span></tt> starts at <tt class="docutils literal"><span class="pre">1</span></tt>
+because it has to skip this first parameter.  <tt class="docutils literal"><span class="pre">i</span> <span class="pre">+=</span> <span class="pre">2</span></tt> is short for <tt class="docutils literal"><span class="pre">i</span> <span class="pre">=</span>
+<span class="pre">i</span> <span class="pre">+</span> <span class="pre">2</span></tt>, as you might recall.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">roads</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">makeRoads</span><span class="p">(</span><span class="s2">&quot;Point Kiukiu&quot;</span><span class="p">,</span> <span class="s2">&quot;Hanaiapa&quot;</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span>
+          <span class="s2">&quot;Mt Feani&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;Taaoa&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
+<span class="nx">makeRoads</span><span class="p">(</span><span class="s2">&quot;Airport&quot;</span><span class="p">,</span> <span class="s2">&quot;Hanaiapa&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;Mt Feani&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>
+          <span class="s2">&quot;Atuona&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;Mt Ootua&quot;</span><span class="p">,</span> <span class="mi">11</span><span class="p">);</span>
+<span class="nx">makeRoads</span><span class="p">(</span><span class="s2">&quot;Mt Temetiu&quot;</span><span class="p">,</span> <span class="s2">&quot;Mt Feani&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;Taaoa&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+<span class="nx">makeRoads</span><span class="p">(</span><span class="s2">&quot;Atuona&quot;</span><span class="p">,</span> <span class="s2">&quot;Taaoa&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Hanakee pearl lodge&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nx">makeRoads</span><span class="p">(</span><span class="s2">&quot;Cemetery&quot;</span><span class="p">,</span> <span class="s2">&quot;Hanakee pearl lodge&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;Mt Ootua&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+<span class="nx">makeRoads</span><span class="p">(</span><span class="s2">&quot;Hanapaoa&quot;</span><span class="p">,</span> <span class="s2">&quot;Mt Ootua&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="nx">makeRoads</span><span class="p">(</span><span class="s2">&quot;Puamua&quot;</span><span class="p">,</span> <span class="s2">&quot;Mt Ootua&quot;</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="s2">&quot;Point Teohotepapapa&quot;</span><span class="p">,</span> <span class="mi">14</span><span class="p">);</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">roads</span><span class="p">[</span><span class="s2">&quot;Airport&quot;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Before starting to generate routes, we need one more higher-order function.
+This one is called <tt class="docutils literal"><span class="pre">filter</span></tt>. Like <tt class="docutils literal"><span class="pre">map</span></tt>, it takes a function and an
+array as arguments, and produces a new array, but instead of putting the
+results of calling the function in the new array, it produces an array with
+only those values from the old array for which the given function returns a
+true-like value. Write this function.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">test</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">test</span><span class="p">(</span><span class="nx">element</span><span class="p">))</span>
+            <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">filter</span><span class="p">(</span><span class="nx">partial</span><span class="p">(</span><span class="nx">op</span><span class="p">[</span><span class="s2">&quot;&gt;&quot;</span><span class="p">],</span> <span class="mi">5</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">]));</span>
+</pre></div>
+</div>
+<p>(If the result of that application of <tt class="docutils literal"><span class="pre">filter</span></tt> surprises you, remember
+that the argument given to <tt class="docutils literal"><span class="pre">partial</span></tt> is used as the <em>first</em> argument of
+the function, so it ends up to the left of the <tt class="docutils literal"><span class="pre">&gt;</span></tt>.)</p>
+</li>
+<li><p class="first">Now that we have all possible routes, let us try to find the shortest one.
+Write a function <tt class="docutils literal"><span class="pre">shortestRoute</span></tt> that, like <tt class="docutils literal"><span class="pre">possibleRoutes</span></tt>, takes the
+names of a starting and ending location as arguments. It returns a single
+route object, of the type that <tt class="docutils literal"><span class="pre">possibleRoutes</span></tt> produces.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">shortestRoute</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">currentShortest</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">possibleRoutes</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">route</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">currentShortest</span> <span class="o">||</span> <span class="nx">currentShortest</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">route</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+            <span class="nx">currentShortest</span> <span class="o">=</span> <span class="nx">route</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">currentShortest</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The tricky thing in &#8220;minimising&#8221; or &#8220;maximising&#8221; algorithms is to not screw
+up when given an empty array. In this case, we happen to know that there is
+at least one road between every two places, so we could just ignore it. But
+that would be a bit lame. What if the road from Puamua to Mount Ootua, which
+is steep and muddy, is washed away by a rainstorm? It would be a shame if
+this caused our function to break as well, so it takes care to return
+<tt class="docutils literal"><span class="pre">null</span></tt> when no routes are found.</p>
+<p>Then, the very functional, abstract-everything-we-can approach:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">minimise</span><span class="p">(</span><span class="nx">func</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">minScore</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">found</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">score</span> <span class="o">=</span> <span class="nx">func</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">minScore</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="nx">score</span> <span class="o">&lt;</span> <span class="nx">minScore</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">minScore</span> <span class="o">=</span> <span class="nx">score</span><span class="p">;</span>
+            <span class="nx">found</span> <span class="o">=</span> <span class="nx">element</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+   <span class="k">return</span> <span class="nx">found</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">getProperty</span><span class="p">(</span><span class="nx">propName</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">object</span><span class="p">[</span><span class="nx">propName</span><span class="p">];</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">shortestRoute</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">minimise</span><span class="p">(</span><span class="nx">getProperty</span><span class="p">(</span><span class="s2">&quot;length&quot;</span><span class="p">),</span> <span class="nx">possibleRoutes</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Unfortunately, it is three times longer than the other version. In programs
+where you need to minimise several things it might be a good idea to write
+the generic algorithm like this, so you can re-use it. In most cases the
+first version is probably good enough.</p>
+<p>Note the <tt class="docutils literal"><span class="pre">getProperty</span></tt> function though, it is often useful when doing
+functional programming with objects.</p>
+</li>
+<li><p class="first">If we are going to find routes through this map, we will again need a
+function to create &#8216;signposts&#8217;, lists of directions that can be taken from a
+given point. Write a function <tt class="docutils literal"><span class="pre">possibleDirections</span></tt>, which takes a point
+object as argument and returns an array of nearby points.  We can only move
+to adjacent points, both straight and diagonally, so squares have a maximum
+of eight neighbours. Take care not to return squares that lie outside of the
+map. For all we know the edge of the map might be the edge of the world.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">possibleDirections</span><span class="p">(</span><span class="nx">from</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">mapSize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">insideMap</span><span class="p">(</span><span class="nx">point</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">point</span><span class="p">.</span><span class="nx">x</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">point</span><span class="p">.</span><span class="nx">x</span> <span class="o">&lt;</span> <span class="nx">mapSize</span> <span class="o">&amp;&amp;</span>
+               <span class="nx">point</span><span class="p">.</span><span class="nx">y</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">point</span><span class="p">.</span><span class="nx">y</span> <span class="o">&lt;</span> <span class="nx">mapSize</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">directions</span> <span class="o">=</span> <span class="p">[</span><span class="nx">point</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="nx">point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="nx">point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+                      <span class="nx">point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nx">point</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="nx">point</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                      <span class="nx">point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="nx">point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)];</span>
+    <span class="k">return</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">insideMap</span><span class="p">,</span> <span class="nx">map</span><span class="p">(</span><span class="nx">partial</span><span class="p">(</span><span class="nx">addPoints</span><span class="p">,</span> <span class="nx">from</span><span class="p">),</span> <span class="nx">directions</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">possibleDirections</span><span class="p">(</span><span class="nx">point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)));</span>
+</pre></div>
+</div>
+<p>I created a variable <tt class="docutils literal"><span class="pre">mapSize</span></tt>, for the sole purpose of not having to
+write <tt class="docutils literal"><span class="pre">20</span></tt> two times. If, at some other time, we want to use this same
+function for another map, it would be clumsy if the code was full of
+<tt class="docutils literal"><span class="pre">20``s,</span> <span class="pre">which</span> <span class="pre">all</span> <span class="pre">have</span> <span class="pre">to</span> <span class="pre">be</span> <span class="pre">changed.</span> <span class="pre">We</span> <span class="pre">could</span> <span class="pre">even</span> <span class="pre">go</span> <span class="pre">as</span> <span class="pre">far</span> <span class="pre">as</span> <span class="pre">making</span> <span class="pre">the</span>
+<span class="pre">``mapSize</span></tt> an argument to <tt class="docutils literal"><span class="pre">possibleDirections</span></tt>, so we can use the
+function for different maps without changing it. I judged that that was not
+necessary in this case though, such things can always be changed when the
+need arises.</p>
+<p>Then why didn&#8217;t I also add a variable to hold the <tt class="docutils literal"><span class="pre">0</span></tt>, which also occurs
+two times? I assumed that maps always start at <tt class="docutils literal"><span class="pre">0</span></tt>, so this one is
+unlikely to ever change, and using a variable for it only adds noise.</p>
+</li>
+<li><p class="first">Write a function <tt class="docutils literal"><span class="pre">estimatedDistance</span></tt> that gives an optimistic estimate of
+the distance between two points. It does not have to look at the height
+data, but can assume a flat map. Remember that we are only travelling
+straight and diagonally, and that we are counting the diagonal distance
+between two squares as <tt class="docutils literal"><span class="pre">141</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">estimatedDistance</span><span class="p">(</span><span class="nx">pointA</span><span class="p">,</span> <span class="nx">pointB</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">dx</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">pointA</span><span class="p">.</span><span class="nx">x</span> <span class="o">-</span> <span class="nx">pointB</span><span class="p">.</span><span class="nx">x</span><span class="p">),</span>
+        <span class="nx">dy</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">pointA</span><span class="p">.</span><span class="nx">y</span> <span class="o">-</span> <span class="nx">pointB</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">dx</span> <span class="o">&gt;</span> <span class="nx">dy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nx">dx</span> <span class="o">-</span> <span class="nx">dy</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="nx">dy</span> <span class="o">*</span> <span class="mi">141</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nx">dy</span> <span class="o">-</span> <span class="nx">dx</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">+</span> <span class="nx">dx</span> <span class="o">*</span> <span class="mi">141</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The strange formulae are used to decompose the path into a straight and a
+diagonal part. If you have a path like this...</p>
+<img alt="Diagonal Path" src="../../_images/diagonalpath.png" />
+<p>... the path is <tt class="docutils literal"><span class="pre">8</span></tt> squares wide and <tt class="docutils literal"><span class="pre">4</span></tt> high, so you get
+<tt class="docutils literal"><span class="pre">8</span> <span class="pre">-</span> <span class="pre">4</span> <span class="pre">=</span> <span class="pre">4</span></tt> straight moves, and <tt class="docutils literal"><span class="pre">4</span></tt> diagonal ones.</p>
+<p>If you wrote a function that just computes the straight &#8220;Pythagorean&#8221;
+distance between the points, that would also work.  What we need is an
+optimistic estimate, and assuming you can go straight to the goal is
+certainly optimistic. However, the closer the estimate is to the real
+distance, the less useless paths our program has to try out.</p>
+</li>
+<li><p class="first">We will use a binary heap for the open list. What would be a good data
+structure for the reached list? This one will be used to look up routes,
+given a pair of <tt class="docutils literal"><span class="pre">x</span></tt>, <tt class="docutils literal"><span class="pre">y</span></tt> coordinates. Preferably in a way that is fast.
+Write three functions, <tt class="docutils literal"><span class="pre">makeReachedList</span></tt>, <tt class="docutils literal"><span class="pre">storeReached</span></tt>, and
+<tt class="docutils literal"><span class="pre">findReached</span></tt>. The first one creates your data structure, the second one,
+given a reached list, a point, and a route, stores a route in it, and the
+last one, given a reached list and point, retrieves a route or returns
+<tt class="docutils literal"><span class="pre">undefined</span></tt> to indicate that no route was found for that point.</p>
+<p>One reasonable idea would be to use an object with objects in it.  One of
+the coordinates in the points, say <tt class="docutils literal"><span class="pre">x</span></tt>, is used as a property name for the
+outer object, and the other, <tt class="docutils literal"><span class="pre">y</span></tt>, for the inner object. This does require
+some bookkeeping to handle the fact that, sometimes, the inner object we are
+looking for is not there (yet).</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">makeReachedList</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{};</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">storeReached</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">point</span><span class="p">,</span> <span class="nx">route</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">inner</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">point</span><span class="p">.</span><span class="nx">x</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">inner</span> <span class="o">==</span> <span class="kc">undefined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">inner</span> <span class="o">=</span> <span class="p">{};</span>
+        <span class="nx">list</span><span class="p">[</span><span class="nx">point</span><span class="p">.</span><span class="nx">x</span><span class="p">]</span> <span class="o">=</span> <span class="nx">inner</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">inner</span><span class="p">[</span><span class="nx">point</span><span class="p">.</span><span class="nx">y</span><span class="p">]</span> <span class="o">=</span> <span class="nx">route</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">findReached</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">point</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">inner</span> <span class="o">=</span> <span class="nx">list</span><span class="p">[</span><span class="nx">point</span><span class="p">.</span><span class="nx">x</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">inner</span> <span class="o">==</span> <span class="kc">undefined</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">undefined</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="nx">inner</span><span class="p">[</span><span class="nx">point</span><span class="p">.</span><span class="nx">y</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Another possibility is to merge the <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt> of the point into a
+single property name, and use that to store routes in a single object.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">pointID</span><span class="p">(</span><span class="nx">point</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">point</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="nx">point</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">makeReachedList</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{};</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">storeReached</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">point</span><span class="p">,</span> <span class="nx">route</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">list</span><span class="p">[</span><span class="nx">pointID</span><span class="p">(</span><span class="nx">point</span><span class="p">)]</span> <span class="o">=</span> <span class="nx">route</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">findReached</span><span class="p">(</span><span class="nx">list</span><span class="p">,</span> <span class="nx">point</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">list</span><span class="p">[</span><span class="nx">pointID</span><span class="p">(</span><span class="nx">point</span><span class="p">)];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch11/ch11s01.html" title="Chapter 11 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch09/ch09s01.html" title="Chapter 9 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

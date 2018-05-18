@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 9 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 10 Exercise Set 1" href="../ch10/ch10s01.html" />
+    <link rel="prev" title="Chapter 08 Exercise Set 1" href="../ch08/ch08s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch10/ch10s01.html" title="Chapter 10 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch08/ch08s01.html" title="Chapter 08 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-9-exercise-set-1">
+<span id="ch09s01"></span><h1>Chapter 9 Exercise Set 1<a class="headerlink" href="#chapter-9-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">Write a function <tt class="docutils literal"><span class="pre">countZeroes</span></tt>, which takes an array of numbers as its
+argument and returns the amount of zeroes that occur in it.  Use <tt class="docutils literal"><span class="pre">reduce</span></tt>.</p>
+<p>Then, write the higher-order function <tt class="docutils literal"><span class="pre">count</span></tt>, which takes an array and a
+test function as arguments, and returns the amount of elements in the array
+for which the test function returned <tt class="docutils literal"><span class="pre">true</span></tt>. Re-implement <tt class="docutils literal"><span class="pre">countZeroes</span></tt>
+using this function.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">countZeroes</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">counter</span><span class="p">(</span><span class="nx">total</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">total</span> <span class="o">+</span> <span class="p">(</span><span class="nx">element</span> <span class="o">===</span> <span class="mi">0</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">reduce</span><span class="p">(</span><span class="nx">counter</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">array</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The weird part, with the question mark and the colon, uses a new operator.
+In <cite>values_chapter</cite> we have seen unary and binary operators.  This one is
+ternary ― it acts on three values.  Its effect resembles that of
+<tt class="docutils literal"><span class="pre">if</span></tt>/<tt class="docutils literal"><span class="pre">else</span></tt>, except that, where <tt class="docutils literal"><span class="pre">if</span></tt> conditionally executes
+statements, this one conditionally chooses expressions. The first part,
+before the question mark, is the condition. If this condition is <tt class="docutils literal"><span class="pre">true</span></tt>,
+the expression after the question mark is chosen, <tt class="docutils literal"><span class="pre">1</span></tt> in this case. If it
+is <tt class="docutils literal"><span class="pre">false</span></tt>, the part after the colon, <tt class="docutils literal"><span class="pre">0</span></tt> in this case, is chosen.</p>
+<p>Use of this operator can make some pieces of code much shorter.  When the
+expressions inside it get very big, or you have to make more decisions
+inside the conditional parts, just using plain <tt class="docutils literal"><span class="pre">if</span></tt> and <tt class="docutils literal"><span class="pre">else</span></tt> is
+usually more readable.</p>
+<p>Here is the solution that uses a <tt class="docutils literal"><span class="pre">count</span></tt> function, with a function that
+produces equality-testers included to make the final <tt class="docutils literal"><span class="pre">countZeroes</span></tt>
+function even shorter:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">count</span><span class="p">(</span><span class="nx">test</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">reduce</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">total</span><span class="p">,</span> <span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">total</span> <span class="o">+</span> <span class="p">(</span><span class="nx">test</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">array</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">equals</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">x</span> <span class="o">===</span> <span class="nx">element</span><span class="p">;};</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">countZeroes</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">count</span><span class="p">(</span><span class="nx">equals</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="nx">array</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Write a function <tt class="docutils literal"><span class="pre">processParagraph</span></tt> that, when given a paragraph string as
+its argument, checks whether this paragraph is a header.  If it is, it
+strips off the &#8216;%&#8217; characters and counts their number.  Then, it returns an
+object with two properties, <tt class="docutils literal"><span class="pre">content</span></tt>, which contains the text inside the
+paragraph, and <tt class="docutils literal"><span class="pre">type</span></tt>, which contains the tag that this paragraph must be
+wrapped in, <tt class="docutils literal"><span class="pre">&quot;p&quot;</span></tt> for regular paragraphs, <tt class="docutils literal"><span class="pre">&quot;h1&quot;</span></tt> for headers with one
+&#8216;%&#8217;, and <tt class="docutils literal"><span class="pre">&quot;hX&quot;</span></tt> for headers with <tt class="docutils literal"><span class="pre">X</span></tt> &#8216;%&#8217; characters.</p>
+<p>Remember that strings have a <tt class="docutils literal"><span class="pre">charAt</span></tt> method that can be used to look at a
+specific character inside them.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">processParagraph</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">header</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">paragraph</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">paragraph</span> <span class="o">=</span> <span class="nx">paragraph</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="nx">header</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="p">(</span><span class="nx">header</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="s2">&quot;p&quot;</span> <span class="o">:</span> <span class="s2">&quot;h&quot;</span> <span class="o">+</span> <span class="nx">header</span><span class="p">),</span>
+                   <span class="nx">content</span><span class="o">:</span> <span class="nx">paragraph</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">processParagraph</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Build a function <tt class="docutils literal"><span class="pre">splitParagraph</span></tt> which, given a paragraph string, returns
+an array of paragraph fragments. Think of a good way to represent the
+fragments.</p>
+<p>The method <tt class="docutils literal"><span class="pre">indexOf</span></tt>, which searches for a character or sub-string in a
+string and returns its position, or <tt class="docutils literal"><span class="pre">-1</span></tt> if not found, will probably be
+useful in some way here.</p>
+<p>This is a tricky algorithm, and there are many not-quite-correct or
+way-too-long ways to describe it. If you run into problems, just think about
+it for a minute. Try to write inner functions that perform the smaller
+actions that make up the algorithm.</p>
+<p>Here is one possible solution:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">splitParagraph</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">indexOrEnd</span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">character</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="o">?</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span> <span class="o">:</span> <span class="nx">index</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">takeNormal</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">reduce</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">,</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+                         <span class="nx">map</span><span class="p">(</span><span class="nx">indexOrEnd</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="s2">&quot;{&quot;</span><span class="p">]));</span>
+        <span class="kd">var</span> <span class="nx">part</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+        <span class="nx">text</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">end</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">part</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">takeUpTo</span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">character</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">end</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Missing closing &#39;&quot;</span> <span class="o">+</span> <span class="nx">character</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">part</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+        <span class="nx">text</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">part</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">fragments</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="nx">text</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span>
+            <span class="nx">fragments</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;emphasised&quot;</span><span class="p">,</span>
+                           <span class="nx">content</span><span class="o">:</span> <span class="nx">takeUpTo</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)});</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;{&quot;</span><span class="p">)</span>
+            <span class="nx">fragments</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;footnote&quot;</span><span class="p">,</span>
+                           <span class="nx">content</span><span class="o">:</span> <span class="nx">takeUpTo</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">)});</span>
+        <span class="k">else</span>
+            <span class="nx">fragments</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;normal&quot;</span><span class="p">,</span>
+                           <span class="nx">content</span><span class="o">:</span> <span class="nx">takeNormal</span><span class="p">()});</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">fragments</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note the over-eager use of <tt class="docutils literal"><span class="pre">map</span></tt> and <tt class="docutils literal"><span class="pre">reduce</span></tt> in the <tt class="docutils literal"><span class="pre">takeNormal</span></tt>
+function. This is a chapter about functional programming, so program
+functionally we will! Can you see how this works? The <tt class="docutils literal"><span class="pre">map</span></tt> produces an
+array of positions where the given characters were found, or the end of the
+string if they were not found, and the <tt class="docutils literal"><span class="pre">reduce</span></tt> takes the minimum of them,
+which is the next point in the string that we have to look at.</p>
+<p>If you&#8217;d write that out without mapping and reducing you&#8217;d get something
+like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">nextAsterisk</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">nextBrace</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">nextAsterisk</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nx">end</span> <span class="o">=</span> <span class="nx">nextAsterisk</span><span class="p">;</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">nextBrace</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="nx">nextBrace</span> <span class="o">&lt;</span> <span class="nx">end</span><span class="p">)</span>
+    <span class="nx">end</span> <span class="o">=</span> <span class="nx">nextBrace</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Which is even more hideous. Most of the time, when a decision has to be made
+based on a series of things, even if there are only two of them, writing it
+as array operations is nicer than handling every value in a separate <tt class="docutils literal"><span class="pre">if</span></tt>
+statement. (Fortunately, <a class="reference internal" href="../../ch13.html#regular-expressions-chapter"><em>Regular Expressions</em></a> describes an
+easier way to ask for the first occurrence of &#8216;this or that character&#8217; in a
+string.)</p>
+<p>If you wrote a <tt class="docutils literal"><span class="pre">splitParagraph</span></tt> that stored fragments in a different way
+than the solution above, you might want to adjust it, because the functions
+in the rest of the chapter assume that fragments are objects with <tt class="docutils literal"><span class="pre">type</span></tt>
+and <tt class="docutils literal"><span class="pre">content</span></tt> properties.</p>
+</li>
+<li><p class="first">Looking back at the example HTML document if necessary, write an <tt class="docutils literal"><span class="pre">image</span></tt>
+function which, when given the location of an image file, will create an
+<tt class="docutils literal"><span class="pre">img</span></tt> HTML element.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">image</span><span class="p">(</span><span class="nx">src</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;img&quot;</span><span class="p">,</span> <span class="p">[],</span> <span class="p">{</span><span class="nx">src</span><span class="o">:</span> <span class="nx">src</span><span class="p">});</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Write a function <tt class="docutils literal"><span class="pre">renderFragment</span></tt>, and use that to implement another
+function <tt class="docutils literal"><span class="pre">renderParagraph</span></tt>, which takes a paragraph object (with the
+footnotes already filtered out), and produces the correct HTML element
+(which might be a paragraph or a header, depending on the <tt class="docutils literal"><span class="pre">type</span></tt> property
+of the paragraph object).</p>
+<p>This function might come in useful for rendering the footnote references:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">footnote</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;sup&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nx">link</span><span class="p">(</span><span class="s2">&quot;#footnote&quot;</span> <span class="o">+</span> <span class="nx">number</span><span class="p">,</span>
+                            <span class="nb">String</span><span class="p">(</span><span class="nx">number</span><span class="p">))]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A <tt class="docutils literal"><span class="pre">sup</span></tt> tag will show its content as &#8220;superscript&#8221;, which means it will be
+smaller and a little higher than other text. The target of the link will be
+something like <tt class="docutils literal"><span class="pre">&quot;#footnote1&quot;</span></tt>. Links that contain a &#8220;#&#8221; character refer to
+&#8220;anchors&#8221; within a page, and in this case we will use them to make it so
+that clicking on the footnote link will take the reader to the bottom of the
+page, where the footnotes live.</p>
+<p>The tag to render emphasised fragments with is <tt class="docutils literal"><span class="pre">em</span></tt>, and normal text can
+be rendered without any extra tags.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">renderParagraph</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">tag</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span> <span class="nx">map</span><span class="p">(</span><span class="nx">renderFragment</span><span class="p">,</span>
+                                   <span class="nx">paragraph</span><span class="p">.</span><span class="nx">content</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">renderFragment</span><span class="p">(</span><span class="nx">fragment</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">fragment</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;reference&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">footnote</span><span class="p">(</span><span class="nx">fragment</span><span class="p">.</span><span class="nx">number</span><span class="p">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">fragment</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;emphasised&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;em&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nx">fragment</span><span class="p">.</span><span class="nx">content</span><span class="p">]);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">fragment</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;normal&quot;</span><span class="p">)</span>
+         <span class="k">return</span> <span class="nx">fragment</span><span class="p">.</span><span class="nx">content</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch10/ch10s01.html" title="Chapter 10 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch08/ch08s01.html" title="Chapter 08 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

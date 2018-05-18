@@ -1,0 +1,11 @@
+Study Unit 1
+
+use and understand database terminology;
+explain the difference between data and information;
+briefly explain the development of database systems;
+discuss the role of the database management system (DBMS);
+explain the structure of the file based system and entity relation system,
+discuss the advantages and disadvantages of the different database systems;
+define and apply structure and data (in) dependency;
+discuss the disadvantage of data redundancy;
+describe the database system environment;

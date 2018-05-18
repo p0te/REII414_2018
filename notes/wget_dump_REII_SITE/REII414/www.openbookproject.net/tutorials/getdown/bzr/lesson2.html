@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson 2</title>
+<style type="text/css">
+@import url(gdw.css);
+@import url(lesson.css);
+</style>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body onload="addHeader(); addFooter()">
+<div id="head"></div>
+
+<h1>Lesson 2 - Mistakes</h1>
+
+<p>So you're bound to make a bunch of mistakes while editing and using bzr; either you'll commit and then regret the commit, or you'll commit too soon. Here is how to deal with those problems.</p>
+<p>Let's make a bad edit to test1.txt. Change the line to "Testing 1, 2, 4". Commit this.</p>
+<blockquote><p><b>Note:</b> <tt>bzr ci</tt> is short for <tt>bzr commit</tt>.</p></blockquote>
+<pre class="source"><tt>bzr ci</tt> -m "Changed wording in test1.txt"</pre>
+<p>In case you commit a revision that you don't want, as we did there, you can revert the change. When reverting, you can revert either the entire change, or just the change to one file; meaning, we could do:</p>
+<pre class="source"><tt>bzr revert</tt> --revision 1</pre>
+<p>Which would revert the entire second revision (you put in 1 because that the version that you want to get back); or you can do:</p>
+<pre class="source"><tt>bzr revert</tt> test1.txt --revision 1</pre>
+<p>Which would revert only the edits made to test1.txt from the first revision.</p>
+<p>The output should be:</p>
+<pre class="source"> M  test1.txt</pre>
+<p>Sometimes you need to know the revision number in order to perform bzr commands; for example, we just went over bzr revert, and there you obviously need to know what version you want to revert back to. <tt>bzr log</tt> is somewhat arbitrary because it shows all of the revisions and their reasons for committing (the message you type with "-m" when committing), and it also can only show so many revisions in one screen; once you have too many revisions it takes time to scroll up to the top, especially excessive given that all you need is a number. <tt>revno</tt> does just that - it returns the current revision you are on, thus allowing you quick access to perform commands that require the revision number.</p>
+<pre class="source"><tt>bzr revno</tt></pre>
+<p>And the output is simply an integer.</p>
+<p>Alternatively, say you make a commit, but then you notice that you forgot to do something. For example, in each file except test3.txt, add (without quotes) "By: [Your_Name]". Commit this however you want.</p>
+<p>Now, you realize that you should have added the same line to test3.txt, but instead of editing it and creating another commit, you can just uncommit the last revision.</p>
+<pre class="source"><tt>bzr uncommit</tt></pre>
+<p>Then edit test3.txt and commit again.</p>
+
+
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+</li>
+
+<li>
+</li>
+</ol>
+</div>
+
+<footer>
+<hr>
+<p>Congratulations, you have finished Lesson 2;</p>
+<p><a href="lesson3.html">next lesson</a> |
+<a href="index.html">home page</a></p>
+<div id="foot"></div>
+</footer>
+
+</body>
+</html>

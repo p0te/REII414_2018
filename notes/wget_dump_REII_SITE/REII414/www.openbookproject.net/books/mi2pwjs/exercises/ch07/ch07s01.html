@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 7 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 08 Exercise Set 1" href="../ch08/ch08s01.html" />
+    <link rel="prev" title="Chapter 6 Exercise Set 1" href="../ch06/ch06s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch08/ch08s01.html" title="Chapter 08 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch06/ch06s01.html" title="Chapter 6 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-7-exercise-set-1">
+<span id="ch07s01"></span><h1>Chapter 7 Exercise Set 1<a class="headerlink" href="#chapter-7-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">Write a function called <tt class="docutils literal"><span class="pre">registerEventHandler</span></tt> to wrap the
+incompatibilities of these two models. It takes three arguments: first a DOM
+node that the handler should be attached to, then the name of the event
+type, such as <tt class="docutils literal"><span class="pre">&quot;click&quot;</span></tt> or <tt class="docutils literal"><span class="pre">&quot;keypress&quot;</span></tt>, and finally the handler
+function.</p>
+<p>To determine which method should be called, look for the methods themselves
+― if the DOM node has a method called <tt class="docutils literal"><span class="pre">attachEvent</span></tt>, you may assume that
+this is the correct method. Note that this is much preferable to directly
+checking whether the browser is Internet Explorer. If a new browser arrives
+which uses Internet Explorer&#8217;s model, or Internet Explorer suddenly switches
+to the standard model, the code will still work. Both are rather unlikely,
+of course, but doing something in a smart way never hurts.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">registerEventHandler</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">node</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">)</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;on&quot;</span> <span class="o">+</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">registerEventHandler</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">),</span> <span class="s2">&quot;click&quot;</span><span class="p">,</span>
+                     <span class="kd">function</span><span class="p">(){</span><span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Click (2)&quot;</span><span class="p">);});</span>
+</pre></div>
+</div>
+<p>Don&#8217;t fret about the long, clumsy name. Later on, we will have to add an
+extra wrapper to wrap this wrapper, and it will have a shorter name.</p>
+<p>It is also possible to do this check only once, and define
+<tt class="docutils literal"><span class="pre">registerEventHandler</span></tt> to hold a different function depending on the
+browser. This is more efficient, but a little strange.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span><span class="p">)</span>
+    <span class="kd">var</span> <span class="nx">registerEventHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="k">else</span>
+    <span class="kd">var</span> <span class="nx">registerEventHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;on&quot;</span> <span class="o">+</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">);</span>
+    <span class="p">};</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add methods <tt class="docutils literal"><span class="pre">moveContent</span></tt> and <tt class="docutils literal"><span class="pre">clearContent</span></tt> to the <tt class="docutils literal"><span class="pre">Square</span></tt>
+prototype. The first one takes another <tt class="docutils literal"><span class="pre">Square</span></tt> object as an argument, and
+moves the content of the <tt class="docutils literal"><span class="pre">this</span></tt> square into the argument by updating the
+<tt class="docutils literal"><span class="pre">content</span></tt> properties and moving the image node associated with this
+content. This will be used to move boulders and players around the grid. It
+may assume the square is not currently empty. <tt class="docutils literal"><span class="pre">clearContent</span></tt> removes the
+content from the square without moving it anywhere. Note that the
+<tt class="docutils literal"><span class="pre">content</span></tt> property for empty squares contains <tt class="docutils literal"><span class="pre">null</span></tt>.</p>
+<p>The <tt class="docutils literal"><span class="pre">removeElement</span></tt> function we defined in <a class="reference internal" href="../../ch06.html#dom-chapter"><em>The Document-Object Model</em></a> is available
+in this chapter too, for your node-removing convenience. You may assume that
+the images are the only child nodes of the table cells, and can thus be
+reached through, for example, <tt class="docutils literal"><span class="pre">this.tableCell.lastChild</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">Square</span><span class="p">.</span><span class="nx">moveContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">content</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="nx">target</span><span class="p">.</span><span class="nx">tableCell</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">tableCell</span><span class="p">.</span><span class="nx">lastChild</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="nx">Square</span><span class="p">.</span><span class="nx">clearContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="nx">removeElement</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">tableCell</span><span class="p">.</span><span class="nx">lastChild</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">All that is left to do now is filling in the key event handler.  Replace the
+<tt class="docutils literal"><span class="pre">keyDown</span></tt> method of the prototype with one that detects presses of the
+arrow keys and, when it finds them, moves the player in the correct
+direction. The following <tt class="docutils literal"><span class="pre">Dictionary</span></tt> will probably come in handy:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">arrowKeyCodes</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dictionary</span><span class="p">({</span>
+    <span class="mi">37</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="c1">// left</span>
+    <span class="mi">38</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="c1">// up</span>
+    <span class="mi">39</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>  <span class="c1">// right</span>
+    <span class="mi">40</span><span class="o">:</span> <span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1">// down</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>After an arrow key has been handled, check <tt class="docutils literal"><span class="pre">this.field.won()</span></tt> to find out
+if that was the winning move. If the player won, use <tt class="docutils literal"><span class="pre">alert</span></tt> to show a
+message, and go to the next level. If there is no next level (check
+<tt class="docutils literal"><span class="pre">sokobanLevels.length</span></tt>), restart the game instead.</p>
+<p>It is probably wise to stop the events for key presses after handling them,
+otherwise pressing arrow-up and arrow-down will scroll your window, which is
+rather annoying.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">SokobanGame</span><span class="p">.</span><span class="nx">keyDown</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">arrowKeyCodes</span><span class="p">.</span><span class="nx">contains</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">event</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">field</span><span class="p">.</span><span class="nx">move</span><span class="p">(</span><span class="nx">arrowKeyCodes</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">keyCode</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">field</span><span class="p">.</span><span class="nx">won</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">level</span> <span class="o">&lt;</span> <span class="nx">sokobanLevels</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Excellent! Going to the next level.&quot;</span><span class="p">);</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">level</span><span class="o">++</span><span class="p">;</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="p">{</span>
+                <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;You win! Game over.&quot;</span><span class="p">);</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">newGame</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>It has to be noted that capturing keys like this ― adding a handler to the
+<tt class="docutils literal"><span class="pre">document</span></tt> and stopping the events that you are looking for ― is not very
+nice when there are other elements in the document. For example, try moving
+the cursor around in the text field at the top of the document. ― It won&#8217;t
+work, you&#8217;ll only move the little man in the Sokoban game. If a game like
+this were to be used in a real site, it is probably best to put it in a
+frame or window of its own, so that it only grabs events aimed at its own
+window.</p>
+</li>
+<li><p class="first">When brought to the exit, the boulders vanish rather abrubtly. By modifying
+the <tt class="docutils literal"><span class="pre">Square.clearContent</span></tt> method, try to show a &#8220;falling&#8221; animation for
+boulders that are about to be removed. Make them grow smaller for a moment
+before, and then disappear. You can use <tt class="docutils literal"><span class="pre">style.width</span> <span class="pre">=</span> <span class="pre">&quot;50%&quot;</span></tt>, and
+similarly for <tt class="docutils literal"><span class="pre">style.height</span></tt>, to make an image appear, for example, half
+as big as it usually is.</p>
+<p>We can use <tt class="docutils literal"><span class="pre">setInterval</span></tt> to handle the timing of the animation.  Note that
+the method makes sure to clear the interval after it is done. If you don&#8217;t
+do that, it will continue wasting your computer&#8217;s time until the page is
+closed.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">Square</span><span class="p">.</span><span class="nx">clearContent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">self</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">image</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">tableCell</span><span class="p">.</span><span class="nx">lastChild</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">animate</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">size</span> <span class="o">-=</span> <span class="mi">10</span><span class="p">;</span>
+        <span class="nx">image</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">size</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">;</span>
+        <span class="nx">image</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">size</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">size</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">animate</span><span class="p">);</span>
+            <span class="nx">removeElement</span><span class="p">(</span><span class="nx">image</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">},</span> <span class="mi">70</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Now, if you have a few hours to waste, try finishing all levels.</p>
+</li>
+<li><p class="first">But this field doesn&#8217;t do very much yet. Add a method called <tt class="docutils literal"><span class="pre">move</span></tt>. It
+takes a <tt class="docutils literal"><span class="pre">Point</span></tt> object specifying the move as argument (for example
+<tt class="docutils literal"><span class="pre">-1,0</span></tt> to move left), and takes care of moving the game elements in the
+correct way.</p>
+<p>The correct way is this: The <tt class="docutils literal"><span class="pre">playerPos</span></tt> property can be used to determine
+where the player is trying to move. If there is a boulder here, look at the
+square behind this boulder. When there is an exit there, remove the boulder
+and update the score. When there is empty space there, move the boulder into
+it. Next, try to move the player. If the square he is trying to move into is
+not empty, ignore the move.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">SokobanField</span><span class="p">.</span><span class="nx">move</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">direction</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">playerSquare</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getSquare</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">playerPos</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">targetPos</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">playerPos</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">direction</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">targetSquare</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getSquare</span><span class="p">(</span><span class="nx">targetPos</span><span class="p">);</span>
+
+    <span class="c1">// Possibly pushing a boulder</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">targetSquare</span><span class="p">.</span><span class="nx">hasBoulder</span><span class="p">())</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">pushTarget</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">getSquare</span><span class="p">(</span><span class="nx">targetPos</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">direction</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">pushTarget</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="nx">targetSquare</span><span class="p">.</span><span class="nx">moveContent</span><span class="p">(</span><span class="nx">pushTarget</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">pushTarget</span><span class="p">.</span><span class="nx">isExit</span><span class="p">())</span> <span class="p">{</span>
+            <span class="nx">targetSquare</span><span class="p">.</span><span class="nx">moveContent</span><span class="p">(</span><span class="nx">pushTarget</span><span class="p">);</span>
+            <span class="nx">pushTarget</span><span class="p">.</span><span class="nx">clearContent</span><span class="p">();</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">bouldersToGo</span><span class="o">--</span><span class="p">;</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">updateScore</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// Moving the player</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">targetSquare</span><span class="p">.</span><span class="nx">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nx">playerSquare</span><span class="p">.</span><span class="nx">moveContent</span><span class="p">(</span><span class="nx">targetSquare</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">playerPos</span> <span class="o">=</span> <span class="nx">targetPos</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>By taking care of boulders first, the move code can work the same way when
+the player is moving normally and when he is pushing a boulder. Note how the
+square behind the boulder is found by adding the <tt class="docutils literal"><span class="pre">direction</span></tt> to the
+<tt class="docutils literal"><span class="pre">playerPos</span></tt> twice. Test it by moving left two squares:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">testField</span><span class="p">.</span><span class="nx">move</span><span class="p">(</span><span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+<span class="nx">testField</span><span class="p">.</span><span class="nx">move</span><span class="p">(</span><span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>If that worked, we moved a boulder into a place from which we can&#8217;t get it
+out anymore, so we&#8217;d better throw this field away.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">testField</span><span class="p">.</span><span class="nx">remove</span><span class="p">();</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch08/ch08s01.html" title="Chapter 08 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch06/ch06s01.html" title="Chapter 6 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

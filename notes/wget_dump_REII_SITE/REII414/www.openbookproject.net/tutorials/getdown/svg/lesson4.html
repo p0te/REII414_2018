@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+@import url(css/table.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>
+Paths are the most flexible and consequently the most complicated of the SVG
+elements.  In fact, all of the element types from the previous lesson could be
+made using <code>path</code>s.
+</p>
+
+<h2>The Basics</h2>
+<p>
+Paths in SVG are made by inputting a sequence of data points together with
+commands that determine how the points will be connected.
+</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+    viewBox="0 0 900 50" width="900" height="50" id="SVG Path Example">
+</svg>
+
+
+<h2>Path Commands</h2>
+
+<table>
+<tr>
+  <th>Command</th>
+  <th>Parameters</th>
+  <th>Name</th>
+  <th>Description</th>
+  <th>Example</th>
+</tr>
+<tr>
+  <td>M (m)</td>
+  <td>x,y (dx,dy)</td>
+  <td>moveto</td>
+  <td>Moves to new location without drawing.</td>
+  <td>
+  <svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+      viewBox="0 0 500 50" width="500" height="50" id="Path Example 1">
+
+      <path d="M 0,25 L 150,25 M 200,25 L 300,25 M 350,25 L 500,25"
+          fill="none" stroke="black" stroke-width="5" />
+  </svg>
+  </td>
+</tr>
+<tr>
+  <td>L (l)</td>
+  <td>x,y (dx,dy)</td>
+  <td>lineto</td>
+  <td>Draws a line from current location to new location.</td>
+  <td>
+  <svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+      viewBox="0 0 500 50" width="500" height="50" id="Path Example 1">
+
+      <path d="M 0,25 L 150,25 M 200,25 L 300,25 M 350,25 L 500,25"
+          fill="none" stroke="black" stroke-width="5" />
+  </svg>
+  </td>
+</tr>
+<tr>
+  <td>H (h)</td>
+  <td>x (dx)</td>
+  <td>horizontal lineto</td>
+  <td>Draws a horizontal line from current location to new location.</td>
+  <td>
+  <svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+      viewBox="0 0 500 50" width="500" height="50" id="Path Example 1">
+
+      <path d="M 0,25 H 150 M 200,25 h 100 M 350,25 H 500"
+          fill="none" stroke="black" stroke-width="5" />
+  </svg>
+  </td>
+</tr>
+<tr>
+  <td>V (v)</td>
+  <td>y (dy)</td>
+  <td>vertical lineto</td>
+  <td>Draws a vertical line from current location to new location.</td>
+  <td>
+  <svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+      viewBox="0 0 500 50" width="500" height="50" id="Path Example 1">
+
+      <path d="M 100,0 V 50 M 200,0 v 25 M 300,0 V 35 M 400,0 v 45"
+          fill="none" stroke="black" stroke-width="5" />
+  </svg>
+  </td>
+</tr>
+<tr>
+  <td>Q (q)</td>
+  <td>cx,cy x,y (cdx,cdy dx,dy)</td>
+  <td>quadratic Bezier curveto</td>
+  <td>Draws a quadratic Bezier curve from current location to x,y. cx,cy is the
+  point controlling the bend of the curve.
+  </td>
+  <td>
+  <svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+      viewBox="0 0 500 50" width="500" height="50" id="Path Example 1">
+
+      <path d="M 0,25 L 150,25 M 200,25 L 300,25 M 350,25 L 500,25"
+          fill="none" stroke="black" stroke-width="5" />
+  </svg>
+  </td>
+</tr>
+<tr>
+  <td>T (t)</td>
+  <td>x,y (dx,dy)</td>
+  <td>shorthand quadratic Bezier curveto</td>
+  <td>Draws a quadratic Bezier curve from current location to x,y. The last
+  specified control point is used to control the bend of the curve.
+  </td>
+  <td>
+  <svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+      viewBox="0 0 500 50" width="500" height="50" id="Path Example 1">
+
+      <path d="M 0,25 L 150,25 M 200,25 L 300,25 M 350,25 L 500,25"
+          fill="none" stroke="black" stroke-width="5" />
+  </svg>
+  </td>
+</tr>
+<tr>
+  <td>C (c)</td>
+  <td>cx1,cy1 cx2,cy2 x,y (cdx1,cdy1 cdx2,cdy2 dx,dy)</td>
+  <td>cubic Bezier curveto</td>
+  <td>Draws a cubic Bezier curve from current location to x,y. cx1,cy1 and
+  cx2,cy2 are the points controlling the bend of the curve.
+  </td>
+  <td>
+  <svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+      viewBox="0 0 500 50" width="500" height="50" id="Path Example 1">
+
+      <path d="M 0,25 L 150,25 M 200,25 L 300,25 M 350,25 L 500,25"
+          fill="none" stroke="black" stroke-width="5" />
+  </svg>
+  </td>
+</tr>
+<tr>
+  <td>S (s)</td>
+  <td>cx2,cy2 x,y (cdx2,cdy2 dx,dy)</td>
+  <td>shorthand cubic Bezier curveto</td>
+  <td>Draws a cubic Bezier curve from current location to x,y. cx2,cy2 is the
+  2nd point controlling the bend of the curve. The first control point is
+  the 2nd control point from the previous command.
+  </td>
+  <td>
+  <svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+      viewBox="0 0 500 50" width="500" height="50" id="Path Example 1">
+
+      <path d="M 0,25 L 150,25 M 200,25 L 300,25 M 350,25 L 500,25"
+          fill="none" stroke="black" stroke-width="5" />
+  </svg>
+  </td>
+</tr>
+<tr>
+  <td>A (a)</td>
+  <td>rx,ry x-axis-rotation large-arc-flag sweepflag x,y
+  (rdx,rdy x-axis-rotation large-arc-flag sweepflag dx,dy)</td>
+  <td>elliptical arc</td>
+  <td>Draws an ellipital arc from the current position to x,y.
+  </td>
+  <td>
+  <svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+      viewBox="0 0 500 50" width="500" height="50" id="Path Example 1">
+
+      <path d="M 0,25 L 150,25 M 200,25 L 300,25 M 350,25 L 500,25"
+          fill="none" stroke="black" stroke-width="5" />
+  </svg>
+  </td>
+</tr>
+</table>
+
+<p></p>
+
+<div class="source">
+<dl>
+ <dt>A</dt>
+ <dd>Elliptical Curve</dd> 
+
+ <dt><code>A rx,ry x-axis-rotation large-arc-flag sweep-flag x,y</code></dt>
+ <dd>In most situations, there are four possible arcs that may be drawn from
+ the given variables. <code>large-arc-flag</code> and <code>sweep-flag</code>
+ determine what kind of arc are drawn, and are defined by either a
+ <code>0</code> or a <code>1</code>.</dd>
+</dl>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="2.0"
+   width="500"
+   height="500"
+   viewBox="0 0 500 500"
+   id="Starter Page">
+  <metadata
+     id="metadata14">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs12" />
+  <path
+     d="m 150,150 a 100,75 0 0 0 150,50"
+     id="Sample Curve"
+     style="fill:none;stroke:#000000;stroke-width:4" />
+  <path
+     d="m 150,150 a 100,75 0 0 1 150,50"
+     id="path4"
+     style="fill:none;stroke:white;stroke-width:4" />
+  <path
+     d="m 150,150 a 100,75 0 1 0 150,50"
+     id="path6"
+     style="fill:none;stroke:#ff0000;stroke-width:4;stroke-opacity:1" />
+  <path
+     d="m 150,150 a 100,75 0 1 1 150,50"
+     id="path8"
+     style="fill:none;stroke:yellow;stroke-width:4" />
+  <text
+     x="383.11688"
+     y="165.58443"
+     id="text2991"
+     xml:space="preserve"
+     style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:yellow;fill-opacity:1;stroke:none;font-family:Sans"><tspan
+       x="383.11688"
+       y="165.58443"
+       id="tspan2993">1,1</tspan></text>
+  <text
+     x="280.84415"
+     y="376.62338"
+     id="text2995"
+     xml:space="preserve"
+     style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ff0000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
+       x="280.84415"
+       y="376.62338"
+       id="tspan2997">1,0</tspan></text>
+  <text
+     x="370.88312"
+     y="235.5065"
+     id="text2999"
+     xml:space="preserve"
+     style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:white;fill-opacity:1;stroke:none;font-family:Sans"><tspan
+       x="370.88312"
+       y="235.5065"
+       id="tspan3001">0,1</tspan></text>
+  <text
+     x="334.29871"
+     y="310.93509"
+     id="text3003"
+     xml:space="preserve"
+     style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
+       x="334.29871"
+       y="310.93509"
+       id="tspan3005">0,0</tspan></text>
+  <text
+     x="44.788303"
+     y="433.97491"
+     id="text3007"
+     xml:space="preserve"
+     style="font-size:28.25795746px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><tspan
+       x="44.788303"
+       y="433.97491"
+       id="tspan3009">(large-arc-flag sweep-flag)</tspan></text>
+</svg>
+</div>
+</section>
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+</li>
+
+<li>
+</li>
+</ol>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

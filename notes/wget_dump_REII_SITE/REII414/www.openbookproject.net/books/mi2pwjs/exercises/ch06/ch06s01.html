@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 6 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 7 Exercise Set 1" href="../ch07/ch07s01.html" />
+    <link rel="prev" title="Chapter 5 Exercise Set 1" href="../ch05/ch05s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch07/ch07s01.html" title="Chapter 7 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch05/ch05s01.html" title="Chapter 5 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-6-exercise-set-1">
+<span id="ch06s01"></span><h1>Chapter 6 Exercise Set 1<a class="headerlink" href="#chapter-6-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">Write a function <tt class="docutils literal"><span class="pre">asHTML</span></tt> which, when given a DOM node, produces a string
+representing the HTML text for that node and its children.  You may ignore
+attributes, just show nodes as <tt class="docutils literal"><span class="pre">&lt;nodename&gt;</span></tt>. The <tt class="docutils literal"><span class="pre">escapeHTML</span></tt> function
+from <a class="reference internal" href="../../ch13.html#regular-expressions-chapter"><em>Regular Expressions</em></a> is available to properly escape the
+content of text nodes.</p>
+<p>Hint: Recursion!</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">asHTML</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">isTextNode</span><span class="p">(</span><span class="nx">node</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nx">escapeHTML</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="nx">node</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">+</span> <span class="s2">&quot;/&gt;&quot;</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="s2">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="nx">node</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span> <span class="o">+</span>
+                <span class="nx">map</span><span class="p">(</span><span class="nx">asHTML</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">+</span>
+                <span class="s2">&quot;&lt;/&quot;</span> <span class="o">+</span> <span class="nx">node</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">asHTML</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Write the convenient function <tt class="docutils literal"><span class="pre">removeElement</span></tt> which removes the DOM node
+it is given as an argument from its parent node.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">removeElement</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">)</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">node</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">removeElement</span><span class="p">(</span><span class="nx">newParagraph</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">The function <tt class="docutils literal"><span class="pre">makeTable</span></tt> takes two arrays as arguments. The first contains
+the JavaScript objects that it should summarise, and the second contains
+strings, which name the columns of the table and the properties of the
+objects that should be shown in these columns. For example, the following
+will produce the table above:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">makeTable</span><span class="p">([{</span><span class="nx">Tree</span><span class="o">:</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="nx">Flowers</span><span class="o">:</span> <span class="s2">&quot;White&quot;</span><span class="p">},</span>
+           <span class="p">{</span><span class="nx">Tree</span><span class="o">:</span> <span class="s2">&quot;Coral&quot;</span><span class="p">,</span> <span class="nx">Flowers</span><span class="o">:</span> <span class="s2">&quot;Red&quot;</span><span class="p">},</span>
+           <span class="p">{</span><span class="nx">Tree</span><span class="o">:</span> <span class="s2">&quot;Pine&quot;</span><span class="p">,</span>  <span class="nx">Flowers</span><span class="o">:</span> <span class="s2">&quot;None&quot;</span><span class="p">}],</span>
+          <span class="p">[</span><span class="s2">&quot;Tree&quot;</span><span class="p">,</span> <span class="s2">&quot;Flowers&quot;</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>Write this function.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">makeTable</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">columns</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">headRow</span> <span class="o">=</span> <span class="nx">dom</span><span class="p">(</span><span class="s2">&quot;TR&quot;</span><span class="p">);</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">columns</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">headRow</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">dom</span><span class="p">(</span><span class="s2">&quot;TH&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">name</span><span class="p">));</span>
+    <span class="p">});</span>
+
+    <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">dom</span><span class="p">(</span><span class="s2">&quot;TBODY&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">headRow</span><span class="p">);</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">row</span> <span class="o">=</span> <span class="nx">dom</span><span class="p">(</span><span class="s2">&quot;TR&quot;</span><span class="p">);</span>
+        <span class="nx">forEach</span><span class="p">(</span><span class="nx">columns</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">row</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">dom</span><span class="p">(</span><span class="s2">&quot;TD&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nb">String</span><span class="p">(</span><span class="nx">object</span><span class="p">[</span><span class="nx">name</span><span class="p">])));</span>
+        <span class="p">});</span>
+        <span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">row</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="k">return</span> <span class="nx">dom</span><span class="p">(</span><span class="s2">&quot;TABLE&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">body</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">makeTable</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">,</span>
+                      <span class="p">[</span><span class="s2">&quot;nodeType&quot;</span><span class="p">,</span> <span class="s2">&quot;tagName&quot;</span><span class="p">]);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">table</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Do not forget to convert the values from the objects to strings before
+adding them to the table ― our <tt class="docutils literal"><span class="pre">dom</span></tt> function only understands strings and
+DOM nodes.</p>
+</li>
+</ol>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch07/ch07s01.html" title="Chapter 7 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch05/ch05s01.html" title="Chapter 5 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

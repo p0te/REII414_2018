@@ -1,0 +1,27 @@
+REII414 tutorial 4
+
+Use the tables customer, product, invoice, line, vendor in the database saleco to formulate sql queries that satisfies the following information requirements:
+
+1. Show the description of the most expensive product that is in stock.
+select P_DESCRIPT from PRODUCT order by P_PRICE desc limit 1
+
+2. A customer buys everything in stock of the most expensive product. Write a query that will reduce the quantity on hand of that specific product code (determined in 1) by the same amount, so that it ends up being zero.
+select P_CODE from PRODUCT order by P_PRICE desc limit 1;
+update PRODUCT set P_QOH = 0 where P_CODE = '89-WRE-Q';
+-- Single query "not yet" supported by MariaDB:
+update PRODUCT set P_QOH = 0 where P_CODE in (select P_CODE from PRODUCT order by P_PRICE desc limit 1);
+
+3. List all the products containing the text "jigsaw" in their description.
+select * from PRODUCT where P_DESCRIPT like '%jigsaw%'
+
+4. List all the products that are below their ordering threshold in terms of quantity on hand.
+select P_CODE, P_DESCRIPT from PRODUCT where P_QOH < P_MIN
+
+5. List all the customers who have completely settled their accounts.
+select CUS_CODE, CUS_LNAME, CUS_FNAME from CUSTOMER where CUS_BALANCE = 0
+
+6. List the average number of items purchased per invoice.
+select avg(a) from (select sum(LINE_UNITS) a from LINE group by INV_NUMBER) t;
+
+
+Save the text of your queries, I will provide you with the means to submit them shortly.

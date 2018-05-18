@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>
+Finally, let's do some useful stuff. As one example, let's explore how to make
+a webpage with <code>SVG</code>.
+</p>
+
+<h3 style="text-align: center">Before Starting:</h3>
+<p>
+Make a basic html page. You can use the "getting down with html" starter
+page to start with.
+</p>
+
+<h3 style="text-align: center">The Basics:</h3>
+<p>Now create a simple design for a homepage with using the <code>SVG</code> you have learned already. If you want to spiff it up, you can use inkscape (but make sure to "Save As" a plain SVG). Here's a quick example: <a href="resources/SiteExample1.svg">Here</a></p>
+
+<p>(You may have noticed the use of gradients and filter effects in my design. I did not cover their use because it is much easier to use inkscape for them, then to manually code out the filters and gradients. If you want to learn how to use them in inkscape, <a href="http://tavmjong.free.fr/INKSCAPE/MANUAL/html/Attributes-Fill-Stroke.html#Attributes-Gradients">here</a> is a basic guide. If you want to look at the documentation for manual use, look <a href="http://www.w3.org/TR/SVG/expanded-toc.html">here</a>.)
+<h3 style="text-align: center">Making it Better:</h3>
+<p>This looks nice, but we can make it a lot better. One thing we can do, is make the gears rotate. This will make the page more dynamic. To do this, we add this SVG code to the first gear:</p>
+<div class="source"><pre>
+&lt;animateTransform
+         attributeName="transform"
+         attributeType="XML"
+         type="rotate"
+         from="0,230,575"
+         to="360,230,575"
+         begin="1s"
+         dur="5s"
+         repeatCount="indefinite"
+         id="animateTransform104" /&gt;
+</pre></div>
+<p>and this slightly different code to the second gear:</p>
+<div class="source"><pre>
+&lt;animateTransform
+         attributeName="transform"
+         attributeType="XML"
+         type="rotate"
+         from="0,340,675"
+         to="360,340,675"
+         begin="1s"
+         dur="5s"
+         repeatCount="indefinite"
+         id="animateTransform110" /&gt;
+</pre></div>
+<p>This code will rotate the two gears 360 degrees in five seconds, around the points (230,575) and (340,675) respectively. See if you can find the specific references to this information in the code. These additions render as: <a href="resources/SiteExample2.svg">This.</a></p>
+
+<p>Now we must get the boxes at the bottom to link to different pages. This can be done by inserting a <code>&lt;a&gt;</code> tag to the object code:</p>
+<div class="source"><pre>    &lt;a
+       xlink:href="http://www.samplesite.com"
+       target="_top"
+       id="Link1"&gt;
+	    (Linked Object Code)
+&lt;/a&gt;</pre></div>
+<p>As seen in the above example, there are three components of the link tag. The actual <code>xlink:href</code> defines the site or page being linked to. The <code>id</code> is just the name for the link tag. The <code>target</code> is more complicated. In this example, it is defined as <code>_top</code> which will cause the link to open in the same window. Here is a quick list of some of the possible definitions for "<code>target</code>":</p>
+<div class="source">
+<dl>
+ <dt><code>_self</code></dt>
+ <dd>Replaces frame of the SVG image with the new link.</dd>
+
+ <dt><code>_top</code></dt>
+ <dd>Replaces entire page with the new link.</dd>
+
+ <dt><code>_blank</code></dt>
+ <dd>Opens new window or tab with new link.</dd>
+</dl>
+</div>
+<p>With that in mind here is the <code>SVG</code> page with the buttons linked. <a href="resources/SiteExample3.svg">Here.</a></p>
+<p>Finally, let's add interactivity to the rectangular link buttons at the bottom of the page. When the mouse moves over them, we will change the color to blue, and then back again when the mouse moves off. This can be accomplished by finding the three small <code>&lt;rect&gt;</code> tags in the document. The <code>&lt;rect&gt;</code> tags will look something like this:</p>
+<div class="source"><pre>
+&lt;rect
+         width="180.18358"
+         height="88.493858"
+         x="431.9082"
+         y="947.11523"
+         transform="translate(0,-452.36218)"
+         id="rect3329-0"
+         style="color:#000000;fill:#1a1a1a;fill-opacity:1;
+fill-rule:nonzero;stroke:#000000;stroke-width:4.30630922;
+stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;
+stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;
+marker:none;visibility:visible;display:inline;overflow:visible;
+filter:url(#filter3331-8);enable-background:accumulate" /&gt;
+</pre></div>
+<p>Okay, there is a lot of information in there (that is what happens when you use Inkscape), and the fill, stroke etc. are set up differently than what I have taught you. I know. It is something to get used when mixing Inkscape with a text editor. But we can work around it. For this interactivity we will use a <code>&lt;set&gt;</code> tag, which needs to go inside of the <code>&lt;rect&gt;</code> tag, at the end. Using the code you learned in <a href="lesson7.html">Lesson 7</a>, we can come up with something like this:</p>
+<div class="source"><pre>&lt;rect
+           width="180.18358"
+           height="88.493858"
+           x="35.051067"
+           y="945.93042"
+           id="rect3329"
+           style="color:#000000;fill:#1a1a1a;fill-opacity:1;
+fill-rule:nonzero;stroke:#000000;stroke-width:4.30630922;
+stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;
+stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;
+marker:none;visibility:visible;display:inline;overflow:visible;
+filter:url(#filter3331);enable-background:accumulate" &gt; 
+&lt;set attributeName="fill" from="#1a1a1a" to="blue" 
+         begin="mouseover" end="mouseout"/&gt;
+&lt;/rect&gt;</pre></div>
+<p>We made some little changes to the formatting to allow us to insert the <code>&lt;set&gt;</code> tag, including switching the "/&gt;" for "&lt;/rect&gt;". By making these changes to each link button rectangle, we get: <a href="resources/SiteExample4.svg">This.</a></p>
+<p>Cool, right? As you can see, you replicate HTML and CSS easily with SVG.</p>
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Try modifying your own simple webpage to add various animations and interactivity to the buttons.</li>
+
+  <li>For an extra challenge, try adding a third rotating gear in the botttom-right-hand corner of the final example web page.</li>
+</ol>
+</div>
+</section>
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+</li>
+
+<li>
+</li>
+</ol>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

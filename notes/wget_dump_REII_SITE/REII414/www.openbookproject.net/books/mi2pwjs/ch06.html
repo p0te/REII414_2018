@@ -1,0 +1,522 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6. The Document-Object Model &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="7. Browser Events" href="ch07.html" />
+    <link rel="prev" title="5. Web programming: A crash course" href="ch05.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch07.html" title="7. Browser Events"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch05.html" title="5. Web programming: A crash course"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="the-document-object-model">
+<span id="dom-chapter"></span><h1>6. The Document-Object Model<a class="headerlink" href="#the-document-object-model" title="Permalink to this headline">¶</a></h1>
+<p>In <a class="reference internal" href="ch05.html#web-programming-chapter"><em>Web programming: A crash course</em></a> we saw JavaScript objects referring to
+<tt class="docutils literal"><span class="pre">form</span></tt> and <tt class="docutils literal"><span class="pre">input</span></tt> tags from the HTML document.  Such objects are part of a
+structure called the Document-Object Model (DOM). Every tag of the document is
+represented in this model, and can be looked up and interacted with.</p>
+<p>HTML documents have what is called a hierarchical structure. Each element (or
+tag) except the top <tt class="docutils literal"><span class="pre">&lt;html&gt;</span></tt> tag is contained in another element, its parent.
+This element can in turn contain child elements. You can visualise this as a
+kind of family tree:</p>
+<p><img alt="image0" src="_images/html.png" /></p>
+<p>The document-object model is based on such a view of the document.  Note that
+the tree contains two types of elements: Nodes, which are shown as blue boxes,
+and pieces of simple text. The pieces of text, as we will see, work somewhat
+different than the other elements.  For one thing, they never have children.</p>
+<p>Open the file <tt class="docutils literal"><span class="pre">example_alchemy.html</span></tt>, which contains the document shown in
+the picture, and attach the console to it.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">attach</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;example_alchemy.html&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The object for the root of the document tree, the <tt class="docutils literal"><span class="pre">html</span></tt> node, can be reached
+through the <tt class="docutils literal"><span class="pre">documentElement</span></tt> property of the <tt class="docutils literal"><span class="pre">document</span></tt> object. Most of
+the time, we need access to the <tt class="docutils literal"><span class="pre">body</span></tt> part of the document instead, which is
+at <tt class="docutils literal"><span class="pre">document.body</span></tt>.</p>
+<hr class="docutils" />
+<p>The links between these nodes are available as properties of the node objects.
+Every DOM object has a <tt class="docutils literal"><span class="pre">parentNode</span></tt> property, which refers to the object in
+which it is contained, if any. These parents also have links pointing back to
+their children, but because there can be more than one child, these are stored
+in a pseudo-array called <tt class="docutils literal"><span class="pre">childNodes</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For convenience, there are also links called <tt class="docutils literal"><span class="pre">firstChild</span></tt> and <tt class="docutils literal"><span class="pre">lastChild</span></tt>,
+pointing at the first and last child inside a node, or <tt class="docutils literal"><span class="pre">null</span></tt> when there are
+no children.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">lastChild</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Finally, there are properties called <tt class="docutils literal"><span class="pre">nextSibling</span></tt> and <tt class="docutils literal"><span class="pre">previousSibling</span></tt>,
+which point at the nodes sitting &#8220;next&#8221; to a node ― nodes that are children of
+the same parent, coming before or after the current node. Again, when there is
+no such sibling, the value of these properties is <tt class="docutils literal"><span class="pre">null</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">previousSibling</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">nextSibling</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>To find out whether a node represents a simple piece of text or an actual HTML
+node, we can look at its <tt class="docutils literal"><span class="pre">nodeType</span></tt> property. This contains a number, <tt class="docutils literal"><span class="pre">1</span></tt>
+for regular nodes and <tt class="docutils literal"><span class="pre">3</span></tt> for text nodes. There are actually other kinds of
+objects with a <tt class="docutils literal"><span class="pre">nodeType</span></tt>, such as the <tt class="docutils literal"><span class="pre">document</span></tt> object, which has <tt class="docutils literal"><span class="pre">9</span></tt>,
+but the most common use for this property is distinguishing between text nodes
+and other nodes.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">isTextNode</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">nodeType</span> <span class="o">==</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">isTextNode</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">isTextNode</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Regular nodes have a property called <tt class="docutils literal"><span class="pre">nodeName</span></tt>, indicating the type of HTML
+tag that they represent. Text nodes, on the other hand, have a <tt class="docutils literal"><span class="pre">nodeValue</span></tt>,
+containing their text content.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">.</span><span class="nx">nodeName</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">nodeName</span></tt>s are always capitalised, which is something you need to take
+into account if you ever want to compare them to something.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">isImage</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">!</span><span class="nx">isTextNode</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">==</span> <span class="s2">&quot;IMG&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">isImage</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">lastChild</span><span class="p">));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Nodes, in fact, already have something similar to <tt class="docutils literal"><span class="pre">asHTML</span></tt>. Their
+<tt class="docutils literal"><span class="pre">innerHTML</span></tt> property can be used to retrieve the HTML text <em>inside</em> of the
+node, without the tags for the node itself. Some browsers also support
+<tt class="docutils literal"><span class="pre">outerHTML</span></tt>, which does include the node itself, but not all of them.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">innerHTML</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Some of these properties can also be modified. Setting the <tt class="docutils literal"><span class="pre">innerHTML</span></tt> of a
+node or the <tt class="docutils literal"><span class="pre">nodeValue</span></tt> of a text-node will change its content. Note that, in
+the first case, the given string is interpreted as HTML, while in the second
+case it is interpreted as plain text.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">.</span><span class="nx">nodeValue</span> <span class="o">=</span>
+    <span class="s2">&quot;Chapter 1: The deep significance of the bottle&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Or ...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">firstChild</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span>
+    <span class="s2">&quot;Did you know the &#39;blink&#39; tag yet? &lt;blink&gt;Joy!&lt;/blink&gt;&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>We have been accessing nodes by going through a series of <tt class="docutils literal"><span class="pre">firstChild</span></tt> and
+<tt class="docutils literal"><span class="pre">lastChild</span></tt> properties. This can work, but it is verbose and easy to break ―
+if we add another node at the start of our document,
+<tt class="docutils literal"><span class="pre">document.body.firstChild</span></tt> no longer refers to the <tt class="docutils literal"><span class="pre">h1</span></tt> element, and code
+which assumes it does will go wrong.  On top of that, some browsers will add
+text-nodes for things like spaces and newlines between tags, while others do
+not, so that the exact layout of the DOM tree can vary.</p>
+<p>An alternative to this is to give elements that you need to have access to an
+<tt class="docutils literal"><span class="pre">id</span></tt> attribute. In the example page, the picture has an id <tt class="docutils literal"><span class="pre">&quot;picture&quot;</span></tt>, and
+we can use this to look it up.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">picture</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">picture</span><span class="p">.</span><span class="nx">src</span><span class="p">);</span>
+<span class="nx">picture</span><span class="p">.</span><span class="nx">src</span> <span class="o">=</span> <span class="s2">&quot;img/ostrich.png&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>When typing <tt class="docutils literal"><span class="pre">getElementById</span></tt>, note that the last letter is lowercase. Also,
+when typing it a lot, beware of carpal-tunnel syndrome. Because
+<tt class="docutils literal"><span class="pre">document.getElementById</span></tt> is a ridiculously long name for a very common
+operation, it has become a convention among JavaScript programmers to
+aggressively abbreviate it to <tt class="docutils literal"><span class="pre">$</span></tt>. <tt class="docutils literal"><span class="pre">$</span></tt>, as you might remember, is
+considered a letter by JavaScript, and is thus a valid variable name.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">$</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>DOM nodes also have a method <tt class="docutils literal"><span class="pre">getElementsByTagName</span></tt> (another nice, short
+name), which, when given a tag name, returns an array of all nodes of that type
+contained in the node it was called on.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;BLINK&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Another thing we can do with these DOM nodes is creating new ones ourselves.
+This makes it possible to add pieces to a document at will, which can be used
+to create some interesting effects.  Unfortunately, the interface for doing
+this is extremely clumsy.  But that can be remedied with some helper functions.</p>
+<p>The <tt class="docutils literal"><span class="pre">document</span></tt> object has <tt class="docutils literal"><span class="pre">createElement</span></tt> and <tt class="docutils literal"><span class="pre">createTextNode</span></tt> methods.
+The first is used to create regular nodes, the second, as the name suggests,
+creates text nodes.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">secondHeader</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;H1&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">secondTitle</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="s2">&quot;Chapter 2: Deep magic&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Next, we&#8217;ll want to put the title name into the <tt class="docutils literal"><span class="pre">h1</span></tt> element, and then add
+the element to the document. The simplest way to do this is the <tt class="docutils literal"><span class="pre">appendChild</span></tt>
+method, which can be called on every (non-text) node.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">secondHeader</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">secondTitle</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">secondHeader</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Often, you will also want to give these new nodes some attributes.  For
+example, an <tt class="docutils literal"><span class="pre">img</span></tt> (image) tag is rather useless without an <tt class="docutils literal"><span class="pre">src</span></tt> property
+telling the browser which image it should show.  Most attributes can be
+approached directly as properties of the DOM nodes, but there are also methods
+<tt class="docutils literal"><span class="pre">setAttribute</span></tt> and <tt class="docutils literal"><span class="pre">getAttribute</span></tt>, which are used to access attributes in a
+more general way:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">newImage</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;IMG&quot;</span><span class="p">);</span>
+<span class="nx">newImage</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="s2">&quot;img/Hiva Oa.png&quot;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">newImage</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">newImage</span><span class="p">.</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>But, when we want to build more than a few simple nodes, it gets very tiresome
+to create every single node with a call to <tt class="docutils literal"><span class="pre">document.createElement</span></tt> or
+<tt class="docutils literal"><span class="pre">document.createTextNode</span></tt>, and then add its attributes and child nodes one by
+one. Fortunately, it is not hard to write a function to do most of the work for
+us. Before we do so, there is one little detail to take care of ― the
+<tt class="docutils literal"><span class="pre">setAttribute</span></tt> method, while working fine on most browsers, does not always
+work on Internet Explorer. The names of a few HTML attributes already have a
+special meaning in JavaScript, and thus the corresponding object properties got
+an adjusted name.  Specifically, the <tt class="docutils literal"><span class="pre">class</span></tt> attribute becomes <tt class="docutils literal"><span class="pre">className</span></tt>,
+<tt class="docutils literal"><span class="pre">for</span></tt> becomes <tt class="docutils literal"><span class="pre">htmlFor</span></tt>, and <tt class="docutils literal"><span class="pre">checked</span></tt> is renamed to <tt class="docutils literal"><span class="pre">defaultChecked</span></tt>.
+On Internet Explorer, <tt class="docutils literal"><span class="pre">setAttribute</span></tt> and <tt class="docutils literal"><span class="pre">getAttribute</span></tt> also work with
+these adjusted names, instead of the original HTML names, which can be
+confusing. On top of that the <tt class="docutils literal"><span class="pre">style</span></tt> attribute, which, along with <tt class="docutils literal"><span class="pre">class</span></tt>,
+will be discussed later in this chapter, can not be set with <tt class="docutils literal"><span class="pre">setAttribute</span></tt>
+on that browser.</p>
+<p>A workaround would look something like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">setNodeAttribute</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">attribute</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">attribute</span> <span class="o">==</span> <span class="s2">&quot;class&quot;</span><span class="p">)</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">attribute</span> <span class="o">==</span> <span class="s2">&quot;checked&quot;</span><span class="p">)</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">defaultChecked</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">attribute</span> <span class="o">==</span> <span class="s2">&quot;for&quot;</span><span class="p">)</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">htmlFor</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">attribute</span> <span class="o">==</span> <span class="s2">&quot;style&quot;</span><span class="p">)</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">cssText</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="nx">attribute</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For every case where Internet Explorer deviates from other browsers, it does
+something that works in all cases. Don&#8217;t worry about the details ― this is the
+kind of ugly trick that we&#8217;d rather not need, but which non-conforming browsers
+force us to write.  Having this, it is possible to write a simple function for
+building DOM elements.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">dom</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">attributes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">attributes</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">forEachIn</span><span class="p">(</span><span class="nx">attributes</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">setNodeAttribute</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">child</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
+            <span class="nx">child</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="nx">child</span><span class="p">);</span>
+        <span class="nx">node</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">child</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">node</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">newParagraph</span> <span class="o">=</span>
+    <span class="nx">dom</span><span class="p">(</span><span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;A paragraph with a &quot;</span><span class="p">,</span>
+        <span class="nx">dom</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">href</span><span class="o">:</span> <span class="s2">&quot;http://en.wikipedia.org/wiki/Alchemy&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;link&quot;</span><span class="p">),</span>
+        <span class="s2">&quot; inside of it.&quot;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">newParagraph</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">dom</span></tt> function creates a DOM node. Its first argument gives the tag name
+of the node, its second argument is an object containing the attributes of the
+node, or <tt class="docutils literal"><span class="pre">null</span></tt> when no attributes are needed. After that, any amount of
+arguments may follow, and these are added to the node as child nodes. When
+strings appear here, they are first put into a text node.</p>
+<hr class="docutils" />
+<p><tt class="docutils literal"><span class="pre">appendChild</span></tt> is not the only way nodes can be inserted into another node.
+When the new node should not appear at the end of its parent, the
+<tt class="docutils literal"><span class="pre">insertBefore</span></tt> method can be used to place it in front of another child node.
+It takes the new node as a first argument, and the existing child as second
+argument.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">link</span> <span class="o">=</span> <span class="nx">newParagraph</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="nx">newParagraph</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">dom</span><span class="p">(</span><span class="s2">&quot;STRONG&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;great &quot;</span><span class="p">),</span> <span class="nx">link</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If a node that already has a <tt class="docutils literal"><span class="pre">parentNode</span></tt> is placed somewhere, it is
+automatically removed from its current position ― nodes can not exist in the
+document in more than one place.</p>
+<p>When a node must be replaced by another one, use the <tt class="docutils literal"><span class="pre">replaceChild</span></tt> method,
+which again takes the new node as first argument and the existing one as second
+argument.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">newParagraph</span><span class="p">.</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="s2">&quot;lousy &quot;</span><span class="p">),</span>
+                          <span class="nx">newParagraph</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>And, finally, there is <tt class="docutils literal"><span class="pre">removeChild</span></tt> to remove a child node. Note that this
+is called on the <em>parent</em> of the node to be removed, giving the child as
+argument.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">newParagraph</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">newParagraph</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>When creating new nodes and moving nodes around it is necessary to be aware of
+the following rule: Nodes are not allowed to be inserted into another document
+from the one in which they were created. This means that if you have extra
+frames or windows open, you can not take a piece of the document from one and
+move it to another, and nodes created with methods on one <tt class="docutils literal"><span class="pre">document</span></tt> object
+must stay in that document. Some browsers, notably Firefox, do not enforce this
+restriction, and thus a program which violates it will work fine in those
+browsers but break on others.</p>
+<hr class="docutils" />
+<p>An example of something useful that can be done with this <tt class="docutils literal"><span class="pre">dom</span></tt> function is a
+program that takes JavaScript objects and summarises them in a table. Tables,
+in HTML, are created with a set of tags starting with <tt class="docutils literal"><span class="pre">t</span></tt>s, something like
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt; &lt;th&gt;Tree &lt;/th&gt; &lt;th&gt;Flowers&lt;/th&gt; &lt;/tr&gt;
+    &lt;tr&gt; &lt;td&gt;Apple&lt;/td&gt; &lt;td&gt;White  &lt;/td&gt; &lt;/tr&gt;
+    &lt;tr&gt; &lt;td&gt;Coral&lt;/td&gt; &lt;td&gt;Red    &lt;/td&gt; &lt;/tr&gt;
+    &lt;tr&gt; &lt;td&gt;Pine &lt;/td&gt; &lt;td&gt;None   &lt;/td&gt; &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</pre></div>
+</div>
+<p>Each <tt class="docutils literal"><span class="pre">tr</span></tt> element is a row of the table. <tt class="docutils literal"><span class="pre">th</span></tt> and <tt class="docutils literal"><span class="pre">td</span></tt> elements are the
+cells of the table, <tt class="docutils literal"><span class="pre">td``s</span> <span class="pre">are</span> <span class="pre">normal</span> <span class="pre">data</span> <span class="pre">cells,</span> <span class="pre">``th</span></tt> cells are &#8216;header&#8217;
+cells, which will be displayed in a slightly more prominent way. The <tt class="docutils literal"><span class="pre">tbody</span></tt>
+(table body) tag does not have to be included when a table is written as HTML,
+but when building a table from DOM nodes it should be added, because Internet
+Explorer refuses to display tables created without a <tt class="docutils literal"><span class="pre">tbody</span></tt>.</p>
+<hr class="docutils" />
+<p>Closely tied to HTML and the document-object model is the topic of
+style-sheets. It is a big topic, and I will not discuss it entirely, but some
+understanding of style-sheets is necessary for a lot of interesting JavaScript
+techniques, so we will go over the basics.</p>
+<p>In old-fashioned HTML, the only way to change the appearance of elements in a
+document was to give them extra attributes or to wrap them in extra tags, such
+as <tt class="docutils literal"><span class="pre">center</span></tt> to center them horizontally, or <tt class="docutils literal"><span class="pre">font</span></tt> to change the font style
+or colour. Most of the time, this meant that if you wanted the paragraphs or
+the tables in your document to look a certain way, you had to add a bunch of
+attributes and tags to <em>every single one of them</em>. This quickly adds a lot of
+noise to such documents, and makes them very painful to write or change by
+hand.</p>
+<p>Of course, people being the inventive monkeys they are, someone came up with a
+solution. Style-sheets are a way to make statements like &#8216;in this document, all
+paragraphs use the Comic Sans font, and are purple, and all tables have a thick
+green border&#8217;. You specify them once, at the top of the document or in a
+separate file, and they affect the whole document. Here, for example, is a
+style-sheet to make headers 22 points big and centered, and make paragraphs use
+the font and colour mentioned earlier, when they are of the &#8216;ugly&#8217; class.:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;style type=&quot;text/css&quot;&gt;
+  h1 {
+    font-size: 22pt;
+    text-align: center;
+  }
+
+  p.ugly {
+    font-family: Comic Sans MS;
+    color: purple;
+  }
+&lt;/style&gt;
+</pre></div>
+</div>
+<p>Classes are a concept related to styles. If you have different kinds of
+paragraphs, ugly ones and nice ones for example, setting the style for all
+<tt class="docutils literal"><span class="pre">p</span></tt> elements is not what you want, so classes can be used to distinguish
+between them. The above style will only be applied to paragraphs like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;p class=&quot;ugly&quot;&gt;Mirror, mirror...&lt;/p&gt;
+</pre></div>
+</div>
+<p>And this is also the meaning of the <tt class="docutils literal"><span class="pre">className</span></tt> property which was briefly
+mentioned for the <tt class="docutils literal"><span class="pre">setNodeAttribute</span></tt> function. The <tt class="docutils literal"><span class="pre">style</span></tt> attribute can be
+used to add a piece of style directly to an element. For example, this gives
+our image a solid border 4 pixels (&#8216;px&#8217;) wide.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">setNodeAttribute</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">),</span> <span class="s2">&quot;style&quot;</span><span class="p">,</span>
+                 <span class="s2">&quot;border-width: 4px; border-style: solid;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>There is much more to styles: Some styles are inherited by child nodes from
+parent nodes, and interfere with each other in complex and interesting ways,
+but for the purpose of DOM programming, the most important thing to know is
+that each DOM node has a <tt class="docutils literal"><span class="pre">style</span></tt> property, which can be used to manipulate
+the style of that node, and that there are a few kinds of styles that can be
+used to make nodes do extraordinary things.</p>
+<p>This <tt class="docutils literal"><span class="pre">style</span></tt> property refers to an object, which has properties for all the
+possible elements of the style. We can, for example, make the picture&#8217;s border
+green.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">borderColor</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">borderColor</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that in style-sheets, the words are separated by hyphens, as in
+<tt class="docutils literal"><span class="pre">border-color</span></tt>, while in JavaScript, capital letters are used to mark the
+different words, as in <tt class="docutils literal"><span class="pre">borderColor</span></tt>.</p>
+<p>A very practical kind of style is <tt class="docutils literal"><span class="pre">display:</span> <span class="pre">none</span></tt>. This can be used to
+temporarily hide a node: When <tt class="docutils literal"><span class="pre">style.display</span></tt> is <tt class="docutils literal"><span class="pre">&quot;none&quot;</span></tt>, the element does
+not appear at all to the viewer of the document, even though it does exist.
+Later, <tt class="docutils literal"><span class="pre">display</span></tt> can be set to the empty string, and the element will
+re-appear.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;none&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>And, to get our picture back:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Another set of style types that can be abused in interesting ways are those
+related to positioning. In a simple HTML document, the browser takes care of
+determining the screen positions of all the elements ― each element is put next
+to or below the elements that come before it, and nodes (generally) do not
+overlap.</p>
+<p>When its <tt class="docutils literal"><span class="pre">position</span></tt> style is set to <tt class="docutils literal"><span class="pre">&quot;absolute&quot;</span></tt>, a node is taken out of
+the normal document &#8216;flow&#8217;. It no longer takes up room in the document, but
+sort of floats above it. The <tt class="docutils literal"><span class="pre">left</span></tt> and <tt class="docutils literal"><span class="pre">top</span></tt> styles can then be used to
+influence its position. This can be used for various purposes, from making a
+node obnoxiously follow the mouse cursor to making &#8216;windows&#8217; open on top of the
+rest of the document.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">position</span> <span class="o">=</span> <span class="s2">&quot;absolute&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">angle</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">spin</span> <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">angle</span> <span class="o">+=</span> <span class="mf">0.1</span><span class="p">;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">cos</span><span class="p">(</span><span class="nx">angle</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="p">;</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span> <span class="o">+</span> <span class="mi">100</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sin</span><span class="p">(</span><span class="nx">angle</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;px&quot;</span><span class="p">;</span>
+<span class="p">},</span> <span class="mi">100</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>If you aren&#8217;t familiar with goniometry, just believe me when I tell you that
+the cosine and sine stuff is used to build coordinates lying on the outline of
+a circle. Ten times per second, the angle at which we place the picture is
+changed, and new coordinates are computed. It is a common error, when setting
+styles like this, to forget to append <tt class="docutils literal"><span class="pre">&quot;px&quot;</span></tt> to your value. In most cases,
+setting a style to a number without a unit does not work, so you must add
+<tt class="docutils literal"><span class="pre">&quot;px&quot;</span></tt> for pixels, <tt class="docutils literal"><span class="pre">&quot;%&quot;</span></tt> for percent, <tt class="docutils literal"><span class="pre">&quot;em&quot;</span></tt> for &#8216;ems&#8217; (the width of an
+<tt class="docutils literal"><span class="pre">M</span></tt> character), or <tt class="docutils literal"><span class="pre">&quot;pt&quot;</span></tt> for points.</p>
+<p>(Now put the image to rest again...)</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">spin</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The place that is treated as 0,0 for the purpose of these positions depends on
+the place of the node in the document. When it is placed inside another node
+that has <tt class="docutils literal"><span class="pre">position:</span> <span class="pre">absolute</span></tt> or <tt class="docutils literal"><span class="pre">position:</span> <span class="pre">relative</span></tt>, the top left of this
+node is used.  Otherwise, you get the top left corner of the document.</p>
+<hr class="docutils" />
+<p>One last aspect of DOM nodes that is fun to play with is their size. There are
+style types called <tt class="docutils literal"><span class="pre">width</span></tt> and <tt class="docutils literal"><span class="pre">height</span></tt>, which can be used to set the
+absolute size of an element.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="s2">&quot;400px&quot;</span><span class="p">;</span>
+<span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">style</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="s2">&quot;200px&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>But, when you need to accurately set the size of an element, there is an tricky
+problem to take into account. Some browsers, in some circumstances, take these
+sizes to mean the outside size of the object, including any border and internal
+padding. Other browsers, in other circumstances, use the size of the space
+inside of the object instead, and do not count the width of borders and
+padding.  Thus, if you set the size of an object that has a border or a
+padding, it will not always appear the same size.</p>
+<p>Fortunately, you can inspect the inner and outer size of a node, which, when
+you really need to accurately size something, can be used to compensate for
+browser behaviour. The <tt class="docutils literal"><span class="pre">offsetWidth</span></tt> and <tt class="docutils literal"><span class="pre">offsetHeight</span></tt> properties give you
+the outer size of your element (the space it takes up in the document), while
+the <tt class="docutils literal"><span class="pre">clientWidth</span></tt> and <tt class="docutils literal"><span class="pre">clientHeight</span></tt> properties give the space inside of
+it, if any.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Outer size: &quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">offsetWidth</span><span class="p">,</span>
+      <span class="s2">&quot; by &quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">offsetHeight</span><span class="p">,</span> <span class="s2">&quot; pixels.&quot;</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Inner size: &quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">clientWidth</span><span class="p">,</span>
+      <span class="s2">&quot; by &quot;</span><span class="p">,</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;picture&quot;</span><span class="p">).</span><span class="nx">clientHeight</span><span class="p">,</span> <span class="s2">&quot; pixels.&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>If you&#8217;ve followed through with all the examples in this chapter, and maybe did
+a few extra things by yourself, you will have completely mutilated the poor
+little document that we started with.  Now let me moralise for a moment and
+tell you that you do not want to do this to real pages. The temptation to add
+all kinds of moving bling-bling will at times be strong. Resist it, or your
+pages shall surely become unreadable or even, if you go far enough, induce the
+occasional seizure.</p>
+<div class="section" id="exercises">
+<h2>6.1. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="exercises/ch06/ch06s01.html#ch06s01"><em>Chapter 6 Exercise Set 1</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch07.html" title="7. Browser Events"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch05.html" title="5. Web programming: A crash course"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

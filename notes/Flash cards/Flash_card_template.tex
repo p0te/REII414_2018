@@ -1,0 +1,254 @@
+\documentclass{article}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{ltablex} 
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{seqsplit}% http://ctan.org/pkg/seqsplit
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{amsmath}
+
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=15mm,
+ top=20mm,
+ }
+ 
+\newcounter{count}
+\setcounter{count}{1}
+\setlist{nosep}
+
+\newcommand{\qa}[2]{\thecount){#1} & \thecount) {#2} \\ \stepcounter{count}}
+
+\newcommand{\newheading}[1]{\end{longtable} 
+\textbf{#1}
+\setcounter{count}{1}%comment out not to reset counter at each new heading
+\begin{longtable}{m{250pt} m{250pt}}}
+
+
+
+\begin{document}
+
+
+
+
+
+ 
+{\huge REII414 EXAM flash cards}
+\large %comment out to make text smaller
+\setlength{\tabcolsep}{0.8em}
+\setlength{\extrarowheight}{0.5em}
+\begin{longtable}{m{250pt} m{250pt}}
+
+
+\textbf{SU1}\\
+%Database terminology
+\qa{Define a Primary Key}{An attribute that \emph{uniquely} defines each row}
+\qa{Define a foreign Key}{An attribute whose value matches the primary key of a related table}
+\qa{Define entity integrity}{The property of a relational table that
+guarantees that each entity has a unique value in a primary
+key and that there are no null values in the primary key.}
+\qa{Define referential integirty}{A condition by which a dependent
+table’s foreign key must have either a null entry or a
+matching entry in the related table. Even though an attribute
+may not have a corresponding attribute, it is impossible to
+have an invalid entry.}
+\qa{Define an ERD}{Refers to the entity relationship
+diagram resulting from the application of extended entity
+relationship concepts that provide additional semantic
+content zrein the ER model.}
+\qa{List the types, and uses for the different crow's feet in the abovementioned diagram}{
+\begin{itemize}
+	\item Zero or many  
+	\item One or many
+	\item ONe and only one
+	\item Zero or one
+\end{itemize}
+}
+\qa{Define a derived attribute}{ an attribute whose value is
+calculated (derived) from other attribute} 
+%data vs information
+\qa{Briefly differentiate between data and information}{Data are raw facts, information is the result of processing data to reveal its meaning}
+%development of database systems
+\qa{State the 3 ways in which a business might manage its data}{
+\begin{itemize}
+	\item A Manual (paper) file system
+	\item A computerized file system
+	\item A database system
+\end{itemize}
+}
+\qa{State 3 problems with computerized file systems}{
+\begin{itemize}
+	\item Structural and data dependence
+	\item Data redundancy
+	\item Lack of design and data-modeling skills
+	
+\end{itemize}
+}
+%Role of the DBMS
+\qa{list 9 roles of the DBMS}{
+\begin{itemize}
+	\item Data dictionary management
+	\item Data Storage management
+	\item Data transformation and presentation
+	\item Security Management	
+	\item Multiuser access control
+	\item Backup and recovery management
+	\item Data integrity management
+	\item Database access languages and application programming interface
+	\item Database communication interfaces
+\end{itemize}
+}
+%structure of the file based system and the entity relationship system
+\qa{define structural dependence}{Access to a file is dependent on its structure, } 
+\qa{define structural independence}{When access to a file is not affected by changes in its structure} 
+\qa{define data dependence}{When access to a file is dependent on its data, for example an appication that relies on the data-type in a file to be an integer.} 
+\qa{define data independence}{When it is possible to change the data in a file without affecting access by an application} 
+\qa{describe the difference between the logical and physical data format}{The logical data format is the format in which a human reads the data, whereas the physical data format defines the way a computer works with the data} 
+%advantages and disadvantages of different systems
+%Database system environment
+\qa{state 5 components of the database system environment}{
+\begin{itemize}
+	\item Hardware
+	\item Software
+	\item People
+	\item Procedures
+	\item Data
+\end{itemize}
+} 
+
+\newheading{SU2}
+%entities and features
+\qa{Define an entity}{something to which data will be attributed, usually corresponds to a table} 
+\qa{Define a feature}{An attribute of an entity} 
+%features of a relational table
+\qa{list 8 Characteristics of a relational table}{
+\begin{itemize}
+	\item A table is perceived as a two-dimensional structure composed of rows and columns.
+	\item Each table row (tuple) represents a single entity occurrence within the entity set.
+	\item Each table column represents an attribute, and each column has a distinct name.
+	\item  Each row/column intersection represents a single data value.
+	\item All values in a column must conform to the same data format
+	\item Each column has a specific range of values known as the attribute domain.
+	\item The order of the rows and columns is immaterial to the DBMS. 
+	\item Each table must have an attribute or a combination of attributes that uniquely identifies each row. 
+\end{itemize}
+} 
+%data types!!!!NOT DONE!!!!
+%define the concept of keys
+\qa{define the concept of a key}{An entity identifier based on the concept of functional
+dependence} 
+%identify and use different types of keys
+\qa{define a  Superkey}{an
+attribute (or combination of attributes) that uniquely
+identifies each entity in a table}
+\qa{define a Primary key}{a
+candidate key selected as a unique entity identifier}
+\qa{define a Secondary key}{a key that is used strictly for data retrieval
+purposes. For example, a customer is not likely to know his
+or her customer number (primary key), but the combination
+of last name, first name, middle initial, and telephone
+number is likely to make a match to the appropriate table
+row}
+\qa{define a Foreign key}{an attribute (or combination of attributes)
+in one table whose values must match the primary key in
+another table or whose values must be null.}
+\qa{define a Candidate key}{a minimal
+superkey, that is, one that does not contain a subset of
+attributes that is itself a superkey}
+\qa{list 6 desirable attributes of a primary key}{
+\begin{itemize}
+	\item Stable : does not change over time
+	\item Minimal: Fewest attributes necessary
+	\item Factless: no hidden information	
+	\item Definitive: Value always exists
+	\item Accessible: Available when data created
+	\item Unique: Absolutely no duplicates
+\end{itemize}
+} 
+ 
+%integrity rules
+\qa{briefly define Data integrity}{In a relational database, refers to a condition
+in which the data in the database is in compliance with all
+entity and referential integrity constraints.} 
+\qa{Define entity integrity}{The property of a relational table that
+guarantees that each entity has a unique value in a primary
+key and that there are no null values in the primary key.}
+\qa{Define referential integrity}{A condition by which a dependent
+table’s foreign key must have either a null entry or a
+matching entry in the related table. }
+
+%database computations !!!NOT DONE!!!
+%the database dictionary
+\qa{Briefly describe the data dictionary}{ provides a detailed description of all tables found within the user/designer-created database.IN other words, the database dictionary contains metadata} 
+\qa{what would a minimal example of a data dictionary contain}{ at least all of the attribute names and characteristics for each table in the system} 
+%entity relationship diagrams
+%redundancy
+
+
+
+
+\newheading{SU3}
+\qa{Define a Functional dependency}{Attribute A determines attribute B (that is, B is functionally dependent on A) if all
+of the rows in the table that agree in value for attribute A also agree in value for
+attribute B} 
+\qa{Define a Partial dependency}{A dependency that exists when the determinant is only part of the primary key [if (A,B) $\to$ (C,D) and B $\to$ C Where (A,B) is the PK]} 
+\qa{Define a transitive dependency}{Dependencies such that X $\to$ Y and Y $\to$ Z form a transitive dependency.In general, transitive dependencies are dependencies between non-primary attributes} 
+\qa{list the 5 normal forms}{
+\begin{itemize}
+	\item First Normal Form (1NF)
+	\item Second Normal Form (2NF)
+	\item Third Normal Form (3NF)
+	\item Boyce-Codd normal form(BCNF)
+	\item Fourth Normal Form (4NF)
+\end{itemize}
+} 
+\qa{give the requirements for 1NF}{Table format, no repeating groups, and PK identified} 
+\qa{give the requirements for 2NF}{1NF and no partial dependencies}  
+\qa{give the requirements for 3NF}{2NF and no transitive dependencies} 
+\qa{give the requirements for BCNF}{Every determinant is a candidate key (special case of 3NF) } 
+\qa{give the requirements for 4NF}{3NF and no independent multivalued dependencies} 
+%describe basic modelling concepts;
+%describe degrees of data abstraction for the different database models;
+%define and describe the conceptual, internal, external and physical abstraction of data;
+%determine relations and apply these between entities;
+%describe and determine connectivity and cardinality between related entities;
+%interpret and award E-R symbols;
+%apply entity classification as a super type or sub type;
+%know and apply external key rules;
+%apply appropriate modelling methods such as Chen and Crow's foot;
+%know database modelling conventions;
+%apply design compromises based on sound principles and conventions.
+\newheading{SQL queries}
+\qa{Briefly describe select syntax}{SELECT $<$fields$>$ FROM$<$tables$>$ WHERE$<$conditions$>$ } 
+\qa{Briefly describe update syntax}{UPDATE$<$table$>$ SET $<$field = new$>$ WHERE $<$condition$>$  }
+\qa{state the SQL function for returning the average}{AVG()} 
+\qa{state the SQL function for returning the number of rows}{COUNT()} 
+\qa{state the SQL function for returning the first value}{FIRST()} 
+\qa{state the SQL function for returning the last value}{LAST()} 
+\qa{state the SQL function for returning the largest value}{MAX()} 
+\qa{state the SQL function for returning the Smallest value}{MIN()} 
+\qa{state the SQL function for returning the sum}{SUM()} 
+\qa{state the SQL function for returning a numeric field to specific number of decimals }{ROUND()} 
+
+\newheading{Exam: missing info}
+\qa{What is the difference between a row level trigger and a table level trigger}{A trigger is code that ex executed in response to certain events, usually when data changes. Row level triggers are executed when data in a given row changes, whereas table level triggers execute when data in a given table changes.  } 
+\qa{How Does SQL injection work}{Web applications are manipulated in order to execute malicious queries, for example by typing in ' 1 = 1 into a search box} 
+\qa{Give an example of a redundant relationship in ERD}{ANS} 
+\qa{How would one execute a right join if the system can only execute left joins}{ execute a left join, but swap the tables} 
+\qa{List 5 classifications for keys commonly used}{
+\begin{itemize}
+	\item Superkey
+	\item Candidate key
+	\item Primary key
+	\item Secondary key
+	\item Foreign Key
+\end{itemize}
+} 
+\end{longtable}
+
+\end{document}

@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 2 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 2 Exercise Set 2" href="ch02s02.html" />
+    <link rel="prev" title="Chapter 1 Exercise Set 1" href="../ch01/ch01s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch02s02.html" title="Chapter 2 Exercise Set 2"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch01/ch01s01.html" title="Chapter 1 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-2-exercise-set-1">
+<span id="ch02s01"></span><h1>Chapter 2 Exercise Set 1<a class="headerlink" href="#chapter-2-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="abs-n">
+<h2><tt class="docutils literal"><span class="pre">abs(n)</span></tt><a class="headerlink" href="#abs-n" title="Permalink to this headline">¶</a></h2>
+<p>Write a function called <tt class="docutils literal"><span class="pre">abs</span></tt>, which returns the absolute value of the number
+it is given as its argument. The absolute value of a negative number is the
+positive version of that same number, and the absolute value of a positive
+number (or zero) is that number itself.</p>
+</div>
+<div class="section" id="makequestion-oprd1-oprd2-op">
+<h2><tt class="docutils literal"><span class="pre">makeQuestion(oprd1,</span> <span class="pre">oprd2,</span> <span class="pre">op)</span></tt><a class="headerlink" href="#makequestion-oprd1-oprd2-op" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">makeQuestion</span></tt>, that takes three arguments: two
+operands and an operator, and returns a string with the question &#8220;What is
+[oprd1] [opr] [oprd2]?&#8221;.</p>
+<p>Examples:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">makeQuestion</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">);</span>
+<span class="nx">makeQuestion</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">);</span>
+<span class="nx">makeQuestion</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The first call will return the string <tt class="docutils literal"><span class="pre">&quot;What</span> <span class="pre">is</span> <span class="pre">5</span> <span class="pre">+</span> <span class="pre">7?&quot;</span></tt>.  The second call
+returns <tt class="docutils literal"><span class="pre">&quot;What</span> <span class="pre">is</span> <span class="pre">8</span> <span class="pre">*</span> <span class="pre">2?&quot;</span></tt>, and the third returns <tt class="docutils literal"><span class="pre">&quot;What</span> <span class="pre">is</span> <span class="pre">8</span> <span class="pre">-</span> <span class="pre">2?&quot;</span></tt>.</p>
+</div>
+<div class="section" id="randomint-low-high">
+<h2><tt class="docutils literal"><span class="pre">randomInt(low,</span> <span class="pre">high)</span></tt><a class="headerlink" href="#randomint-low-high" title="Permalink to this headline">¶</a></h2>
+<p>Write a function, <tt class="docutils literal"><span class="pre">randomInt(low,</span> <span class="pre">high)</span></tt>, that returns a random integer
+between <tt class="docutils literal"><span class="pre">low</span></tt> and <tt class="docutils literal"><span class="pre">high</span></tt> inclusive.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">This is essentially a rewrite of the
+<a class="reference internal" href="../ch01/ch01s01.html#random-between-low-and-high-exercise"><em>Random between low and high</em></a> exercise that you completed
+last chapter.</p>
+</div>
+</div>
+<div class="section" id="what-is-oprd1-oprd2">
+<span id="what-is-oprd1-plus-oprd2-exercise"></span><h2>What is oprd1 + oprd2?<a class="headerlink" href="#what-is-oprd1-oprd2" title="Permalink to this headline">¶</a></h2>
+<p>Rewrite the program you made in <a class="reference internal" href="../ch01/ch01s01.html#what-is-2-plus-2-exercise"><em>What&#8217;s 2 + 2?</em></a> last chapter
+using the <tt class="docutils literal"><span class="pre">makeQuestion</span></tt> and <tt class="docutils literal"><span class="pre">randomInt</span></tt> functions you wrote in the
+exercises above.  At this point you can assume that <tt class="docutils literal"><span class="pre">op</span></tt> is always <tt class="docutils literal"><span class="pre">+</span></tt>.</p>
+</div>
+<div class="section" id="evaluateexpression-oprd1-oprd2-op">
+<h2><tt class="docutils literal"><span class="pre">evaluateExpression(oprd1,</span> <span class="pre">oprd2,</span> <span class="pre">op)</span></tt><a class="headerlink" href="#evaluateexpression-oprd1-oprd2-op" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">evaluateExpression</span></tt>, that takes three arguments: two
+operands and an operator, and returns the number that results from applying
+the operator to the opperands.</p>
+<p>Examples:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">evaluateExpression</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">);</span>
+<span class="nx">evaluateExpression</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">);</span>
+<span class="nx">evaluateExpression</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">);</span>
+<span class="nx">evaluateExpression</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>These three class to <tt class="docutils literal"><span class="pre">evaluateExpression</span></tt> will return <tt class="docutils literal"><span class="pre">12</span></tt>, <tt class="docutils literal"><span class="pre">16</span></tt>, <tt class="docutils literal"><span class="pre">6</span></tt>,
+and <tt class="docutils literal"><span class="pre">5</span></tt>, respectively.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You will need to use a multiway branch that matches <tt class="docutils literal"><span class="pre">op</span></tt> and applies
+the proper opperation to <tt class="docutils literal"><span class="pre">oprd1</span></tt> and <tt class="docutils literal"><span class="pre">oprd2</span></tt> accordingly.</p>
+</div>
+</div>
+<div class="section" id="randomop">
+<h2><tt class="docutils literal"><span class="pre">randomOp()</span></tt><a class="headerlink" href="#randomop" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">randomOp</span></tt> that randomly returns either <tt class="docutils literal"><span class="pre">&quot;+&quot;</span></tt>,
+<tt class="docutils literal"><span class="pre">&quot;-&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;*&quot;</span></tt>, or <tt class="docutils literal"><span class="pre">&quot;/&quot;</span></tt>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Use the <tt class="docutils literal"><span class="pre">randomInt</span></tt> function you wrote earlier to generate a random
+number between 1 and the number of operators.  Then use a multiway
+branch returning a different operator for each number.</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>What is oprd1 [+ | - | * | /] oprd2?<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Use the <tt class="docutils literal"><span class="pre">evaluateExpression</span></tt> and <tt class="docutils literal"><span class="pre">randomOp</span></tt> functions you wrote in the
+preceding exercises to enhance the program you wrote in
+<a class="reference internal" href="#what-is-oprd1-plus-oprd2-exercise"><em>What is oprd1 + oprd2?</em></a> so that it generates questions with
+random operators as well as random operands.</p>
+</div>
+<div class="section" id="splitcheck-amt-numpeople-tip">
+<h2><tt class="docutils literal"><span class="pre">splitCheck(amt,</span> <span class="pre">numPeople,</span> <span class="pre">tip)</span></tt><a class="headerlink" href="#splitcheck-amt-numpeople-tip" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">splitCheck</span></tt> that takes three arguments: the total
+amount of the check, the number of people splitting the check, and the percent
+tip to be included, and returns the amount that each person needs to leave
+for the check.</p>
+</div>
+<div class="section" id="splitcheck-on-the-dollar">
+<h2><tt class="docutils literal"><span class="pre">splitCheck</span></tt> on the dollar<a class="headerlink" href="#splitcheck-on-the-dollar" title="Permalink to this headline">¶</a></h2>
+<p>Modify <tt class="docutils literal"><span class="pre">splitCheck</span></tt> so that it rounds each person&#8217;s amount up to the nearest
+whole dollar.</p>
+</div>
+<div class="section" id="greaterthan-n">
+<h2><tt class="docutils literal"><span class="pre">greaterThan(n)</span></tt><a class="headerlink" href="#greaterthan-n" title="Permalink to this headline">¶</a></h2>
+<p>Write a function <tt class="docutils literal"><span class="pre">greaterThan</span></tt>, which takes one argument, a number, and
+returns a function that represents a test. When this returned function is
+called with a single number as argument, it returns a boolean: <tt class="docutils literal"><span class="pre">true</span></tt> if the
+given number is greater than the number that was used to create the test
+function, and <tt class="docutils literal"><span class="pre">false</span></tt> otherwise.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch02s02.html" title="Chapter 2 Exercise Set 2"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch01/ch01s01.html" title="Chapter 1 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+li > h3 {
+    text-align: left;
+}
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<h2 id="format">Format</h2>
+
+<p>Links are what make the web <i>the web</i>.  With a simple mouse click they
+let you transfer to another page anywhere on the World Wide Web.</p>
+
+<p>The format of a link looks like this:</p>
+
+<pre class="source" style="width: 500px; text-align: center;">
+&lt;a href="http://wikipedia.org"&gt;Wikipedia&lt;/a&gt;
+</pre>
+
+<p>or this:</p>
+
+<pre class="source" style="width: 400px; text-align: center;">
+&lt;a href="index.html"&gt;Go Home&lt;/a&gt;
+</pre>
+
+<p>Let's look at each part of this statement:</p>
+<div class="source">
+<dl>
+  <dt><code>&lt;a ...&gt;</code></dt><dd>is the openning hypterlink tag.</dd>
+
+  <dt><code>href="index.html"</code></dt><dd> defines an <b>attribute-value
+  pair</b> for the <code>href</code> attribute. <code>href</code> stands for
+  <q>hypertext reference</q>.  <code>index.html</code> is the <b>value</b> of
+  the <code>href</code> attribute.  The browser will load this page when the
+  hyperlink element is clicked.</dd>
+
+  <dt><code>Go Home</code></dt><dd>is a label on which the user would click to
+  <b>follow</b> the link.</dd>
+  <dt><code>&lt;/a&gt;</code></dt><dd>is the closing hyperlink tag.</dd>
+</dl>
+</div>
+
+
+<h2>Attributes</h2>
+<p>
+<i>Attributes</i>, as you may recall from the section with that title in
+<a href="lesson1.html#attributes">Lesson 1</a>, are modifiers of html
+elements with values assigned to names using
+<code><i>name</i>="<i>value</i>"</code> inside the open tag of an element.
+The <code>href</code> attribute is required for hyperlink elements.</p>
+
+<h2>Hypertext</h2>
+
+<p>The attribute in the hyperlink tag, <code>href</code>, stands for
+<b><a href="http://en.wikipedia.org/wiki/Hypertext">hypertext</a>
+reference</b>. It is the <code>href</code> attribute that
+tells the browser which location to load when the
+<b><a href="http://en.wikipedia.org/wiki/Hyperlinks">hyperlink</a></b> (or
+as it's more commonly called, <b>link</b>) element is clicked.  Links are what
+drives the <a href="http://en.wikipedia.org/wiki/World_Wide_Web">World Wide
+Web</a> and makes it so popular.
+</p>
+
+
+<h2>Location</h2>
+
+<p>The value of an href attribute is usually a web address, which describes
+the location of another web page.  Web addresses are also called
+<a href="http://en.wikipedia.org/wiki/Web_address">URLs</a>.
+There are two ways to specify the <b>location</b> of a hypertext link.</p>
+
+
+<h3>Absolute Location</h3>
+
+<p>An <code>absolute location</code> uses the entire URL, like:</p> 
+
+<p><code>http://openbookproject.net/tutorials/getdown/html/index.html</code></p>
+
+<p>Not only is this tedious to type, but using absolute locations makes it
+difficult to move your site, which brings us to...</p>
+
+
+<h3>Relative Location</h3>
+<p>
+Let's say you want to go from
+</p>
+<p>
+<code>http://openbookproject.net/tutorials/getdown/html/lesson6.html</code>
+</p>
+<p>to</p>
+<p>
+<code>http://openbookproject.net/tutorials/getdown/html/lesson7.html</code>
+</p>
+
+<p>From inside the <code>lesson6.html</code> file, the link only needs to be
+written as:</p>
+
+<pre class="source" style="width: 400px; text-align: center;">
+&lt;a href="lesson7.html"&gt;Lesson 7&lt;/a&gt;
+</pre>
+
+<p><code>lesson6.html</code> and <code>lesson7.html</code> are in the same
+directory, and so have the <i>same relative location</i>.</p>
+
+
+<h3>Links Within A Document</h3>
+<p>
+Hyperlinks can also link to places within a document - either the same
+document or a different one.  For example, clicking
+<a href="#format">this</a> link will take you the format section at the
+beginning of this lesson.
+</p>
+<p>
+Two attributes were combined to make that work.  First, an
+<code>id="format"</code> attribute was added to the <q>Format</q>
+<code>h2</code> element at the beginning of the lesson.  Second, a link element
+with <code>href="#format"</code> was put around the the word <q>this</q>,
+making it a local link.
+</p>
+<p>
+The link to the Attributes section of Lesson 1 above is another example of a
+link to a location within a document.  In this case the link looks like this:
+</p>
+<pre class="source" style="width: 500px; text-align: center;">
+&lt;a href="lesson1.html#attributes"&gt;Lesson 1&lt;/a&gt;
+</pre>
+<p>
+and is combined with the element
+</p>
+<pre class="source" style="width: 400px; text-align: center;">
+&lt;h2 id="attributes"&gt;Attributes&lt;/h2&gt;
+</pre>
+<p>
+in Lesson 1 to make the link.
+</p>
+</section>
+
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Copy <code>minimal_page.html</code> to <code>favorite.html</code>.
+  Put <q>My Favorite Web Sites</q> in the title and a top level heading.
+  Create an ordered list with <i>absolute links</i> to your top 10 favorite
+  websites.  Your completed <code>favorite.html</code> might should look
+  something like <a href="screenshots/lesson6/favorite_html.png">this</a>.
+  </li>  
+    
+  <li id="project"><h3>Project: Putting the Pieces Together</h3>
+  <p>Edit the <code>gdw.html</code> file that you created in Lesson 2,
+  making the following changes:</p>
+  <ul>
+    <li>Change <code>Block-level Elements</code>, <code>Inline Elements</code>,
+    <code>Object Elements</code>, and <code>Special Characters</code> from
+    third level headings to list items.  Put them in an unordered list.
+    Make <code>Block-level Elements</code> link to the file
+    <code>block.html</code> that you created in lesson 3.
+    <code>Inline Elements</code> should link to <code>inline.html</code>,
+    <code>Object Elements</code> to <code>object.html</code>, and
+    <code>Special Characters</code> to <code>special.html</code>.</li>
+
+    <li>Change <code>Ordered</code>, <code>Unordered</code>, and
+    <code>Definition</code> from third level headings to list items.  Put them
+    in an unordered list. Link <code>Ordered</code> to the file
+    <code>ordered.html</code> that you created in lesson 4.  Link the other
+    two labels to their corresponding files as well.</li>
+
+    <li>Create another unordered list under the <code>Tables</code> heading
+    with two items: <code>Decimal, Binary, Octal, and Hex</code>, and
+    <code>My Table</code>.  Link the first one to the
+    <code>decbinocthex.html</code> file you made in lesson 5, and the second
+    one to <code>mytable.html</code>.</li>
+
+    <li>Remove the two third level headings under <code>Links</code>
+    (<code>Absolute</code> and <code>Relative</code>) and in their place
+    create an unordered list with a single list item.  Put the text
+    <code>My Favorite Websites</code> in this list item and link it to the
+    <code>favorite.html</code> file you created in the previous exercise.</li>
+
+    <li>Finally add an unordered list under the <code>Images</code> heading
+    with <code>Gallery I</code> and <code>Gallery II</code> as the text in
+    these list items.  You will make these links in the next lesson.</li>
+  </ul>
+  </li>
+  <li>When finished, your <code>gdw.html</code> page should look something
+  like <a href="screenshots/lesson6/gdw_html.png">this</a>, and all the
+  links should load the correct pages when clicked.</li>
+</ol>
+</section>
+
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

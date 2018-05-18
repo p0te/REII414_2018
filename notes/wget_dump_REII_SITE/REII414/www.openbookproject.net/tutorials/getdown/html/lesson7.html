@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>Images are a important part of many web pages. To include an image on your
+page, you need to specify where the image file is located, by using an
+<code>img</code> element, with syntax:</p>
+
+<pre class="source" style="width: 560px; text-align: center;">
+&lt;img src="<em>location of image file</em>" alt="<em>alt string</em>"&gt;
+</pre>
+
+<p>Both the <code>src</code> and <code>alt</code> attributes are required to be
+valid html.  The <code>src</code> attribute tells the browser where to find the
+image, and the <code>alt</code> attribute has an <i>alt string</i> as a value
+and tells the browser what to put in place of the image if the browser has its
+display images setting turned off.</p>
+
+<p>The <q><em>location of image file</em></q> needs to be replaced with the
+<b>path to the image</b>, which as in the previous lesson can be either an
+absolute or relative URL.</p>
+
+<p>Here is an example:</p>
+
+<div class="source" style="width: 800px; text-align: center;">
+&lt;p&gt;&lt;img src="images/orangespiral.jpg" alt="Orange Spiral by Jerusalem
+Tekle"&gt;&lt;/p&gt;
+</div>
+
+<p>Which, assuming the file, <code>orangespiral.jpg</code> is contained in a
+directory called <code>images</code> in the same location as the current file,
+will display the following image:</p>
+
+<p style="text-align: center;">
+<img src="images/orangespiral.jpg" alt="Orange Spiral by Jerusalem Tekle" /></p>
+</section>
+
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Copy <code>minimal_page.html</code> to a new file name
+  <code>gallery1.html</code>  Put <q>Some Pictures I Like</q> in both
+  the title and a top level heading.  Select five images from either
+  <a href="http://openbookproject.net/multimedia/paulcardunergraphics">Paul
+  Carduner Graphics</a> or <a href="http://openphoto.net">OpenPhoto</a>,
+  and include these images in your gallery.  Your completed page should look
+  somthing like <a href="resources/gallery1.html">this</a>.</li>
+
+  <li>Copy <code>minimal_page.html</code> to a new file name
+  <code>gallery2.html</code>  Put <q>Some Pictures I Took</q> in both
+  the title and a top level heading.  Select five images that you (or a friend
+  or family member) took yourself, and include these images in your gallery.
+  </li>
+
+  <li>Edit the <code>gdw.html</code> file that you made in the last lesson,
+  making <code>Gallery I</code> link to <code>gallery1.html</code> and
+  <code>Gallery II</code> link to <code>gallery2.html</code>.</li>
+</ol>
+</section>
+
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

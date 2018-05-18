@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>
+Animation in SVG is the changing of attributes of objects over time. In the
+last lesson, we covered activating immeadiate effects with the mouse. With
+animation, we make events happen over a period of time.</p>
+
+<h3 style="text-align: center">Before Starting:</h3>
+
+<p>Before we really begin, there are several tags that control animation in
+<code>SVG</code>.</p>
+
+<div class="source">
+<dl>
+ <dt><code>&lt;set&gt;</code></dt>
+ <dd>A basic animation tag good for changing non-numerical values, such as
+ colors and visibility.</dd>
+
+ <dt><code>&lt;animate&gt;</code></dt>
+ <dd>All-round animation tag that changes properties over time.</dd>
+ <dt><code>&lt;animateMotion&gt;</code></dt>
+
+ <dd>Moves object along a path.</dd>
+ <dt><code>&lt;animateTransform&gt;</code></dt>
+ <dd>Transforms object.</dd>
+</dl>
+</div>
+
+<p>Now we can move onto setting up an actual animation tag.</p>
+
+<h3 style="text-align: center">Animation Basics</h3>
+<p>Let's start off with a simple, red, circle shape.</p>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   viewBox="0 0 1000 500"
+   width="1000"
+   height="500"
+   id="Starter Page">
+<circle cx="250" cy="250" r="200"
+  stroke="black" stroke-width="5" fill="red"> 
+</circle>
+
+</svg>
+
+<p>Now we add some fun, or specifically, an animation tag.</p>
+
+<div class="source">
+<pre>
+&lt;animate attributeName="cx" from="250" to="750" begin="0s" dur="5s" 
+  repeatCount="indefinite" /&gt;</pre></div>
+<p>This tag goes inside the circle tag, at the end of it. And the result:</p>
+<svg
+
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   viewBox="0 0 1000 500"
+   width="1000"
+   height="500"
+   id="Starter Page">
+<circle cx="250" cy="250" r="200"
+  stroke="black" stroke-width="5" fill="red"> 
+<animate attributeName="cx" from="250" to="750" begin="0s" dur="5s" repeatCount="indefinite" />
+</circle>
+
+</svg>
+
+<p>As you can see, the center point of the circle, <code>cx</code>, is moving
+to the right. <code>cx</code> is identified in the <code>attributeName</code>
+of the <code>&lt;animate&gt;</code> tag. The following <code>from</code> and
+<code>to</code> define where the variable starts and ends, and the
+<code>begin</code> and <code>dur</code> define the interval of time for the
+animation in seconds. The <code>repeatCount</code> can be set to a specific
+number, or to "indefinite" which means the animation will go on forever. It is
+in this way that you can animate with all basic circle variables. You can also
+use multiple animations at the same time, and link the beginning of the
+animations to the mouse events you learned in the last lesson. See if you can
+figure out where the <code>mouseover</code> event trigger was placed in the
+code.</p>
+
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.0"
+   viewBox="0 0 1000 500"
+   width="1000"
+   height="500"
+   id="Starter Page">
+<circle cx="250" cy="250" r="200"
+  stroke="black" stroke-width=".1" fill="red"> 
+<animate attributeName="cx" from="250" to="750" begin="mouseover" dur="5s" repeatCount="indefinite" />
+<animate attributeName="stroke-width" from="0.1" to="100" begin="mouseover" dur="5s" repeatCount="indefinite" />
+</circle></svg>
+<h3 style="text-align: center">Animation and Rotation on Paths</h3>
+<p>Animating on object on a path is extremely easy. Using the <code>&lt;animateMotion&gt;</code> tag, define the path as you learned several lessons ago. Then specify the duration, and set <code>rotate</code> to <code>auto</code>.</p><div class="source"><pre>&lt;rect x="0" y="0" width="25" height="25" fill="blue"&gt;
+    &lt;animateMotion path="m 150,150 c 20,70 -70,20 -100,-100" dur="10s"
+                   rotate="auto" repeatCount="indefinite"/&gt;&lt;/rect&gt;</pre></div>
+<svg
+
+   xmlns="http://www.w3.org/2000/svg"
+   version="2.0"
+   viewBox="0 0 200 200"
+   width="200"
+   height="200"
+   id="Starter Page">
+
+
+<path
+       d="m 150,150 c 20,70 -70,20 -100,-100"
+       id="Sample Curve"
+       fill="none" stroke="black" stroke-width="1" />
+
+<rect x="0" y="0" width="25" height="25" fill="BLUE">
+    <animateMotion path="m 150,150 c 20,70 -70,20 -100,-100" dur="10s"
+                   rotate="auto" repeatCount="indefinite"/>
+</rect>
+</svg>
+<p>Notice how the rectangle rotates in the direction it is moving? Try deleting the rotation definition from the code. Does the rectangle still rotate? Here are some of the possible definitions for <code>rotate</code>:</p>
+<div class="source">
+<dl>
+ <dt><code>auto</code></dt>
+ <dd>Automatically rotates object over time in the direction of the motion.</dd>
+
+ <dt><code>auto-reverse</code></dt>
+ <dd>Automatically rotates object in the opposite direction of the motion.</dt>
+
+ <dt><code>&lt;x&gt;</code></dt>
+ <dd>Keeps the rotation constant at x degrees, no matter what direction the object is heading.</dd>
+</dl>
+</div>
+<p>Okay, you've now got the basics of <code>SVG</code> animation. Together with all of the past lessons, you should have a decent understanding of <code>SVG</code> by now. The following tutorials will be about the applications of <code>SVG</svg>.</p>
+</section>
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+</li>
+
+<li>
+</li>
+</ol>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

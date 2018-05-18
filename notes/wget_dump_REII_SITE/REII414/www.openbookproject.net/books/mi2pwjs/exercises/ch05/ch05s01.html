@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 5 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 6 Exercise Set 1" href="../ch06/ch06s01.html" />
+    <link rel="prev" title="Chapter 4 Exercise Set 1" href="../ch04/ch04s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch06/ch06s01.html" title="Chapter 6 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch04/ch04s01.html" title="Chapter 4 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-5-exercise-set-1">
+<span id="ch05s01"></span><h1>Chapter 5 Exercise Set 1<a class="headerlink" href="#chapter-5-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">Being able to read the values of the form fields makes it possible to write
+a function <tt class="docutils literal"><span class="pre">validInfo</span></tt>, which takes a form object as its argument and
+returns a boolean value: <tt class="docutils literal"><span class="pre">true</span></tt> when the <tt class="docutils literal"><span class="pre">name</span></tt> field is not empty and
+the <tt class="docutils literal"><span class="pre">email</span></tt> field contains something that looks like an e-mail address,
+<tt class="docutils literal"><span class="pre">false</span></tt> otherwise. Write this function.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">validInfo</span><span class="p">(</span><span class="nx">form</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">form</span><span class="p">.</span><span class="nx">elements</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">value</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="o">&amp;&amp;</span>
+        <span class="sr">/^.+@.+\.\w{2,3}$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">form</span><span class="p">.</span><span class="nx">elements</span><span class="p">.</span><span class="nx">email</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">validInfo</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">.</span><span class="nx">userinfo</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>You did think to use a regular expression for the e-mail check, didn&#8217;t you?</p>
+</li>
+<li><p class="first">Finish the form validator by giving the button&#8217;s <tt class="docutils literal"><span class="pre">onclick</span></tt> property a new
+value ― a function that checks the form, submits when it is valid, or pops
+up a warning message when it is not. It will be useful to know that form
+objects have a <tt class="docutils literal"><span class="pre">submit</span></tt> method that takes no parameters and submits the
+form.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">userForm</span><span class="p">.</span><span class="nx">elements</span><span class="p">.</span><span class="nx">send</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">validInfo</span><span class="p">(</span><span class="nx">userForm</span><span class="p">))</span>
+        <span class="nx">userForm</span><span class="p">.</span><span class="nx">submit</span><span class="p">();</span>
+    <span class="k">else</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Give us a name and a valid e-mail address!&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch06/ch06s01.html" title="Chapter 6 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch04/ch04s01.html" title="Chapter 4 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>retrieveMails &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="prev" title="Chapter 3 Exercise Set 1 Solutions" href="../../exercises/solutions/ch03/ch03s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../exercises/solutions/ch03/ch03s01.html" title="Chapter 3 Exercise Set 1 Solutions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="retrievemails">
+<span id="id1"></span><h1>retrieveMails<a class="headerlink" href="#retrievemails" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">retrieveMails</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="s2">&quot;Nephew,\n\nI bought a computer as soon as I received your letter. It took me two days to make it do &#39;internet&#39;, but I just kept calling the nice man at the computer shop, and in the end he came down to help personally. Send me something back if you receive this, so I know whether it actually works.\n\nLove,\nAunt Emily&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Dear Nephew,\n\nVery good! I feel quite proud about being so technologically minded, having a computer and all. I bet Mrs. Goor down the street wouldn&#39;t even know how to plug it in, that witch.\n\nAnyway, thanks for sending me that game, it was great fun. After three days, I beat it. My friend Mrs. Johnson was quite worried when I didn&#39;t come outside or answer the phone for three days, but I explained to her that I was working with my computer.\n\nMy cat had two kittens yesterday! I didn&#39;t even realize the thing was pregnant. I&#39;ve listed the names at the bottom of my letter, so that you will know how to greet them the next time you come over.\n\nSincerely,\nAunt Emily\n\nborn 02/15/1999 (mother Spot): Clementine, Fireball&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;[... and so on ...]\n\nborn 09/21/2000 (mother Spot): Yellow Emperor, Black Leclère&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\nborn 04/02/2001 (mother Clementine): Bugeye, Wolverine, Miss Bushtail&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\ndied 12/12/2002: Clementine\n\ndied 15/12/2002: Wolverine&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\nborn 11/15/2003 (mother Spot): White Fang&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\nborn 04/10/2003 (mother Miss Bushtail): Yellow Bess&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\ndied 05/30/2004: Yellow Emperor&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\nborn 01/06/2004 (mother Miss Bushtail): Catharina, Fat Igor&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\nborn 09/20/2004 (mother Yellow Bess): Doctor Hobbles the 2nd, Noog&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\nborn 01/15/2005 (mother Yellow Bess): The Moose, Liger\n\ndied 01/17/2005: Liger&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Dear nephew,\n\nYour mother told me you have taken up skydiving. Is this true? You watch yourself, young man! Remember what happened to my husband? And that was only from the second floor!\n\nAnyway, things are very exciting here. I have spent all week trying to get the attention of Mr. Drake, the nice gentleman who moved in next\ndoor, but I think he is afraid of cats. Or allergic to them? I am\ngoing to try putting Fat Igor on his shoulder next time I see him, very curious what will happen.\n\nAlso, the scam I told you about is going better than expected. I have already gotten back five &#39;payments&#39;, and only one complaint. It is starting to make me feel a bit bad though. And you are right that it is probably illegal in some way.\n\n(... etc ...)\n\nMuch love,\nAunt Emily\n\ndied 04/27/2006: Black Leclère\n\nborn 04/05/2006 (mother Lady Penelope): Red Lion, Doctor Hobbles the 3rd, Little Iroquois&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\nborn 07/22/2006 (mother Noog): Goblin, Reginald, Little Maggie&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\ndied 02/13/2007: Spot\n\ndied 02/21/2007: Fireball&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\nborn 02/05/2007 (mother Noog): Long-ear Johnson&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;...\n\nborn 03/03/2007 (mother Catharina): Asoka, Dark Empress, Rabbitface&quot;</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../exercises/solutions/ch03/ch03s01.html" title="Chapter 3 Exercise Set 1 Solutions"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

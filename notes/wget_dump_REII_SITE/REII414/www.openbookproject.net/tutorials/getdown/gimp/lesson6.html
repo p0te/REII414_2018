@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson 6</title>
+<style type="text/css">
+@import url(gdw.css);
+@import url(lesson.css);
+</style>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body onload="addHeader(); addFooter()">
+<div id="head"></div>
+
+<h1>Lesson 6: Making The Stars Image</h1>
+
+<p>One of the most reocurring pieces of this tutorial is the stars images.
+Lesson 5 is the tutorial that teaches how to create one. This lesson will have
+a lot of what you haven't learned yet - but it's really just meant to show you
+the type of thing you can do with the GIMP, and maybe you can pick up a few
+things along the way.</p>
+
+<p>Start by creating a new document size 1024 px by 768 px. Using the fill
+tool, make the document black.</p>
+
+<div class="source">file &gt;&gt; new &gt;&gt;</div>
+
+<p>In the new document screen, select filters in the top bar. Then select the
+<code>Noise</code> sub-menu, and then select <code>HSV Noise</code>.</p>
+
+<div class="source">Filters
+&gt;&gt; Noise &gt;&gt; HSV Noise</div>
+
+<p>Set the <code>Holdness</code> (the first setting) to 4. Set the
+<code>Hue</code> &amp; <code>Saturation</code> to 0. Set the <code>Value</code> 
+as 190. Click <code>Ok</code>. You should see a few star-like dots appear.</p>
+
+<p>Again in the new document screen (it should be title something like
+<code>*Untitled-1.0</code>), select <code>Colors</code>, then select
+<code>Brightness &amp; Contrast</code>.</p>
+
+<div class="source">Colors &gt;&gt; Brightness &amp; Contrast &gt;&gt;</div>
+
+<p>Set <code>Brightness</code> to <code>-25</code> (<b>negative</b> 25), then
+set <code>Contrast</code> to <code>+55</code> (<b>positive</b> 55).</p>
+
+<p>This should space out the dots a bit.</p>
+
+<p>Now go into the <code>Layers</code> menu, double click on the only layer up
+(probably titled <code>Background</code>), and name the layer
+<code>small stars</code>. These images show what everything should look like at
+this point.</p>
+
+<div class="capt2"><img class="center" src="images/stars_beginning.jpg"
+alt="Stars Creation- Beginning"/>This is what your document screen should look 
+like at this point.</div>
+
+<div class="capt2"><img class="center" src="images/stars_layers_beginning.jpg"
+alt="Stars Creation - Layers - Beginning"/>This is what your layers screen
+should look like at this point</div>
+
+<p>Go to your layers screen. Right click on the <code>small stars</code> layer,
+and select <code>Duplicate Layer</code>. Double click this new layer, and name
+it <code>big stars</code>.</p>
+
+<p>Make sure that the <code>big stars</code> layer is selected. Again go to
+<code>Colors</code>, then <code>Brightness &amp; Contrast</code>. Set
+<code>Brightness</code> to <code>-70</code> (<b>negative</b> 70) and
+<code>Contrast</code> to <code>+40</code> (<b>positive</b> 
+<code>40</code>).</p>
+
+<p>Now we want to enlarge the image. Press Shift-T. There should be a little
+drop down on the right side of the dialogue that comes up, it should say
+<code>pixels</code>, which is the default. Click the drop down, and change the
+value to percent. Set both the width and height to 200 (so we're enlarging the
+width and height by 200%).</p>
+
+<div><img src="images/stars_enlarging.jpg" alt="Stars Enlarging Box"
+class="center" width="250" height="114"/></div>
+
+<p>Now we're going to try to make the stars a bit more visible. In the document
+screen, select <code>Colors</code> then <code>Invert</code>, just so we can see
+the stars slightly better. Then go to <code>Colors</code> then
+<code>Threshold</code>. Click the <code>Auto</code> button. The stars should be 
+a lot more visible now. Invert the colors again to get it back to normal.</p>
+
+<p>Let's get this layer almost back to it's original size. We'll change the
+percent value to <code>53%</code>, since obviously <code>50%</code> of
+<code>200</code> is <code>100</code>. So, press Shift-T, and
+change the height and width to <code>53%</code> (you might have to select
+percent from the drop down menu again).</p>
+
+<p>We'll be using the alignment tool to center the layers.</p>
+
+<p>Click on the alignment tool. Then make sure that <code>big stars</code> is
+the selected layer, and click on the images. The preferences of this tool
+should now become active.</p>
+
+<p>In the tools screen (where the alignment preferences are), click on the drop
+down menu <code>Relative to:</code>, select image. Under the
+<code>Relative to:</code> section (not the <code>Distribute</code> section!),
+click on the two middle buttons.</p>
+
+<p>Now they're centered.</p>
+
+<p>Go to the Layers menu. In the <code>Mode</code> drop down menu, select
+<code>Screen</code>. Now we have a zoom or echo-effect. To avoid this we simply
+rotate the layer by <code>180°</code>.  (<code>Shift+R</code> to use the rotate 
+tool: enter <code>180°</code>).</p>
+
+<p>Here's where you should be so far:</p>
+
+<div><img class="center" src="images/stars_second.jpg"
+alt="Stars Second View"/></div>
+
+<div><img class="center" src="images/stars_layers_second.jpg"
+alt="Stars Layers 2" /></div>
+
+<p>If you haven't yet - SAVE!</p>
+
+<p>Now use the free select tool, and randomly select all around your document.
+Here's what mine looked like:</p>
+
+<div><img class="center" src="images/stars_third.jpg"
+alt="Stars Third View"/></div>
+
+<p>Now, in the document screen, go to the select drop down, then select grow.
+Plug in 8 and hit <code>OK</code>. Now we're going to delete the selected parts
+by simply pressing <code>Delete</code>. If anything is still selected: go to
+<code>Select</code> then <code>None</code>.</p>
+
+<p>Now create a new layer by right clicking in the layers menu, and pressing
+<code>New Layer</code>. Click and drag this layer below the
+<code>small stars</code> layer in the Layers menu. Make sure this layer is
+selected, and fill it black.</p>
+
+<p>Now lets activate our small stars layer. Right click the small stars layer
+in the layers dialog, choose <code>Add alpha channel</code>.</p>
+
+<p>Again use the free selection tool to select some parts of the image by
+random move the selection tool all over the layer, but it should be much less
+than the wild selection in step 7.</p>
+
+<div><img src="images/stars_small.jpg" class="center" alt="Small Stars"/></div>
+
+<p>Go to select, then feather, and put in 50px. Click <code>OK</code>. Then
+delete the selection by pressing delete. The stars should be still visible, but
+some may be less visible or black. If neccessary, go to <code>Select</code> then
+<code>None</code>.</p>
+
+<p>Now we're going to quickly merge everything. Just go to (in the document
+screen): <code>Image</code>, then <code>Merge Visible Layers</code>, then
+<code>Merge</code>.</p>
+
+<p>In the tools menu, select the Clone tool, and, in that tool's preferences,
+select <code>Screen</code> as the mode, then click on the Brush drop down menu,
+and select the Sparks brush. Press Control, and click anywhere in the image
+(preferably an area with a lot of stars). Then bring your mouse over to a
+different point (prefereably an area with few visisble stars), and brush all
+over. It might be hard to tell, but this is just randomizing the stars.</p>
+
+<p>Duplicate the layer; name this <code>Stars glow</code> or something.</p>
+
+<p>We're going to change a lot of settings here. First go to
+<code>Filter</code> then <code>Blur</code> then <code>Gaussian Blur</code>, and 
+set the horizontal to 15 (pixels), the vertical will change automatically.</p>
+
+<p>Now go to <code>Colors</code> and then <code>Color Balance</code>. Select
+shadows in the select list, and set <code>Cyan</code> to
+<code>-100</code>, <code>Magneta</code> to <code>0</code> and
+<code>Yellow</code> to <code>40</code>. Then select Midtone (under Shadow); set <code>Cyan</code> to <code>-100</code>, <code>Magneta</code> to <code>30</code> 
+and <code>Yellow</code> to <code>40</code>. Then select <code>Highlights</code>
+and set <code>Cyan</code> to <code>-100</code>, <code>Magneta</code> to
+<code>30</code> and <code>Yellow</code> to <code>40</code>.</p>
+
+<p>Now in the layers menu, in the <code>Mode</code> drop down, select
+<code>Screen</code>.</p>
+
+<p>Now, let's add some fun. Create a new layer, fill it black. Go to
+<code>Filter</code>, <code>Light and Shadow</code> and then
+<code>Supernova</code>. Having the filter dialog open enter any values you like
+to create you shining star. But don't make it too big for the first time and
+place it in the middle - this is most easily done by setting the drop down menu
+to percent, and then putting 50 as the value for both. Now in the layers menu,
+set the <code>Mode</code> to <code>Addition</code>. Now move the layer around
+to where you want your star. You can duplicate it or scale it or whatever.</p>
+
+<p>Optional: You can add some more color if you like. Make another layer, fill
+it black, add a supernova - but this time change the color. When you do so:
+notice the first two numberic values: <code>H</code> and <code>S</code>. Copy
+them down - don't forget them! Set the mode to addition (after you've added the
+supernova) and then go to the stars glow layer. Select an area, go to
+<code>Colors</code> then <code>Colorize</code> - and plug in those values,
+change the lightness to whatever you like.</p>
+
+<div class="capt2"><img src="images/stars_final.jpg" alt="Final Stars Image"
+class="center"/>Final Stars Image</div>
+
+
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+</li>
+
+<li>
+</li>
+</ol>
+</div>
+
+<footer>
+<hr>
+<p>Congratulations, you have finished Lesson 6;</p>
+<p><a href="lesson7.html">next lesson</a> |
+<a href="index.html">home page</a></p>
+<div id="foot"></div>
+</footer>
+
+</body>
+</html>

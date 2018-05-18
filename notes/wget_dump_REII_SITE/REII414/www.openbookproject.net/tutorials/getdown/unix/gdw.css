@@ -1,0 +1,95 @@
+/* Import the CSS button style */
+@import url(button.css);
+
+/* General Content */
+body {
+    color: #000;
+    margin: 50px 50px 50px 50px;
+}
+p {
+    text-align: justify;
+}
+p, li {
+    font-size: large;
+}
+h1, h2, h3 {
+    text-align: center;
+}
+h1, h2 {
+    color: #007;
+}
+h3 {
+    color: #77F;
+}
+h2, h3 {
+    font-size: x-large;
+}
+img {
+    border: 0;
+}
+a {
+    text-decoration: none;
+    color: #00A;
+}
+a:visited {
+    color: #007;
+}
+a:hover {
+    color: #FFF;
+    background-color: #33A;
+    text-decoration: none;
+}
+dd {
+    margin-top: 3px;
+    margin-bottom: 10px;
+}
+
+/* Top section and navigation */
+header {
+    display: block;
+    margin: -35px -25px 0px -25px;
+    border: 2px solid #000;
+    text-align: center;
+}
+header h1 {
+    font-size: 36px;
+    color: #007;
+    padding: 5px 1px;
+}
+header nav {
+    display: table;
+    width: 100%;
+    background-color: #5B5C5C;
+}
+header nav a {
+    display: table-cell;
+    color: #FFF;
+    text-align: center;
+    font: bold 12pt/24px sans-serif;
+}
+header nav a:visited {
+    color: #FFF;
+    text-decoration: none;
+}
+header nav a:hover {
+    color: #FF0;
+    text-decoration: none;
+}
+header p {
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: #006;
+    color: #AAF;
+    font: bold 12pt/24px serif;
+    text-align: center;
+}
+
+/* Bottom section and navigation */
+footer p {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+footer p.button {
+    margin-top: 30px;
+}

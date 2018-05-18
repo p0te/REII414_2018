@@ -1,0 +1,861 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>9. Functional Programming &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="10. Searching" href="ch10.html" />
+    <link rel="prev" title="8. HTTP requests" href="ch08.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch10.html" title="10. Searching"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch08.html" title="8. HTTP requests"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="functional-programming">
+<span id="functional-programming-chapter"></span><h1>9. Functional Programming<a class="headerlink" href="#functional-programming" title="Permalink to this headline">¶</a></h1>
+<p>As programs get bigger, they also become more complex and harder to understand.
+We all think ourselves pretty clever, of course, but we are mere human beings,
+and even a moderate amount of chaos tends to baffle us. And then it all goes
+downhill. Working on something you do not really understand is a bit like
+cutting random wires on those time-activated bombs they always have in movies.
+If you are lucky, you might get the right one ― especially if you are the hero
+of the movie and strike a suitably dramatic pose ― but there is always the
+possibility of blowing everything up.</p>
+<p>Admittedly, in most cases, breaking a program does not cause any large
+explosions. But when a program, by someone&#8217;s ignorant tinkering, has
+degenerated into a ramshackle mass of errors, reshaping it into something
+sensible is a terrible labor ― sometimes you might just as well start over.</p>
+<p>Thus, the programmer is always looking for ways to keep the complexity of his
+programs as low as possible. An important way to do this is to try and make
+code more abstract. When writing a program, it is easy to get sidetracked into
+small details at every point. You come across some little issue, and you deal
+with it, and then proceed to the next little problem, and so on. This makes the
+code read like a grandmother&#8217;s tale.</p>
+<blockquote>
+<div>Yes, dear, to make pea soup you will need split peas, the dry kind.  And
+you have to soak them at least for a night, or you will have to cook them
+for hours and hours. I remember one time, when my dull son tried to make
+pea soup. Would you believe he hadn&#8217;t soaked the peas? We almost broke our
+teeth, all of us. Anyway, when you have soaked the peas, and you&#8217;ll want
+about a cup of them per person, and pay attention because they will expand
+a bit while they are soaking, so if you aren&#8217;t careful they will spill out
+of whatever you use to hold them, so also use plenty water to soak in, but
+as I said, about a cup of them, when they are dry, and after they are
+soaked you cook them in four cups of water per cup of dry peas. Let it
+simmer for two hours, which means you cover it and keep it barely cooking,
+and then add some diced onions, sliced celery stalk, and maybe a carrot or
+two and some ham. Let it all cook for a few minutes more, and it is ready
+to eat.</div></blockquote>
+<p>Another way to describe this recipe:</p>
+<blockquote>
+<div>Per person: one cup dried split peas, half a chopped onion, half a carrot,
+a celery stalk, and optionally ham.  Soak peas overnight, simmer them for
+two hours in four cups of water (per person), add vegetables and ham, and
+cook for ten more minutes.</div></blockquote>
+<p>This is shorter, but if you don&#8217;t know how to soak peas you&#8217;ll surely screw up
+and put them in too little water. But how to soak peas can be looked up, and
+that is the trick. If you assume a certain basic knowledge in the audience, you
+can talk in a language that deals with bigger concepts, and express things in a
+much shorter and clearer way. This, more or less, is what abstraction is.</p>
+<p>How is this far-fetched recipe story relevant to programming? Well, obviously,
+the recipe is the program. Furthermore, the basic knowledge that the cook is
+supposed to have corresponds to the functions and other constructs that are
+available to the programmer. If you remember the introduction of this book,
+things like <tt class="docutils literal"><span class="pre">while</span></tt> make it easier to build loops, and in
+<a class="reference internal" href="ch03.html#objects-and-arrays-chapter"><em>Data structures: Objects and Arrays</em></a> we wrote some simple functions in order to
+make other functions shorter and more straightforward.  Such tools, some of
+them made available by the language itself, others built by the programmer, are
+used to reduce the amount of uninteresting details in the rest of the program,
+and thus make that program easier to work with.</p>
+<hr class="docutils" />
+<p>Functional programming, which is the subject of this chapter, produces
+abstraction through clever ways of combining functions. A programmer armed with
+a repertoire of fundamental functions and, more importantly, the knowledge on
+how to use them, is much more effective than one who starts from scratch.
+Unfortunately, a standard JavaScript environment comes with deplorably few
+essential functions, so we have to write them ourselves or, which is often
+preferable, make use of somebody else&#8217;s code (more on that in
+<a class="reference internal" href="ch12.html#modularity-chapter"><em>Modularity</em></a>).</p>
+<p>There are other popular approaches to abstraction, most notably object-oriented
+programming, the subject of <a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a>.</p>
+<hr class="docutils" />
+<p>One ugly detail that, if you have any good taste at all, must be starting to
+bother you is the endlessly repeated <tt class="docutils literal"><span class="pre">for</span></tt> loop going over an array: <tt class="docutils literal"><span class="pre">for</span>
+<span class="pre">(var</span> <span class="pre">i</span> <span class="pre">=</span> <span class="pre">0;</span> <span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">something.length;</span> <span class="pre">i++)</span> <span class="pre">...</span></tt>.  Can this be abstracted?</p>
+<p>The problem is that, whereas most functions just take some values, combine
+them, and return something, such a loop contains a piece of code that it must
+execute. It is easy to write a function that goes over an array and prints out
+every element:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">printArray</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>But what if we want to do something else than print? Since &#8220;doing something&#8221;
+can be represented as a function, and functions are also values, we can pass
+our action as a function value:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">forEach</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">action</span><span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="nx">forEach</span><span class="p">([</span><span class="s2">&quot;Wampeter&quot;</span><span class="p">,</span> <span class="s2">&quot;Foma&quot;</span><span class="p">,</span> <span class="s2">&quot;Granfalloon&quot;</span><span class="p">],</span> <span class="nx">alert</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>And by making use of an anonymous function, something just like a <tt class="docutils literal"><span class="pre">for</span></tt> loop
+can be written with less useless details:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">numbers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">numbers</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">total</span> <span class="o">+=</span> <span class="nx">number</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">total</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">sum</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]));</span>
+</pre></div>
+</div>
+<p>Note that the variable <tt class="docutils literal"><span class="pre">total</span></tt> is visible inside the anonymous function
+because of the lexical scoping rules. Also note that this version is hardly
+shorter than the <tt class="docutils literal"><span class="pre">for</span></tt> loop and requires a rather clunky <tt class="docutils literal"><span class="pre">});</span></tt> at its end ―
+the brace closes the body of the anonymous function, the parenthesis closes the
+function call to <tt class="docutils literal"><span class="pre">forEach</span></tt>, and the semicolon is needed because this call is
+a statement.</p>
+<p>You do get a variable bound to the current element in the array, <tt class="docutils literal"><span class="pre">number</span></tt>, so
+there is no need to use <tt class="docutils literal"><span class="pre">numbers[i]</span></tt> anymore, and when this array is created
+by evaluating some expression, there is no need to store it in a variable,
+because it can be passed to <tt class="docutils literal"><span class="pre">forEach</span></tt> directly.</p>
+<p>The cat-code in <cite>objects_and_arrays_chapter</cite> contains a piece like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">paragraphs</span> <span class="o">=</span> <span class="nx">mailArchive</span><span class="p">[</span><span class="nx">mail</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">paragraphs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="nx">handleParagraph</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>This can now be written as...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">forEach</span><span class="p">(</span><span class="nx">mailArchive</span><span class="p">[</span><span class="nx">mail</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">),</span> <span class="nx">handleParagraph</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>On the whole, using more abstract (or &#8216;higher level&#8217;) constructs results in
+more information and less noise: The code in <tt class="docutils literal"><span class="pre">sum</span></tt> reads &#8216;<em>for each number in
+numbers add that number to the total</em>&#8216;, instead of...  &#8220;<em>there is this variable
+that starts at zero, and it counts upward to the length of the array called
+numbers, and for every value of this variable we look up the corresponding
+element in the array and add this to the total</em>&#8221;.</p>
+<hr class="docutils" />
+<p>What <tt class="docutils literal"><span class="pre">forEach</span></tt> does is take an algorithm, in this case &#8216;going over an array&#8217;,
+and abstract it. The &#8216;gaps&#8217; in the algorithm, in this case, what to do for each
+of these elements, are filled by functions which are passed to the algorithm
+function.</p>
+<p>Functions that operate on other functions are called higher-order functions. By
+operating on functions, they can talk about actions on a whole new level. The
+<tt class="docutils literal"><span class="pre">makeAddFunction</span></tt> function from <a class="reference internal" href="ch02.html#functions-chapter"><em>Functions</em></a> is also a
+higher-order function.  Instead of taking a function value as an argument, it
+produces a new function.</p>
+<p>Higher-order functions can be used to generalise many algorithms that regular
+functions can not easily describe. When you have a repertoire of these
+functions at your disposal, it can help you think about your code in a clearer
+way: Instead of a messy set of variables and loops, you can decompose
+algorithms into a combination of a few fundamental algorithms, which are
+invoked by name, and do not have to be typed out again and again.</p>
+<p>Being able to write <em>what</em> we want to do instead of <em>how</em> we do it means we are
+working at a higher level of abstraction. In practice, this means shorter,
+clearer, and more pleasant code.</p>
+<hr class="docutils" />
+<p>Another useful type of higher-order function <em>modifies</em> the function value it
+is given:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">negate</span><span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">!</span><span class="nx">func</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">isNotNaN</span> <span class="o">=</span> <span class="nx">negate</span><span class="p">(</span><span class="nb">isNaN</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">isNotNaN</span><span class="p">(</span><span class="kc">NaN</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The function returned by <tt class="docutils literal"><span class="pre">negate</span></tt> feeds the argument it is given to the
+original function <tt class="docutils literal"><span class="pre">func</span></tt>, and then negates the result. But what if the
+function you want to negate takes more than one argument? You can get access to
+any arguments passed to a function with the <tt class="docutils literal"><span class="pre">arguments</span></tt> array, but how do you
+call a function when you do not know how many arguments you have?</p>
+<p>Functions have a method called <tt class="docutils literal"><span class="pre">apply</span></tt>, which is used for situations like
+this. It takes two arguments. The role of the first argument will be discussed
+in <a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a>, for now we just use <tt class="docutils literal"><span class="pre">null</span></tt> there. The second argument
+is an array containing the arguments that the function must be applied to.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]));</span>
+
+<span class="kd">function</span> <span class="nx">negate</span><span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">!</span><span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Unfortunately, on the Internet Explorer browser a lot of built-in functions,
+such as <tt class="docutils literal"><span class="pre">alert</span></tt>, are not <em>really</em> functions... or something. They report
+their type as <tt class="docutils literal"><span class="pre">&quot;object&quot;</span></tt> when given to the <tt class="docutils literal"><span class="pre">typeof</span></tt> operator, and they do
+not have an <tt class="docutils literal"><span class="pre">apply</span></tt> method. Your own functions do not suffer from this, they
+are always real functions.</p>
+<hr class="docutils" />
+<p>Let us look at a few more basic algorithms related to arrays. The <tt class="docutils literal"><span class="pre">sum</span></tt>
+function is really a variant of an algorithm which is usually called <tt class="docutils literal"><span class="pre">reduce</span></tt>
+or <tt class="docutils literal"><span class="pre">fold</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">reduce</span><span class="p">(</span><span class="nx">combine</span><span class="p">,</span> <span class="nx">base</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">base</span> <span class="o">=</span> <span class="nx">combine</span><span class="p">(</span><span class="nx">base</span><span class="p">,</span> <span class="nx">element</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">base</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">numbers</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">reduce</span><span class="p">(</span><span class="nx">add</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">numbers</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">reduce</span></tt> combines an array into a single value by repeatedly using a function
+that combines an element of the array with a base value. This is exactly what
+<tt class="docutils literal"><span class="pre">sum</span></tt> did, so it can be made shorter by using <tt class="docutils literal"><span class="pre">reduce</span></tt>... except that
+addition is an operator and not a function in JavaScript, so we first had to
+put it into a function.</p>
+<p>The reason <tt class="docutils literal"><span class="pre">reduce</span></tt> takes the function as its first argument instead of its
+last, as in <tt class="docutils literal"><span class="pre">forEach</span></tt>, is partly that this is tradition ― other languages do
+it like that ― and partly that this allows us to use a particular trick, which
+will be discussed at the end of this chapter. It does mean that, when calling
+<tt class="docutils literal"><span class="pre">reduce</span></tt>, writing the reducing function as an anonymous function looks a bit
+weirder, because now the other arguments follow after the function, and the
+resemblance to a normal <tt class="docutils literal"><span class="pre">for</span></tt> block is lost entirely.</p>
+<hr class="docutils" />
+<p>One other generally useful &#8216;fundamental algorithm&#8217; related to arrays is called
+<tt class="docutils literal"><span class="pre">map</span></tt>. It goes over an array, applying a function to every element, just like
+<tt class="docutils literal"><span class="pre">forEach</span></tt>. But instead of discarding the values returned by function, it
+builds up a new array from these values.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">map</span><span class="p">(</span><span class="nx">func</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">func</span><span class="p">(</span><span class="nx">element</span><span class="p">));</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">9.89</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">]));</span>
+</pre></div>
+</div>
+<p>Note that the first argument is called <tt class="docutils literal"><span class="pre">func</span></tt>, not <tt class="docutils literal"><span class="pre">function</span></tt>, this is
+because <tt class="docutils literal"><span class="pre">function</span></tt> is a keyword and thus not a valid variable name.</p>
+<hr class="docutils" />
+<p>There once was, living in the deep mountain forests of Transylvania, a recluse.
+Most of the time, he just wandered around his mountain, talking to trees and
+laughing with birds. But now and then, when the pouring rain trapped him in his
+little hut, and the howling wind made him feel unbearably small, the recluse
+felt an urge to write something, wanted to pour some thoughts out onto paper,
+where they could maybe grow bigger than he himself was.</p>
+<p>After failing miserably at poetry, fiction, and philosophy, the recluse finally
+decided to write a technical book. In his youth, he had done some computer
+programming, and he figured that if he could just write a good book about that,
+fame and recognition would surely follow.</p>
+<p>So he wrote. At first he used fragments of tree bark, but that turned out not
+to be very practical. He went down to the nearest village and bought himself a
+laptop computer. After a few chapters, he realised he wanted to put the book in
+HTML format, in order to put it on his web-page...</p>
+<hr class="docutils" />
+<p>The recluse wanted to have his book in HTML format. At first he just wrote all
+the tags directly into his manuscript, but typing all those less-than and
+greater-than signs made his fingers hurt, and he constantly forgot to write
+<tt class="docutils literal"><span class="pre">&amp;amp;</span></tt> when he needed an <tt class="docutils literal"><span class="pre">&amp;</span></tt>. This gave him a headache. Next, he tried to
+write the book in Microsoft Word, and then save it as HTML. But the HTML that
+came out of that was fifteen times bigger and more complicated than it had to
+be. And besides, Microsoft Word gave him a headache.</p>
+<p>The solution that he eventually came up with was this: He would write the book
+as plain text, following some simple rules about the way paragraphs were
+separated and the way headings looked. Then, he would write a program to
+convert this text into precisely the HTML that he wanted.</p>
+<p>The rules are this:</p>
+<ol class="arabic simple">
+<li>Paragraphs are separated by blank lines.</li>
+<li>A paragraph that starts with a &#8216;%&#8217; symbol is a header. The more
+&#8216;%&#8217; symbols, the smaller the header.</li>
+<li>Inside paragraphs, pieces of text can be emphasised by putting
+them between asterisks.</li>
+<li>Footnotes are written between braces.</li>
+</ol>
+<hr class="docutils" />
+<p>After he had struggled painfully with his book for six months, the recluse had
+still only finished a few paragraphs. At this point, his hut was struck by
+lightning, killing him, and forever putting his writing ambitions to rest. From
+the charred remains of his laptop, I could recover the following file:</p>
+<div class="highlight-python"><div class="highlight"><pre>% The Book of Programming
+
+%% The Two Aspects
+
+Below the surface of the machine, the program moves. Without effort,
+it expands and contracts. In great harmony, electrons scatter and
+regroup. The forms on the monitor are but ripples on the water. The
+essence stays invisibly below.
+
+When the creators built the machine, they put in the processor and the
+memory. From these arise the two aspects of the program.
+
+The aspect of the processor is the active substance. It is called
+Control. The aspect of the memory is the passive substance. It is
+called Data.
+
+Data is made of merely bits, yet it takes complex forms. Control
+consists only of simple instructions, yet it performs difficult
+tasks. From the small and trivial, the large and complex arise.
+
+The program source is Data. Control arises from it. The Control
+proceeds to create new Data. The one is born from the other, the
+other is useless without the one. This is the harmonious cycle of
+Data and Control.
+
+Of themselves, Data and Control are without structure. The programmers
+of old moulded their programs out of this raw substance. Over time,
+the amorphous Data has crystallised into data types, and the chaotic
+Control was restricted into control structures and functions.
+
+%% Short Sayings
+
+When a student asked Fu-Tzu about the nature of the cycle of Data and
+Control, Fu-Tzu replied &#39;Think of a compiler, compiling itself.&#39;
+
+A student asked &#39;The programmers of old used only simple machines and
+no programming languages, yet they made beautiful programs. Why do we
+use complicated machines and programming languages?&#39;. Fu-Tzu replied
+&#39;The builders of old used only sticks and clay, yet they made
+beautiful huts.&#39;
+
+A hermit spent ten years writing a program. &#39;My program can compute
+the motion of the stars on a 286-computer running MS DOS&#39;, he proudly
+announced. &#39;Nobody owns a 286-computer or uses MS DOS anymore.&#39;,
+Fu-Tzu responded.
+
+Fu-Tzu had written a small program that was full of global state and
+dubious shortcuts. Reading it, a student asked &#39;You warned us against
+these techniques, yet I find them in your program. How can this be?&#39;
+Fu-Tzu said &#39;There is no need to fetch a water hose when the house is
+not on fire.&#39;{This is not to be read as an encouragement of sloppy
+programming, but rather as a warning against neurotic adherence to
+rules of thumb.}
+
+%% Wisdom
+
+A student was complaining about digital numbers. &#39;When I take the root
+of two and then square it again, the result is already inaccurate!&#39;.
+Overhearing him, Fu-Tzu laughed. &#39;Here is a sheet of paper. Write down
+the precise value of the square root of two for me.&#39;
+
+Fu-Tzu said &#39;When you cut against the grain of the wood, much strength
+is needed. When you program against the grain of a problem, much code
+is needed.&#39;
+
+Tzu-li and Tzu-ssu were boasting about the size of their latest
+programs. &#39;Two-hundred thousand lines&#39;, said Tzu-li, &#39;not counting
+comments!&#39;. &#39;Psah&#39;, said Tzu-ssu, &#39;mine is almost a *million* lines
+already.&#39; Fu-Tzu said &#39;My best program has five hundred lines.&#39;
+Hearing this, Tzu-li and Tzu-ssu were enlightened.
+
+A student had been sitting motionless behind his computer for hours,
+frowning darkly. He was trying to write a beautiful solution to a
+difficult problem, but could not find the right approach. Fu-Tzu hit
+him on the back of his head and shouted &#39;*Type something!*&#39; The student
+started writing an ugly solution. After he had finished, he suddenly
+understood the beautiful solution.
+
+%% Progression
+
+A beginning programmer writes his programs like an ant builds her
+hill, one piece at a time, without thought for the bigger structure.
+His programs will be like loose sand. They may stand for a while, but
+growing too big they fall apart{Referring to the danger of internal
+inconsistency and duplicated structure in unorganised code.}.
+
+Realising this problem, the programmer will start to spend a lot of
+time thinking about structure. His programs will be rigidly
+structured, like rock sculptures. They are solid, but when they must
+change, violence must be done to them{Referring to the fact that
+structure tends to put restrictions on the evolution of a program.}.
+
+The master programmer knows when to apply structure and when to leave
+things in their simple form. His programs are like clay, solid yet
+malleable.
+
+%% Language
+
+When a programming language is created, it is given syntax and
+semantics. The syntax describes the form of the program, the semantics
+describe the function. When the syntax is beautiful and the semantics
+are clear, the program will be like a stately tree. When the syntax is
+clumsy and the semantics confusing, the program will be like a bramble
+bush.
+
+Tzu-ssu was asked to write a program in the language called Java,
+which takes a very primitive approach to functions. Every morning, as
+he sat down in front of his computer, he started complaining. All day
+he cursed, blaming the language for all that went wrong. Fu-Tzu
+listened for a while, and then reproached him, saying &#39;Every language
+has its own way. Follow its form, do not try to program as if you
+were using another language.&#39;
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>To honour the memory of our good recluse, I would like to finish his
+HTML-generating program for him. A good approach to this problem goes like
+this:</p>
+<ol class="arabic simple">
+<li>Split the file into paragraphs by cutting it at every empty line.</li>
+<li>Remove the &#8216;%&#8217; characters from header paragraphs and mark them as headers.</li>
+<li>Process the text of the paragraphs themselves, splitting them into normal
+parts, emphasised parts, and footnotes.</li>
+<li>Wrap each piece into the correct HTML tags.</li>
+<li>Combine everything into a single HTML document.</li>
+</ol>
+<p>This approach does not allow footnotes inside emphasised text, or vice versa.
+This is kind of arbitrary, but helps keep the example code simple. If, at the
+end of the chapter, you feel like an extra challenge, you can try to revise the
+program to support &#8220;nested&#8221; mark-up.</p>
+<p>The whole manuscript, as a string value, is available on this page by calling
+<tt class="docutils literal"><span class="pre">recluseFile</span></tt> function.</p>
+<hr class="docutils" />
+<p>Step 1 of the algorithm is trivial. A blank line is what you get when you have
+two newlines in a row, and if you remember the <tt class="docutils literal"><span class="pre">split</span></tt> method that strings
+have, which we saw in <cite>objects_and_arrays_chapter</cite>, you will realise that this
+will do the trick:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">paragraphs</span> <span class="o">=</span> <span class="nx">recluseFile</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n\n&quot;</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Found &quot;</span><span class="p">,</span> <span class="nx">paragraphs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="s2">&quot; paragraphs.&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>This is where we can try out the <tt class="docutils literal"><span class="pre">map</span></tt> function we saw earlier.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">paragraphs</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">processParagraph</span><span class="p">,</span>
+                     <span class="nx">recluseFile</span><span class="p">().</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n\n&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>And <em>bang</em>, we have an array of nicely categorised paragraph objects. We are
+getting ahead of ourselves though, we forgot step 3 of the algorithm:</p>
+<blockquote>
+<div>Process the text of the paragraphs themselves, splitting them into
+normal parts, emphasised parts, and footnotes.</div></blockquote>
+<p>Which can be decomposed into:</p>
+<ol class="arabic simple">
+<li>If the paragraph starts with an asterisk, take off the emphasised part and
+store it.</li>
+<li>If the paragraph starts with an opening brace, take off the footnote and
+store it.</li>
+<li>Otherwise, take off the part until the first emphasised part or footnote, or
+until the end of the string, and store it as normal text.</li>
+<li>If there is anything left in the paragraph, start at 1 again.</li>
+</ol>
+<hr class="docutils" />
+<p>We can now wire <tt class="docutils literal"><span class="pre">processParagraph</span></tt> to also split the text inside the
+paragraphs, my version can be modified like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">processParagraph</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">header</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">paragraph</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">paragraph</span> <span class="o">=</span> <span class="nx">paragraph</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="nx">header</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="p">(</span><span class="nx">header</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="s2">&quot;p&quot;</span> <span class="o">:</span> <span class="s2">&quot;h&quot;</span> <span class="o">+</span> <span class="nx">header</span><span class="p">),</span>
+            <span class="nx">content</span><span class="o">:</span> <span class="nx">splitParagraph</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Mapping that over the array of paragraphs gives us an array of paragraph
+objects, which in turn contain arrays of fragment objects. The next thing to do
+is to take out the footnotes, and put references to them in their place.
+Something like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">extractFootnotes</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">footnotes</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">currentNote</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="kd">function</span> <span class="nx">replaceFootnote</span><span class="p">(</span><span class="nx">fragment</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">fragment</span><span class="p">.</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;footnote&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">currentNote</span><span class="o">++</span><span class="p">;</span>
+            <span class="nx">footnotes</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">fragment</span><span class="p">);</span>
+            <span class="nx">fragment</span><span class="p">.</span><span class="nx">number</span> <span class="o">=</span> <span class="nx">currentNote</span><span class="p">;</span>
+            <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;reference&quot;</span><span class="p">,</span> <span class="nx">number</span><span class="o">:</span> <span class="nx">currentNote</span><span class="p">};</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">fragment</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">paragraph</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">replaceFootnote</span><span class="p">,</span>
+                                <span class="nx">paragraph</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="k">return</span> <span class="nx">footnotes</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">replaceFootnote</span></tt> function is called on every fragment. When it gets a
+fragment that should stay where it is, it just returns it, but when it gets a
+footnote, it stores this footnote in the <tt class="docutils literal"><span class="pre">footnotes</span></tt> array, and returns a
+reference to it instead. In the process, every footnote and reference is also
+numbered.</p>
+<hr class="docutils" />
+<p>That gives us enough tools to extract the information we need from the file.
+All that is left now is generating the correct HTML.</p>
+<p>A lot of people think that concatenating strings is a great way to produce
+HTML. When they need a link to, for example, a site where you can play the game
+of Go, they will do:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">&quot;http://www.gokgs.com/&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="s2">&quot;Play Go!&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">linkText</span> <span class="o">=</span> <span class="s2">&quot;&lt;a href=\&quot;&quot;</span> <span class="o">+</span> <span class="nx">url</span> <span class="o">+</span> <span class="s2">&quot;\&quot;&gt;&quot;</span> <span class="o">+</span> <span class="nx">text</span> <span class="o">+</span> <span class="s2">&quot;&lt;/a&gt;&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">linkText</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>(Where <tt class="docutils literal"><span class="pre">a</span></tt> is the tag used to create links in HTML documents.) ... Not only
+is this clumsy, but when the string <tt class="docutils literal"><span class="pre">text</span></tt> happens to include an angular
+bracket or an ampersand, it is also wrong.  Weird things will happen on your
+website, and you will look embarrassingly amateurish. We wouldn&#8217;t want that to
+happen. A few simple HTML-generating functions are easy to write. So let us
+write them.</p>
+<hr class="docutils" />
+<p>The secret to successful HTML generation is to treat your HTML document as a
+data structure instead of a flat piece of text.  JavaScript&#8217;s objects provide a
+very easy way to model this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">linkObject</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span>
+                  <span class="nx">attributes</span><span class="o">:</span> <span class="p">{</span><span class="nx">href</span><span class="o">:</span> <span class="s2">&quot;http://www.gokgs.com/&quot;</span><span class="p">},</span>
+                  <span class="nx">content</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;Play Go!&quot;</span><span class="p">]};</span>
+</pre></div>
+</div>
+<p>Each HTML element contains a <tt class="docutils literal"><span class="pre">name</span></tt> property, giving the name of the tag it
+represents. When it has attributes, it also contains an <tt class="docutils literal"><span class="pre">attributes</span></tt>
+property, which contains an object in which the attributes are stored. When it
+has content, there is a <tt class="docutils literal"><span class="pre">content</span></tt> property, containing an array of other
+elements contained in this element. Strings play the role of pieces of text in
+our HTML document, so the array <tt class="docutils literal"><span class="pre">[&quot;Play</span> <span class="pre">Go!&quot;]</span></tt> means that this link has only
+one element inside it, which is a simple piece of text.</p>
+<p>Typing in these objects directly is clumsy, but we don&#8217;t have to do that. We
+provide a shortcut function to do this for us:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">tag</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">content</span><span class="p">,</span> <span class="nx">attributes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">attributes</span><span class="o">:</span> <span class="nx">attributes</span><span class="p">,</span> <span class="nx">content</span><span class="o">:</span> <span class="nx">content</span><span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note that, since we allow the <tt class="docutils literal"><span class="pre">attributes</span></tt> and <tt class="docutils literal"><span class="pre">content</span></tt> of an element to
+be undefined if they are not applicable, the second and third argument to this
+function can be left off when they are not needed.</p>
+<p><tt class="docutils literal"><span class="pre">tag</span></tt> is still rather primitive, so we write shortcuts for common types of
+elements, such as links, or the outer structure of a simple document:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">link</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nx">text</span><span class="p">],</span> <span class="p">{</span><span class="nx">href</span><span class="o">:</span> <span class="nx">target</span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">htmlDoc</span><span class="p">(</span><span class="nx">title</span><span class="p">,</span> <span class="nx">bodyContent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;head&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nx">title</span><span class="p">])]),</span>
+                        <span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">,</span> <span class="nx">bodyContent</span><span class="p">)]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>When we have created a document, it will have to be reduced to a string. But
+building this string from the data structures we have been producing is very
+straightforward. The important thing is to remember to transform the special
+characters in the text of our document...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">escapeHTML</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">replacements</span> <span class="o">=</span> <span class="p">[[</span><span class="sr">/&amp;/g</span><span class="p">,</span> <span class="s2">&quot;&amp;amp;&quot;</span><span class="p">],</span> <span class="p">[</span><span class="sr">/&quot;/g</span><span class="p">,</span> <span class="s2">&quot;&amp;quot;&quot;</span><span class="p">],</span>
+                        <span class="p">[</span><span class="sr">/&lt;/g</span><span class="p">,</span> <span class="s2">&quot;&amp;lt;&quot;</span><span class="p">],</span> <span class="p">[</span><span class="sr">/&gt;/g</span><span class="p">,</span> <span class="s2">&quot;&amp;gt;&quot;</span><span class="p">]];</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">replacements</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">replace</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">text</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">replace</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">replace</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">text</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">replace</span></tt> method of strings creates a new string in which all occurrences
+of the pattern in the first argument are replaced by the second argument, so
+<tt class="docutils literal"><span class="pre">&quot;Borobudur&quot;.replace(/r/g,</span> <span class="pre">&quot;k&quot;)</span></tt> gives <tt class="docutils literal"><span class="pre">&quot;Bokobuduk&quot;</span></tt>. Don&#8217;t worry about the
+pattern syntax here ― we&#8217;ll get to that in <a class="reference internal" href="ch13.html#regular-expressions-chapter"><em>Regular Expressions</em></a>.
+The <tt class="docutils literal"><span class="pre">escapeHTML</span></tt> function puts the different replacements that have to be
+made into an array, so that it can loop over them and apply them to the
+argument one by one.</p>
+<p>Double quotes are also replaced, because we will also be using this function
+for the text inside the attributes of HTML tags. Those will be surrounded by
+double quotes, and thus must not have any double quotes inside of them.</p>
+<p>Calling replace four times means the computer has to go over the whole string
+four times to check and replace its content. This is not very efficient. If we
+cared enough, we could write a more complex version of this function, something
+that resembles the <tt class="docutils literal"><span class="pre">splitParagraph</span></tt> function we saw earlier, to go over it
+only once. For now, we are too lazy for this. Again,
+<a class="reference internal" href="ch13.html#regular-expressions-chapter"><em>Regular Expressions</em></a> shows a much better way to do this.</p>
+<hr class="docutils" />
+<p>To turn an HTML element object into a string, we can use a recursive function
+like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">renderHTML</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">pieces</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="kd">function</span> <span class="nx">renderAttributes</span><span class="p">(</span><span class="nx">attributes</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">attributes</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="k">in</span> <span class="nx">attributes</span><span class="p">)</span>
+            <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;=\&quot;&quot;</span> <span class="o">+</span>
+                        <span class="nx">escapeHTML</span><span class="p">(</span><span class="nx">attributes</span><span class="p">[</span><span class="nx">name</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;\&quot;&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nx">result</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">render</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Text node</span>
+        <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">element</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">pieces</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">escapeHTML</span><span class="p">(</span><span class="nx">element</span><span class="p">));</span>
+        <span class="p">}</span>
+        <span class="c1">// Empty tag</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">element</span><span class="p">.</span><span class="nx">content</span> <span class="o">||</span> <span class="nx">element</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">pieces</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="nx">element</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span>
+                        <span class="nx">renderAttributes</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">attributes</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&gt;&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="c1">// Tag with content</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">pieces</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&lt;&quot;</span> <span class="o">+</span> <span class="nx">element</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span>
+                        <span class="nx">renderAttributes</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">attributes</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">);</span>
+            <span class="nx">forEach</span><span class="p">(</span><span class="nx">element</span><span class="p">.</span><span class="nx">content</span><span class="p">,</span> <span class="nx">render</span><span class="p">);</span>
+                <span class="nx">pieces</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;&lt;/&quot;</span> <span class="o">+</span> <span class="nx">element</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">render</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">pieces</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note the <tt class="docutils literal"><span class="pre">in</span></tt> loop that extracts the properties from a JavaScript object in
+order to make HTML tag attributes out of them. Also note that in two places,
+arrays are being used to accumulate strings, which are then joined into a
+single result string. Why didn&#8217;t I just start with an empty string and then add
+the content to it with the <tt class="docutils literal"><span class="pre">+=</span></tt> operator?</p>
+<p>It turns out that creating new strings, especially big strings, is quite a lot
+of work. Remember that JavaScript string values never change. If you
+concatenate something to them, a new string is created, the old ones stay
+intact. If we build up a big string by concatenating lots of little strings,
+new strings have to be created at every step, only to be thrown away when the
+next piece is concatenated to them. If, on the other hand, we store all the
+little strings in an array and then join them, only <em>one</em> big string has to be
+created.</p>
+<hr class="docutils" />
+<p>So, let us try out this HTML generating system...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">renderHTML</span><span class="p">(</span><span class="nx">link</span><span class="p">(</span><span class="s2">&quot;http://www.nedroid.com&quot;</span><span class="p">,</span> <span class="s2">&quot;Drawings!&quot;</span><span class="p">)));</span>
+</pre></div>
+</div>
+<p>That seems to work.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="p">[</span><span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;h1&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;The Test&quot;</span><span class="p">]),</span>
+            <span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;Here is a paragraph, and an image...&quot;</span><span class="p">]),</span>
+            <span class="nx">image</span><span class="p">(</span><span class="s2">&quot;img/sheep.png&quot;</span><span class="p">)];</span>
+<span class="kd">var</span> <span class="nx">doc</span> <span class="o">=</span> <span class="nx">htmlDoc</span><span class="p">(</span><span class="s2">&quot;The Test&quot;</span><span class="p">,</span> <span class="nx">body</span><span class="p">);</span>
+<span class="nx">viewHTML</span><span class="p">(</span><span class="nx">renderHTML</span><span class="p">(</span><span class="nx">doc</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Now, I should probably warn you that this approach is not perfect.  What it
+actually renders is XML, which is similar to HTML, but more structured. In
+simple cases, such as the above, this does not cause any problems. However,
+there are some things, which are correct XML, but not proper HTML, and these
+might confuse a browser that is trying to show the documents we create. For
+example, if you have an empty <tt class="docutils literal"><span class="pre">script</span></tt> tag (used to put JavaScript into a
+page) in your document, browsers will not realise that it is empty and think
+that everything after it is JavaScript. (In this case, the problem can be fixed
+by putting a single space inside of the tag, so that it is no longer empty, and
+gets a proper closing tag.)</p>
+<hr class="docutils" />
+<p>We are almost finished. The only thing that we do not have a rendering function
+for yet are the footnotes. To make the <tt class="docutils literal"><span class="pre">&quot;#footnote1&quot;</span></tt> links work, an anchor
+must be included with every footnote. In HTML, an anchor is specified with an
+<tt class="docutils literal"><span class="pre">a</span></tt> element, which is also used for links. In this case, it needs a <tt class="docutils literal"><span class="pre">name</span></tt>
+attribute, instead of an <tt class="docutils literal"><span class="pre">href</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">renderFootnote</span><span class="p">(</span><span class="nx">footnote</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">anchor</span> <span class="o">=</span> <span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="p">[],</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;footnote&quot;</span> <span class="o">+</span> <span class="nx">footnote</span><span class="p">.</span><span class="nx">number</span><span class="p">});</span>
+    <span class="kd">var</span> <span class="nx">number</span> <span class="o">=</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="nx">footnote</span><span class="p">.</span><span class="nx">number</span> <span class="o">+</span> <span class="s2">&quot;] &quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nx">tag</span><span class="p">(</span><span class="s2">&quot;small&quot;</span><span class="p">,</span> <span class="p">[</span><span class="nx">anchor</span><span class="p">,</span> <span class="nx">number</span><span class="p">,</span>
+                                   <span class="nx">footnote</span><span class="p">.</span><span class="nx">content</span><span class="p">])]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, then, is the function which, when given a file in the correct format and
+a document title, returns an HTML document:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">renderFile</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">title</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">paragraphs</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">processParagraph</span><span class="p">,</span> <span class="nx">file</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n\n&quot;</span><span class="p">));</span>
+    <span class="kd">var</span> <span class="nx">footnotes</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">renderFootnote</span><span class="p">,</span>
+                        <span class="nx">extractFootnotes</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">));</span>
+    <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">map</span><span class="p">(</span><span class="nx">renderParagraph</span><span class="p">,</span> <span class="nx">paragraphs</span><span class="p">).</span><span class="nx">concat</span><span class="p">(</span><span class="nx">footnotes</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">renderHTML</span><span class="p">(</span><span class="nx">htmlDoc</span><span class="p">(</span><span class="nx">title</span><span class="p">,</span> <span class="nx">body</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="nx">viewHTML</span><span class="p">(</span><span class="nx">renderFile</span><span class="p">(</span><span class="nx">recluseFile</span><span class="p">(),</span> <span class="s2">&quot;The Book of Programming&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">concat</span></tt> method of an array can be used to concatenate another array to
+it, similar to what the <tt class="docutils literal"><span class="pre">+</span></tt> operator does with strings.</p>
+<hr class="docutils" />
+<p>In the chapters after this one, elementary higher-order functions like <tt class="docutils literal"><span class="pre">map</span></tt>
+and <tt class="docutils literal"><span class="pre">reduce</span></tt> will always be available and will be used by code examples. Now
+and then, a new useful tool is added to this. In <a class="reference internal" href="ch12.html#modularity-chapter"><em>Modularity</em></a>, we
+develop a more structured approach to this set of &#8216;basic&#8217; functions.</p>
+<hr class="docutils" />
+<p>When using higher-order functions, it is often annoying that operators are not
+functions in JavaScript. We have needed <tt class="docutils literal"><span class="pre">add</span></tt> or <tt class="docutils literal"><span class="pre">equals</span></tt> functions at
+several points. Rewriting these every time, you will agree, is a pain. From now
+on, we will assume the existence of an object called <tt class="docutils literal"><span class="pre">op</span></tt>, which contains
+these functions:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">op</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;+&quot;</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span><span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;},</span>
+    <span class="s2">&quot;==&quot;</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span><span class="k">return</span> <span class="nx">a</span> <span class="o">==</span> <span class="nx">b</span><span class="p">;},</span>
+    <span class="s2">&quot;===&quot;</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">){</span><span class="k">return</span> <span class="nx">a</span> <span class="o">===</span> <span class="nx">b</span><span class="p">;},</span>
+    <span class="s2">&quot;!&quot;</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">){</span><span class="k">return</span> <span class="o">!</span><span class="nx">a</span><span class="p">;}</span>
+    <span class="cm">/* and so on */</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>So we can write <tt class="docutils literal"><span class="pre">reduce(op[&quot;+&quot;],</span> <span class="pre">0,</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5])</span></tt> to sum an array. But
+what if we need something like <tt class="docutils literal"><span class="pre">equals</span></tt> or <tt class="docutils literal"><span class="pre">makeAddFunction</span></tt>, in which one
+of the arguments already has a value? In that case we are back to writing a new
+function again.</p>
+<p>For cases like that, something called &#8216;partial application&#8217; is useful. You want
+to create a new function that already knows some of its arguments, and treats
+any additional arguments it is passed as coming after these fixed arguments.
+This can be done by making creative use of the <tt class="docutils literal"><span class="pre">apply</span></tt> method of a function:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">asArray</span><span class="p">(</span><span class="nx">quasiArray</span><span class="p">,</span> <span class="nx">start</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="p">(</span><span class="nx">start</span> <span class="o">||</span> <span class="mi">0</span><span class="p">);</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">quasiArray</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">quasiArray</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">partial</span><span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">fixedArgs</span> <span class="o">=</span> <span class="nx">asArray</span><span class="p">(</span><span class="nx">arguments</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">fixedArgs</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">asArray</span><span class="p">(</span><span class="nx">arguments</span><span class="p">)));</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We want to allow binding multiple arguments at the same time, so the
+<tt class="docutils literal"><span class="pre">asArray</span></tt> function is necessary to make normal arrays out of the
+<tt class="docutils literal"><span class="pre">arguments</span></tt> objects. It copies their content into a real array, so that the
+<tt class="docutils literal"><span class="pre">concat</span></tt> method can be used on it. It also takes an optional second argument,
+which can be used to leave out some arguments at the start.</p>
+<p>Also note that it is necessary to store the <tt class="docutils literal"><span class="pre">arguments</span></tt> of the outer function
+(<tt class="docutils literal"><span class="pre">partial</span></tt>) into a variable with another name, because otherwise the inner
+function can not see them ― it has its own <tt class="docutils literal"><span class="pre">arguments</span></tt> variable, which
+shadows the one of the outer function.</p>
+<p>Now <tt class="docutils literal"><span class="pre">equals(10)</span></tt> can be written as <tt class="docutils literal"><span class="pre">partial(op[&quot;==&quot;],</span> <span class="pre">10)</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nx">partial</span><span class="p">(</span><span class="nx">op</span><span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]));</span>
+</pre></div>
+</div>
+<p>The reason <tt class="docutils literal"><span class="pre">map</span></tt> takes its function argument before its array argument is
+that it is often useful to partially apply map by giving it a function. This
+&#8216;lifts&#8217; the function from operating on a single value to operating on an array
+of values. For example, if you have an array of arrays of numbers, and you want
+to square them all, you do this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">square</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">;}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nx">partial</span><span class="p">(</span><span class="nx">map</span><span class="p">,</span> <span class="nx">square</span><span class="p">),</span> <span class="p">[[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>One last trick that can be useful when you want to combine functions is
+function composition. At the start of this chapter I showed a function
+<tt class="docutils literal"><span class="pre">negate</span></tt>, which applies the boolean <em>not</em> operator to the result of calling a
+function:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">negate</span><span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">!</span><span class="nx">func</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is a special case of a general pattern: call function A, and then apply
+function B to the result. Composition is a common concept in mathematics. It
+can be caught in a higher-order function like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">compose</span><span class="p">(</span><span class="nx">func1</span><span class="p">,</span> <span class="nx">func2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">func1</span><span class="p">(</span><span class="nx">func2</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">));</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">isUndefined</span> <span class="o">=</span> <span class="nx">partial</span><span class="p">(</span><span class="nx">op</span><span class="p">[</span><span class="s2">&quot;===&quot;</span><span class="p">],</span> <span class="kc">undefined</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">isDefined</span> <span class="o">=</span> <span class="nx">compose</span><span class="p">(</span><span class="nx">op</span><span class="p">[</span><span class="s2">&quot;!&quot;</span><span class="p">],</span> <span class="nx">isUndefined</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">isDefined</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">isDefined</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">PIE</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Here we are defining new functions without using the <tt class="docutils literal"><span class="pre">function</span></tt> keyword at
+all. This can be useful when you need to create a simple function to give to,
+for example, <tt class="docutils literal"><span class="pre">map</span></tt> or <tt class="docutils literal"><span class="pre">reduce</span></tt>. However, when a function becomes more
+complex than these examples, it is usually shorter (not to mention more
+efficient) to just write it out with <tt class="docutils literal"><span class="pre">function</span></tt>.</p>
+<div class="section" id="exercises">
+<h2>9.1. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="exercises/ch09/ch09s01.html#ch09s01"><em>Chapter 9 Exercise Set 1</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch10.html" title="10. Searching"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch08.html" title="8. HTTP requests"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

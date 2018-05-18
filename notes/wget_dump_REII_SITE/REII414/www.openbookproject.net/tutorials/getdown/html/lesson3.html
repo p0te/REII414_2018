@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+.blockvsinline {
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+    padding: 25px;
+    border: 1px dotted #888;
+}
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>Elements come in two varieties: <b>block-level</b> elements, which mark up
+larger sections, or <em>blocks</em>, within your document, and <b>inline</b>
+elements, which are for smaller bits, usually contained within one line.</p>
+
+<p>The web browser puts new lines (think <code>Enter</code> key on the
+keyboard) around block level elements so that they appear on their own line.
+</p>
+
+<p>The following source:</p>
+<pre class="source" style="width: 500px;">
+&lt;p&gt;p element&lt;/p&gt;&lt;div&gt;div element&lt;/div&gt;
+&lt;section&gt;section element&lt;/section&gt;
+&lt;b&gt;b element&lt;/b&gt;
+&lt;i&gt;i element&lt;/i&gt;
+&lt;span&gt;span element&lt;/span&gt;
+&lt;code&gt;code element&lt;/code&gt;
+&lt;p&gt;p element&lt;/p&gt;&lt;p&gt;p element&lt;/p&gt;&lt;p&gt;p element&lt;/p&gt;
+</pre>
+
+<p>Renders like this:</p>
+
+<div class="blockvsinline">
+<p>p element</p><div>div element</div>
+<section>section element</section>
+<b>b element</b>
+<i>i element</i>
+<span>span element</span>
+<code>code element</code>
+<p>p element</p><p>p element</p><p>p element</p>
+</div>
+
+<p>Notice that the block-level elements render on their own line (with extra
+space below the <code>p</code> element), while the the inline elements
+are all on the same line.</p>
+
+<p>In older versions of html, the distinction between block-level and inline
+elements was a firm part of the html language, together with a rule that
+inline elements had to be enclosed inside a block-level element to be
+syntactically valid.</p>
+
+<p>With html 5, this distiction is greatly relaxed, and it is possible to
+use <a href="http://en.wikipedia.org/wiki/Cascading_Style_Sheets">CSS</a>
+to convert a given element to either block-level or inline.</p>
+
+
+<h2>Block-level Elements</h2>
+
+<p>Here are some of the most common (and most useful) elements with
+default block-level behavior:</p>
+
+<div class="source">
+<dl>
+ <dt>&lt;p&gt;&lt;/p&gt;</dt>
+ <dd>Paragraph. Probably the most common tag you will use, it marks the
+ beginning and end of a paragraph of text.</dd>
+
+ <dt>&lt;pre&gt;&lt;/pre&gt;</dt>
+ <dd>Preformatted text. This tag is good for examples of source code.</dd>
+
+ <dt>&lt;div&gt;&lt;/div&gt;</dt>
+ <dd>Block-level logical division. No default attributes.</dd>
+
+ <dt>&lt;h1&gt;&lt;/h1&gt;...&lt;h6&gt;&lt;/h6&gt;</dt>
+ <dd>All of the heading tags are block-level tags.</dd>
+</dl>
+
+<hr>
+<p>The following elements are new in HTML 5:</p>
+<dl>
+ <dt>&lt;header&gt;&lt;/header&gt;</dt>
+ <dd>Marks the top section, or header, of a web page.</dd>
+ 
+ <dt>&lt;footer&gt;&lt;/footer&gt;</dt>
+ <dd>Marks the bottom section, or footer, of a web page.</dd>
+
+ <dt>&lt;nav&gt;&lt;/nav&gt;</dt>
+ <dd>Used for marking a navigation section.</dd> 
+ 
+ <dt>&lt;main&gt;&lt;/main&gt;</dt>
+ <dd>Marks the main content area of the body of a web page.</dd>
+
+ <dt>&lt;section&gt;&lt;/section&gt;</dt>
+ <dd>Used for enclosing other elements that make up a section of a web page.
+
+ <dt>&lt;article&gt;&lt;/article&gt;</dt>
+ <dd>Used for enclosing a self-contained composition within a web page.
+ </dd> 
+</dl>
+</div>
+
+
+<h2>Inline Elements</h2>
+
+<p>Here are some of the most common inline elements together with their uses
+and default attributes:</p>
+
+<div class="source">
+<dl>
+ <dt>&lt;strong&gt;&lt;/strong&gt;</dt>
+ <dd>Used for text that you want to stand out, like <strong>this</strong>.</dd>
+
+ <dt>&lt;b&gt;&lt;/b&gt;</dt>
+ <dd>Bolded text, like <b>this</b>.</dd>
+
+ <dt>&lt;em&gt;&lt;/em&gt;</dt>
+
+ <dd>Gives emphasis to the encoded text, like <em>this</em>.</dd>
+
+ <dt>&lt;i&gt;&lt;/i&gt;</dt>
+ <dd>Italicized text, like <i>this</i>.</dd>
+
+ <dt>&lt;q&gt;&lt;/q&gt;</dt>
+ <dd>Marks the beginning and ending of a quotation, like <q>this</q>.</dd>
+
+ <dt>&lt;code&gt;&lt;/code&gt;</dt>
+ <dd>Indicates that the enclosed text is source code, like <code>this</code>.
+ </dd>
+
+ <dt>&lt;kbd&gt;&lt;/kbd&gt;</dt>
+ <dd>Indicates enclosed text is input by the user from a keyboard, like
+ <kbd>this</kbd>.</dd>
+
+ <dt>&lt;sup&gt;&lt;/sup&gt;</dt>
+ <dd>Encloses superscript text, like <sup>this</sup>.</dd>
+
+ <dt>&lt;sub&gt;&lt;/sub&gt;</dt>
+ <dd>Encloses subscript text, like <sub>this</sub>.</dd>
+
+ <dt>&lt;a&gt;&lt;/a&gt;</dt>
+ <dd>Sets a hyperlink to another document or location within a document.<br>
+ (see <a href="lesson6.html">Lesson 6</a>).</dd>
+
+ <dt>&lt;span&gt;&lt;/span&gt;</dt>
+ <dd>Inline logical division. No default attributes.</dd>
+</dl>
+</div>
+
+
+<h2>Object Elements</h2>
+
+<p>These three elements are special, because they insert objects rather than
+enclosing text. Since there is nothing to <q>contain</q>, they do not have a
+closing tag:</p>
+
+<div class="source">
+<dl>
+ <dt>&lt;br&gt;</dt>
+ <dd>Line break. This tag forces a line return.</dd>
+
+ <dt>&lt;img&gt;</dt>
+ <dd>Image tag. Used to display an image.
+ (see <a href="lesson7.html">Lesson 7</a>).</dd>
+
+ <dt>&lt;hr&gt;</dt>
+ <dd>Horizontal rule. Places a horizontal line across the page.</dd>
+</dl>
+</div>
+
+
+<h2>Special Characters</h2>
+
+<p>Since <code>&lt;</code>, <code>&gt;</code>, and <code>&amp;</code> have
+special meanings in HTML, you can't use them to represent themselves in an
+HTML document. When you do want to use them literally (as in HTML source
+examples), you need to mark them up with special codes:</p>
+
+<table class="source" style="width: 400px;">
+<tr>
+ <th style="text-align: left; width: 200px;">MARK-UP</th>
+ <th style="text-align: left; width: 200px;">RENDER</th>
+</tr>
+<tr>
+ <td>&amp;lt;</td><td>&lt;</td>
+</tr>
+<tr>
+ <td>&amp;gt;</td><td>&gt;</td>
+</tr>
+<tr>
+ <td>&amp;amp;</td><td>&amp;</td>
+</tr>
+<tr>
+ <td>&amp;nbsp;</td><td>non-breaking space</td>
+</tr>
+</table>
+
+<p>The markup for an example like this:</p>
+
+<pre class="source">
+&lt;h2&gt;Using Special Characters to Mark-up HTML Source&lt;/h2&gt;
+&lt;p&gt;
+Marking-up HTML source requires special characters to replace
+occurances of &lt;, &gt;, and &amp;.
+&lt;/p&gt;
+</pre>
+
+<p>looks like this:</p>
+
+<pre class="source">
+&amp;lt;h2&amp;gt;Using Special Characters to Mark-up HTML Source&amp;lt;/h2&amp;gt;
+&amp;lt;p&amp;gt;
+Marking-up HTML source requires special characters to replace
+occurances of &amp;lt;, &amp;gt;, and &amp;amp;.
+&amp;lt;/p&amp;gt;
+</pre>
+
+<p>It's not pretty, but it works.</p>
+</section>
+
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Copy <code>minimal_page.html</code> to a page called
+  <code>block.html</code> and do the following in the new document:
+  <ul>
+    <li>Set the title and a top level heading (&lt;h1&gt;&lt;/h1&gt;) to
+    <q>Block-level Elements</q>.</li>
+
+    <li>Create a subsection (with an <code>&lt;h2&gt;&lt;/h2&gt;</code>
+    element) labeled <q>Text in a Preformatted Element</q>.  Copy and paste the
+    following text between <code>&lt;pre&gt;&lt;/pre&gt;</code> tags:
+    <pre class="source">
+This             text
+
+        spans              several
+   lines
+
+                     and             has             lots
+  of         extra              
+
+whitespace.
+    </pre>
+    </li>
+    <li>Add a paragraph element (in <code>&lt;p&gt;&lt;/p&gt;</code> tags)
+    with text describing what you see above.</li>
+
+    <li>Create a subsection below the paragraph you created in the previous
+    exercise labeled <q>Same Text in a Paragraph Element</q>.  Copy and paste
+    the same text from the previous exercise, but put it inside a paragraph
+    element (<code>&lt;p&gt;&lt;/p&gt;</code>) instead of a preformatted
+    (<code>&lt;pre&gt;&lt;/pre&gt;</code>) element.</li>
+    
+    <li>View your page in your browser.  Add a new paragraph element with
+    text describing what you see.</li>
+
+    <li>Add two more paragraphs of any text you like (this would be a great
+    time to learn about 
+    <a href="http://en.wikipedia.org/wiki/Lorum_ipsum">lorem ipsum</a> text and
+    to use it here).
+    Put these two paragraphs inside a division
+    (<code>&lt;div&gt;&lt;/div&gt;</code>) element.  Look at the page in the
+    browser again.  Has anything changed? Add one more paragraph describing
+    the effect of the <code>div</code>.
+    </li>
+  </ul>
+  Your completed <code>block.html</code> page should look something like
+  <a href="screenshots/lesson3/block_html.png">this</a>.</li>
+
+  <li>Copy <code>minimal_page.html</code> to a page called
+  <code>inline.html</code> and do the following:
+  <ul>
+    <li>Set the title and a top level heading to <q>Inline Elements</q>.</li>
+    
+    <li>Add several paragraphs to the document, with examples of <i>each
+    in-line element</i> from the lesson (except for
+    <code>&lt;a&gt;&lt;/a&gt;</code>, which will be introduced in lesson 6).
+    Include text describing the use of each element where it is used.</li>
+
+    <li>Add a paragraph describing what happens to text that is included in
+    <code>span</code> elements.</li>
+  </ul>
+  Your completed <code>inline.html</code> page should look something like
+  <a href="screenshots/lesson3/inline_html.png">this</a>.</li>
+
+  <li>Copy <code>minimal_page.html</code> to a page called
+  <code>object.html</code>.  Set the title and a top level heading to
+  <q>Object Elements</q>.  Experiment with <code>&lt;br&gt;</code> and
+  <code>&lt;hr&gt;</code> elemements.  Add a paragraph to this document
+  describing what they do. Use a few more paragraphs of lorem ipsum and
+  seperate them with horizontal rules (<code>&lt;hr&gt;</code>) and line
+  breaks (<code>&lt;br&gt;</code>). Your completed <code>object.html</code>
+  might look something like
+  <a href="screenshots/lesson3/object_html.png">this</a>.
+  </li>
+
+  <li>Copy <code>minimal_page.html</code> to a page called
+  <code>special.html</code>.  Set the title and a top level heading to
+  <q>Special Characters</q>. Add the following paragraph to your document: 
+  <p>
+  <img src="resources/special_paragraph.png" alt="Image of paragraph with
+  special characters">
+  </p>
+  You will need to use the special characters to do this.
+  </li>
+
+  <li>Check your page on with the
+  <a href="http://validator.w3.org">W3C Markup Validation Service</a>.  If
+  your page has syntax errors, fix them.</li>
+</ol>
+</section>
+
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

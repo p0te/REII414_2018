@@ -1,0 +1,23 @@
+select distinct PROJ_NAME, sum(CHG_HOUR*HOURS) from DATA_ORG_1NF group by PROJ_NAME
+   
+
+select EMP_NAME, sum(HOURS) from DATA_ORG_1NF group by EMP_NUM having count(*) > 1 
+   
+
+select EMP_NAME from DATA_ORG_1NF group by EMP_NUM order by sum(CHG_HOUR*HOURS) desc limit 1
+    
+
+select distinct Name, count(*) t  from Artist, Album where Album.ArtistId = Artist.ArtistId group by Album.ArtistId order by t desc limit 1
+  
+
+select Genre.Name, sum(Milliseconds) t from Genre, Track where Genre.GenreId = Track.GenreId group by Track.GenreId order by t desc limit 1
+  
+
+select Artist.Name, Album.Title, sum(UnitPrice) t from Album, Track, Artist where Album.AlbumId = Track.AlbumId and Album.ArtistId = Artist.ArtistId group by Track.AlbumId order by t desc limit 1
+  
+
+select  distinct Track.AlbumId, count(*) t, Title, Artist.Name from Track, Album, Artist where Track.AlbumId = Album.AlbumId and Album.ArtistId = Artist.ArtistId group by Track.AlbumId order by t desc limit 1
+ 
+
+select * from Album, Artist, Genre, MediaType, Track where Track.AlbumId = Album.AlbumId and Album.ArtistId = Artist.ArtistId and Track.MediaTypeId = MediaType.MediaTypeId and Track.GenreId = Genre.GenreId
+  

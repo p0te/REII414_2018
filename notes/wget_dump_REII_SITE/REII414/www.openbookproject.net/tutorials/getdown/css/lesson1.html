@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>
+<a href="http://en.wikipedia.org/wiki/CSS">Cascading Style Sheets</a> (CSS) is
+a <a href="http://en.wikipedia.org/wiki/Style_sheet_language">style language</a>
+developed by the
+<a href="http://en.wikipedia.org/wiki/World_Wide_Web_Consortium">World Wide Web
+Consortium</a> in the mid 1990s for use primarily with
+<a href="http://en.wikipedia.org/wiki/Web_page">web pages</a>.
+</p>
+<p>
+The purpose of CSS is to seperate the <i>presentation</i> of a document
+(i.e. its look and format) from the document's structure, expressed in HTML.
+</p>
+<p>
+CSS is a seperate language from HTML, with its own syntax and semantics.
+Modern <a href="http://en.wikipedia.org/wiki/Web_browser">web browsers</a> can
+read CSS and apply it to web pages as they render them.
+</p>
+
+<h2>A First Look At CSS</h2>
+<p>
+Here is a screen shot of a small web page styled with CSS:
+</p>
+<p style="text-align: center;">
+<img src="images/lesson1/css_properties_with_css.png"
+alt="CSS Properties with CSS">
+</p>
+<p>
+and here is a screen shot of the same web page unstyled:
+</p>
+<p style="text-align: center;">
+<img src="images/lesson1/css_properties_no_css.png"
+alt="CSS Properties without CSS">
+</p>
+
+
+<h2>Adding Style to a Web Page</h2>
+<p>
+Here is a <i>CSS starter page</i>, which we can use whenever we need a new,
+<q>empty</q>, page:
+</p>
+
+<pre class="source" style="width: 600px;">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;style type="text/css"&gt;
+/* This is a CSS comment. Your style goes below here. */
+
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+<p>
+The only differences between this and the <code>minimal_page.html</code> we
+saw in the <a href="../html/lesson1.html">lesson 1</a> of
+<a href="../html">Getting Down with HTML</a> is the addition of the
+<code>&lt;style type="text/css"&gt;&lt;/style&gt;</code> element between
+the <code>title</code> and the closing <code>head</code> tag, and the
+inclusion of a <b>CSS comment</b> inside the style element.
+</p>
+<p>
+You will put your CSS between the opening and closing <code>style</code> tags.
+</p>
+</section>
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>Download
+<a href="resources/lesson1/css_properties.html">css_properties.html</a> on to
+your computer (in firefox you can mouse over the link, right click, and select
+<q>Save Link As...</q> to download the file).</li>
+
+<li>While keeping the page open in a web browser, open it with your favorite
+<a href="http://en.wikipedia.org/wiki/Text_editor">text editor</a>. You
+now have two views of the same web page on your desktop: the
+<i>source view</i> in a text editor, and a <i>rendered view</i> in a web
+browser.</li>
+
+<li>Add the following nine lines between the opening and closing
+<code>style</code> tags:
+<pre>
+body {
+    margin: 60px;
+}
+h1 {
+    color: #007;
+    background-color: #FFF;
+    text-align: center;
+    font-style: italic;
+}
+</pre>
+Reload the page in your browser.  You should now see the main heading,
+<q>Common CSS Properties</q> centered with a blue color and an italic font
+style. The body has a 60 pixel margin around all sides too.</li>
+
+<li>Now add the following two styles immediately after the <code>h1</code>
+style you added in the previous exercise: 
+<pre>
+h2 {
+    margin-left: -20px;
+    color: #049;
+}
+p {
+    text-align: justify;
+    font-size: large;
+}
+</pre>
+<code>h2</code>s have now been moved 20 pixels to the left, and paragraphs are
+justified and in a larger font.
+</li>
+
+<li>Now let's style the table.  Add the following immediately after the
+<code>p</code> style from the previous exercise:
+<pre>
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    font-size: large;
+    line-height: 24px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+</pre>
+Reload the page in your browser.  You should now see the table centered, and a
+new font in the table text.
+</li>
+
+<li>Adding the next style will change the appearance of the table headings:
+<pre>
+th {
+    border-top: 1px solid #777;
+    border-bottom: 1px solid #777;
+    background-color: #AFEEEE;
+    color: #007;    
+    text-align: left;   
+}
+</pre></li>
+
+<li>And the next one makes the table data look nicer:
+<pre>
+td {
+    border-bottom: 1px solid #BBB;
+    background-color: #EEE;
+    color: #000;
+}
+</pre></li>
+
+<li>Now we add padding around both the table headings and table data so they
+don't look so crowded:
+<pre>
+td, th {
+    padding: 0.2em 0.5em 0.2em 0.5em;
+} 
+</pre></li>
+
+<li>Finally, we finish our table by adding a left border to heading and data
+that have another heading or data element to the left of them:
+<pre>
+td+td, th+th {
+    border-left: 1px solid #BBB;
+}
+</pre></li>
+
+<li>Add the following to style the links:
+<pre>
+a:link, a:visited {
+    color: #007;
+    font-weight: bold;
+    text-decoration: none;
+}
+</pre></li>
+
+<li>Download <a href="resources/lesson1/footer.css">footer.css</a> and put it
+in the same directory with <code>css_properties.html</code>.  Add the following
+to the beginning of the <code>style</code> element, immediately below the
+open style tag (<code>&lt;style type="text/css"&gt;</code>):
+<pre>
+@import url(footer.css);
+</pre></li>
+</ol>
+After completing these exercises, your document should look something like
+<a href="screenshots/lesson1/css_properties_html.png">this</a>.
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

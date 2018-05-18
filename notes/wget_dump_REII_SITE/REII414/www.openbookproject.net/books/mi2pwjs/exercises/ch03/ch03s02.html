@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 3 Exercise Set 2 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 4 Exercise Set 1" href="../ch04/ch04s01.html" />
+    <link rel="prev" title="Chapter 3 Exercise Set 1" href="ch03s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch04/ch04s01.html" title="Chapter 4 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch03s01.html" title="Chapter 3 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-3-exercise-set-2">
+<span id="ch03s02"></span><h1>Chapter 3 Exercise Set 2<a class="headerlink" href="#chapter-3-exercise-set-2" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="animal">
+<h2><tt class="docutils literal"><span class="pre">animal</span></tt><a class="headerlink" href="#animal" title="Permalink to this headline">¶</a></h2>
+<p>Create an object named, <tt class="docutils literal"><span class="pre">animal</span></tt> with properties <tt class="docutils literal"><span class="pre">type</span></tt> set to <tt class="docutils literal"><span class="pre">&quot;tiger&quot;</span></tt>,
+<tt class="docutils literal"><span class="pre">gender</span></tt> set to <tt class="docutils literal"><span class="pre">&quot;female&quot;</span></tt>, <tt class="docutils literal"><span class="pre">age</span></tt> set to <tt class="docutils literal"><span class="pre">5</span></tt>, and <tt class="docutils literal"><span class="pre">hungry</span></tt> set to
+<tt class="docutils literal"><span class="pre">true</span></tt>.</p>
+</div>
+<div class="section" id="addtocounts-thing">
+<span id="addtocounts-exercise"></span><h2><tt class="docutils literal"><span class="pre">addToCounts(thing)</span></tt><a class="headerlink" href="#addtocounts-thing" title="Permalink to this headline">¶</a></h2>
+<p>Create an object named <tt class="docutils literal"><span class="pre">counts</span></tt> that will hold the &#8220;count&#8221; (i.e. the number
+of occurances) of things added to it by <tt class="docutils literal"><span class="pre">addToCounts</span></tt> below.</p>
+<p>Then write a function named <tt class="docutils literal"><span class="pre">addToCounts(thing)</span></tt> which tracks inside
+<tt class="docutils literal"><span class="pre">counts</span></tt> the number of times <tt class="docutils literal"><span class="pre">thing</span></tt> is sent to it.</p>
+<p>The following sequence of <tt class="docutils literal"><span class="pre">addToCount</span></tt> calls starting with an empty count</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">addToCounts</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">);</span>
+<span class="nx">addToCounts</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
+<span class="nx">addToCounts</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
+<span class="nx">addToCounts</span><span class="p">(</span><span class="mi">7</span><span class="p">);</span>
+<span class="nx">addToCounts</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>should result in a <tt class="docutils literal"><span class="pre">counts</span></tt> object with the following state (when viewed
+in Firebug):</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nb">Object</span><span class="p">{</span><span class="nx">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="nx">b</span><span class="o">=</span><span class="mi">2</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="max-nums">
+<h2><tt class="docutils literal"><span class="pre">max(nums)</span></tt><a class="headerlink" href="#max-nums" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">max</span></tt> that takes an array of numbers, <tt class="docutils literal"><span class="pre">nums</span></tt>, as an
+argument and returns the largest number found in the array.</p>
+</div>
+<div class="section" id="min-nums">
+<h2><tt class="docutils literal"><span class="pre">min(nums)</span></tt><a class="headerlink" href="#min-nums" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">min</span></tt> that takes an array of numbers, <tt class="docutils literal"><span class="pre">nums</span></tt>, as an
+argument and returns the smallest number found in the array.</p>
+</div>
+<div class="section" id="mean-nums">
+<h2><tt class="docutils literal"><span class="pre">mean(nums)</span></tt><a class="headerlink" href="#mean-nums" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">mean</span></tt> that takes an array of numbers, <tt class="docutils literal"><span class="pre">nums</span></tt>, as an
+argument and returns the arithmetic mean (the &#8220;average&#8221;) of the numbers.</p>
+</div>
+<div class="section" id="sort-nums">
+<h2><tt class="docutils literal"><span class="pre">sort(nums)</span></tt><a class="headerlink" href="#sort-nums" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">sort</span></tt> that takes an array of numbers, <tt class="docutils literal"><span class="pre">nums</span></tt>, as an
+argument and returns an array of the same numbers sorted from least to
+greatest.</p>
+</div>
+<div class="section" id="median-nums">
+<h2><tt class="docutils literal"><span class="pre">median(nums)</span></tt><a class="headerlink" href="#median-nums" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">median</span></tt> that takes an array of numbers, <tt class="docutils literal"><span class="pre">nums</span></tt>, as
+an argument and returns the median of the set of numbers.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Use the <tt class="docutils literal"><span class="pre">sort</span></tt> function you wrote in the previous exercise to put the
+numbers in order before trying to computer the median.</p>
+</div>
+</div>
+<div class="section" id="mode-nums">
+<h2><tt class="docutils literal"><span class="pre">mode(nums)</span></tt><a class="headerlink" href="#mode-nums" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">mode</span></tt> that takes an array of numbers, <tt class="docutils literal"><span class="pre">nums</span></tt>, as
+an argument and returns the mode of the set of numbers.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Use the <tt class="docutils literal"><span class="pre">addToCounts</span></tt> function you wrote in <a class="reference internal" href="#addtocounts-exercise"><em>addToCounts(thing)</em></a>
+to create a <tt class="docutils literal"><span class="pre">counts</span></tt> object that keeps track of the frequency of each
+number in <tt class="docutils literal"><span class="pre">nums</span></tt>.  Then write another helper function to find the maximum
+frequency.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch04/ch04s01.html" title="Chapter 4 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch03s01.html" title="Chapter 3 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

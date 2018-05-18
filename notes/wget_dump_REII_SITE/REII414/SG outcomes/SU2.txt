@@ -1,0 +1,12 @@
+Study Unit 2
+
+explain the terms entities and features;
+identify the features of a relational table;
+use the different data types to depict data in tables;
+use and explain the concept "keys";
+identify and use the different types of keys;
+explain and use integrity rules for relational databases;
+apply database computations;
+describe the role of the database dictionary;
+develop basic entity relation diagrams for 1:M and N:M relations;
+discuss redundancy in relational database models.

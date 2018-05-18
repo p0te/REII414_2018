@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 13 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 1 Exercise Set 1 Solutions" href="../solutions/ch01/ch01s01.html" />
+    <link rel="prev" title="Chapter 12 Exercise Set 1" href="../ch12/ch12s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../solutions/ch01/ch01s01.html" title="Chapter 1 Exercise Set 1 Solutions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch12/ch12s01.html" title="Chapter 12 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-13-exercise-set-1">
+<span id="ch13s01"></span><h1>Chapter 13 Exercise Set 1<a class="headerlink" href="#chapter-13-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">Write a regular expression that matches a date in the format
+<tt class="docutils literal"><span class="pre">&quot;XX/XX/XXXX&quot;</span></tt>, where the <tt class="docutils literal"><span class="pre">X``s</span> <span class="pre">are</span> <span class="pre">digits.</span> <span class="pre">Test</span> <span class="pre">it</span> <span class="pre">against</span> <span class="pre">the</span> <span class="pre">string</span>
+<span class="pre">``&quot;born</span> <span class="pre">15/11/2003</span> <span class="pre">(mother</span> <span class="pre">Spot):</span> <span class="pre">White</span> <span class="pre">Fang&quot;</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">datePattern</span> <span class="o">=</span> <span class="sr">/\d\d\/\d\d\/\d\d\d\d/</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;born 15/11/2003 (mother Spot): White Fang&quot;</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">datePattern</span><span class="p">));</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Write a pattern that matches e-mail addresses. For simplicity, assume that
+the parts before and after the <tt class="docutils literal"><span class="pre">&#64;</span></tt> can contain only alphanumeric
+characters and the characters <tt class="docutils literal"><span class="pre">.</span></tt> and <tt class="docutils literal"><span class="pre">-</span></tt> (dot and dash), while the last
+part of the address, the country code after the last dot, may only contain
+alphanumeric characters, and must be two or three characters long.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mailAddress</span> <span class="o">=</span> <span class="sr">/\b[\w\.-]+@[\w\.-]+\.\w{2,3}\b/</span><span class="p">;</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">mailAddress</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;kenny@test.net&quot;</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">mailAddress</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;I mailt kenny@tets.nets, but it didn wrok!&quot;</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">mailAddress</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;the_giant_sloth@gmail.com&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">\b</span></tt>s at the start and end of the pattern make sure that the second
+string does not match.</p>
+</li>
+<li><p class="first">Re-write the function <tt class="docutils literal"><span class="pre">extractDate</span></tt> that we wrote in
+<a class="reference internal" href="../../ch03.html#objects-and-arrays-chapter"><em>Data structures: Objects and Arrays</em></a>. When given a string, this function looks
+for something that follows the date format we saw earlier. If it can find
+such a date, it puts the values into a <tt class="docutils literal"><span class="pre">Date</span></tt> object.  Otherwise, it
+throws an exception. Make it accept dates in which the day or month are
+written with only one digit.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">extractDate</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">found</span> <span class="o">=</span> <span class="nx">string</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/(\d\d?)\/(\d\d?)\/(\d{4})/</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">found</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;No date found in &#39;&quot;</span> <span class="o">+</span> <span class="nx">string</span> <span class="o">+</span> <span class="s2">&quot;&#39;.&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="nx">found</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">found</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nb">Number</span><span class="p">(</span><span class="nx">found</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">extractDate</span><span class="p">(</span><span class="s2">&quot;born 5/2/2007 (mother Noog): Long-ear Johnson&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>This version is slightly longer than the previous one, but it has the
+advantage of actually checking what it is doing, and shouting out when it is
+given nonsensical input. This was a lot harder without regular expressions ―
+it would have taken a lot of calls to <tt class="docutils literal"><span class="pre">indexOf</span></tt> to find out whether the
+numbers had one or two digits, and whether the dashes were in the right
+places.</p>
+</li>
+<li><p class="first">That last trick can be used to make the HTML-escaper from
+<a class="reference internal" href="../../ch09.html#functional-programming-chapter"><em>Functional Programming</em></a> more efficient. You may remember that
+it looked like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">escapeHTML</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">replacements</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;&amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;amp;&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;\&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;quot;&quot;</span><span class="p">],</span>
+                        <span class="p">[</span><span class="s2">&quot;&lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;lt;&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&amp;gt;&quot;</span><span class="p">]];</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">replacements</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">replace</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">text</span> <span class="o">=</span> <span class="nx">text</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">replace</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">replace</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">text</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Write a new function <tt class="docutils literal"><span class="pre">escapeHTML</span></tt>, which does the same thing, but only
+calls <tt class="docutils literal"><span class="pre">replace</span></tt> once.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">escapeHTML</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">replacements</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;&lt;&quot;</span><span class="o">:</span> <span class="s2">&quot;&amp;lt;&quot;</span><span class="p">,</span> <span class="s2">&quot;&gt;&quot;</span><span class="o">:</span> <span class="s2">&quot;&amp;gt;&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;&amp;&quot;</span><span class="o">:</span> <span class="s2">&quot;&amp;amp;&quot;</span><span class="p">,</span> <span class="s2">&quot;\&quot;&quot;</span><span class="o">:</span> <span class="s2">&quot;&amp;quot;&quot;</span><span class="p">};</span>
+    <span class="k">return</span> <span class="nx">text</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[&lt;&gt;&amp;&quot;]/g</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">character</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">replacements</span><span class="p">[</span><span class="nx">character</span><span class="p">];</span>
+    <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">escapeHTML</span><span class="p">(</span><span class="s2">&quot;The &#39;pre-formatted&#39; tag is written \&quot;&lt;pre&gt;\&quot;.&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">replacements</span></tt> object is a quick way to associate each character with
+its escaped version. Using it like this is safe (i.e. no <tt class="docutils literal"><span class="pre">Dictionary</span></tt>
+object is needed), because the only properties that will be used are those
+matched by the <tt class="docutils literal"><span class="pre">/[&lt;&gt;&amp;&quot;]/</span></tt> expression.</p>
+</li>
+</ol>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../solutions/ch01/ch01s01.html" title="Chapter 1 Exercise Set 1 Solutions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch12/ch12s01.html" title="Chapter 12 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

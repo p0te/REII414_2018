@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<h2>Anatomy of a Style</h2>
+
+<p>CSS consists of a collection of <b>styles</b> (or <b>rules</b>) describing
+how to format particular elements in your html document.</p>
+
+<p>Each style is made up of a <b>selector</b> and a set of <b>declarations</b>
+describing the formatting of the <i>selected</i> elements.</p>
+
+<p>The set of declarations are contained inside a <b>declaration block</b>,
+which is enclosed in curly braces (<code>{ }</code>).</p>
+
+<p>Each declaration is made up of a
+<a href="http://en.wikipedia.org/wiki/Attribute-value_pair">property-value
+pair</a>.  The property is seperated from the value by a colon (<code>:</code>),
+and the property-value pair ends in a semi-colon (<code>;</code>).</p>
+
+<p>Here is the structure of a style:</p>
+
+<pre class="source" style="width: 400px;">
+[selector] {
+    [property]: [value]; 
+       ...
+    [property]: [value]; 
+}
+</pre>
+
+<p>Here is an example of a style being applied to the <code>p</code>
+(paragraph) element:</p>
+
+<pre class="source" style="width: 400px;">
+p {
+    color: #F00;
+    background-color: #FFF;
+    text-align: center;
+    font-style: italic;
+}
+</pre>
+
+<p>The first two property-value pairs set the text color to red and the
+background color to white. The third one centers the text, and the last one
+gives it an italic font style. Each of these properties will be applied to
+<code>p</code> elements throughout the document.</p>
+
+<p>White space does not matter in CSS, so the whole thing could have been
+written like this:</p>
+
+<pre class="source" style="width: 840px; text-align: center;">
+p{color:#F00;background-color:#FFF;text-align:center;font-style:italic;}
+</pre>
+
+<p>which is not as easy to read. </p>
+
+
+<h2><br />Including Style Sheets</h2>
+
+<p>There are 3 ways to include style sheets into your html document:</p>
+
+
+<h3>Inline Style Sheet</h3>
+
+<p>A style can be applied to to a single element by using a <code>style</code>
+attribute. The selector isn't needed since only the element containing the
+attribute is styled.  Instead of using curly braces to start and end the
+declaration block, just put quotes around it.</p>
+
+<pre class="source" style="width: 800px; text-align: center;">
+&lt;h1 style="text-align: center; color: #F00;"&gt;A Centered Red Title&lt;/h1&gt;
+</pre>
+
+<p>The inline style above centers the heading and sets its font color to red.</p>
+
+
+<h3>Internal Style Sheet</h3>
+
+<p>To apply a style to a whole document, put it inside the head of the document
+(between <code>&lt;style&gt;&lt;/style&gt;</code> tags) like this:</p>
+
+<pre class="source">
+&lt;head&gt;
+&lt;title&gt;Example Page with Internal Style Sheet&lt;/title&gt;
+&lt;style type="text/css"&gt;
+body {
+    margin: 50px 50px 50px 50px;
+    background-color: #FFC;
+}
+h1 {
+    text-align: center;
+    color: #090;
+    background-color: #FFC;
+}
+p {
+    text-align: justify;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+</pre>
+
+<h3>External Style Sheet</h3>
+
+<p>You can also place your style in a seperate file and link to it like this:
+</p>
+
+<pre class="source">
+&lt;head&gt;
+&lt;title&gt;Example Page with External Style Sheet&lt;/title&gt;
+&lt;style type="text/css"&gt;
+@import url(style1.css);
+&lt;/style&gt;
+&lt;/head&gt;
+</pre>
+
+<p>The file containing the style sheet in this example is named
+<a href="resources/style1.css">style1.css</a>, but you can name your file any
+way you like (as long as you use a legal file name, of course).</p>
+
+<p>External style sheets can even be located other places on the web.
+This adds one of google's free, cross browser
+<a href="http://www.google.com/webfonts">web fonts</a> to a document:</p>
+
+<pre class="source" style="width: 660px;">
+@import url(http://fonts.googleapis.com/css?family=Eater);
+</pre>
+
+
+<h2>Adding Validation Links</h2>
+
+<p>Add this to the bottom of your pages (just above the
+<code>&lt;/body&gt;</code> tag) to include validation links for your HTML and
+CSS:</p>
+
+<pre class="source" style="width: 760px;">
+&lt;footer&gt;
+&lt;a href="http://validator.w3.org/check/referer"&gt;
+&lt;strong&gt; HTML &lt;/strong&gt; Valid! &lt;/a&gt; &nbsp;
+&lt;a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3"&gt;
+&lt;strong&gt; CSS &lt;/strong&gt; Valid! &lt;/a&gt;
+&lt;/footer&gt;
+</pre>
+
+<p>Add this style to center the links on the page:</p>
+
+<pre class="source" style="width: 300px;">
+footer {
+    text-align: center;
+}
+</pre>
+</section>
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Download <a href="resources/lesson2/start.html">start.html</a> (by
+  mousing over the link and right-clicking) and save this file in a convenient
+  place.  This is a new <q>minimal page</q> that you can copy whenever you want
+  to create a new document.</li>
+
+  <li>Starting with the <code>gdw.html</code> you finished at the end of
+  <a href="../html/lesson7.html">lesson 7 of Getting Down with HTML</a>
+  (note: if you don't have the version that you made, you can use
+  <a href="resources/lesson2/gdw.html">this one</a>), do the following:
+  <ul>
+    <li>Add a
+    <pre>
+    &lt;style type="text/css"&gt;
+    &lt;/style&gt;
+    </pre>
+    element inside the <code>head</code> element, immediately after the
+    <code>title</code> element.</li>
+
+    <li>Change the <code>footer</code> element to match the one in the
+    <i>Adding Validation Links</i> section from this lesson.</li>
+
+    <li>Now add the following styles, one at a time, reloading your document
+    after adding each one to see what it did:
+    <ol>
+      <li style="list-style-type: lower-roman;"><pre>
+      body {
+          margin: 40px;
+          padding: 40px;
+          background-color: #FFF8DC;
+          border: 1px solid #808080;
+      }
+      </pre></li>
+      <li style="list-style-type: lower-roman;"><pre>
+      h1 {
+          text-align: center;
+          color: #FF8C00;
+      }
+      </pre></li>
+      <li style="list-style-type: lower-roman;"><pre>
+      h2 {
+          color: #8B4513;
+      }
+      </pre></li>
+      <li style="list-style-type: lower-roman;"><pre>
+      a, a:visited {
+          color: #000000;
+          text-decoration: none;
+      }
+      </pre></li>
+      <li style="list-style-type: lower-roman;"><pre>
+      footer {
+          text-align: center;
+      }
+      </pre></li>
+   </ol>
+   When you are finished, your document should look something like
+   <a href="screenshots/lesson2/gdw_html.png">this</a>.
+   </li> 
+
+  </ul></li>
+
+  <li>Make a new file named <code>mystyle.css</code>.  Move everything you put
+  between the <code>&lt;style type="text/css"&gt;</code> and
+  <code>&lt;/style&gt;</code> tags to this new file.  Add:
+  <pre>
+      @import url(mystyle.css);
+  </pre>
+  inside the style element.  Verify that the page is still styled.
+  </li>
+
+  <li>Download <a href="resources/lesson2/index.html">this</a> version of
+  the <code>index.html</code> page you made in
+  <a href="../html/lesson1.html">Lesson 1</a> of
+  <a href="../html">Getting Down with HTML</a> Add the following styles, one at
+  a time, reloading your document after adding each one to see what it did:
+  <ol>
+    <li style="list-style-type: lower-roman;"><pre>
+    body {
+        margin: 25px;
+        padding: 10px;
+        border: 1px dotted #BBB;
+    }
+    </pre></li>
+    <li style="list-style-type: lower-roman;"><pre>
+    h1, footer {
+        text-align: center;
+    }
+    </pre></li>
+    <li style="list-style-type: lower-roman;"><pre>
+    footer a, footer a:visited {
+        color: #A50;
+        text-decoration: none;
+        padding: 10px;
+        border: 1px dashed #000;
+    }
+    </pre></li>
+  </ol>
+  When you are finished, your document should look like
+  <a href="screenshots/lesson2/index_html.png">this</a>.
+  </li>
+ 
+  <li><p>Starting with the document you made in the previous exercise, add
+  three paragraphs of
+  <a href="http://en.wikipedia.org/wiki/Lorum_ipsum">lorem ipsum</a> text:</p>
+  <pre>
+  &lt;p&gt;
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+  consequat.  Duis aute irure dolor in reprehenderit in voluptate velit esse
+  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  &lt;/p&gt;
+  </pre>
+  <p>
+  Use <code>&lt;span&gt;&lt;/span&gt;</code> elements with an inline style
+  sheet to change the colors of four different words in the first paragraph.
+  Use a different color for each word.  Experiment with the colors until you
+  have a feel for how they work.
+  </p>
+  <p style="margin: 25px; padding: 20px; border: 1px solid #000;">
+  <span style="color: #F00;">Hint</span>: Colors can be set with
+  <code>color: #RGB;</code> where <code>R</code> stands for <i>red</i>,
+  <code>G</code> stands for <i>green</i>, and <code>B</code> stands for
+  <i>blue</i>.  To assign a color, you replace each of <code>R</code>,
+  <code>G</code>, and <code>B</code> with a
+  <a href="http://en.wikipedia.org/wiki/Hexadecimal">hexidecimal</a> digit
+  (<code>0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F</code>).  <code>0</code>
+  means the least amount of the color and <code>F</code> (15) means the most.
+  <code>#F00</code> is maximum red.  <code>#0F0</code> is maximum green.  
+  <code>#00F</code> is maximum blue.  <code>#000</code> is black (no color).  
+  <code>#FFF</code> is white (max of all three colors).
+  </p>
+  <p>
+  Apply <code>text-decoration: line-through</code> as an inline style
+  to third paragraph.  When finished, your document should look something like
+  <a href="screenshots/lesson2/index2_html.png">this</a>.
+  </p></li>
+</ol>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

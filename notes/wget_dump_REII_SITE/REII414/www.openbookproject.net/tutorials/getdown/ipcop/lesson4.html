@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson 4</title>
+<style type="text/css">
+@import url(gdw.css);
+@import url(lesson.css);
+</style>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body onload="addHeader(); addFooter()">
+<div id="head"></div>
+
+
+<h1>Configure IPCop Without Wireless</h1>
+
+<ol>
+  <li>First you will be asked to enter your type of keyboard. Select US and hit 
+      Enter</li>
+  <li>Next it will ask you for your time zone, select America/New_York and hit 
+      Enter</li>
+  <li>Next it will ask you to enter the machine's hostname. By default it has 
+      the word ipcop as the hostname. We will leave it as ipcop so just hit OK. 
+<br />
+<img src="images/hostname.jpg" alt="hostname" /></li>
+  <li>Next it will ask you to enter the domain name. By default the domain name 
+      is "localdomain". Leave the default as it is and hit OK.</li>
+  <li>The ISDN configuration menu will pop up. We do not use ISDN so select 
+      Disable ISDN.
+<br />
+<img src="images/network_configuration_menu.jpg" alt="Network Configuration Menu" /></li>
+  <li>Now the network configuration menu shows up and there is a lot of important 
+      options in this menu. First select Network configuration type.
+<br /><img src="images/network_configuration_menu.jpg" alt="Network Configuration Menu" /></li>
+  <li>We want to use a GREEN(the internal network) and RED(which is the outside network). 
+Select GREEN + RED and hit OK.<br /><img src="images/network_configuration_type.jpg" alt="Network Configuration Type" /></li>
+  <li>Now select Drivers and card assignments from the Network configuration 
+      menu.</li>
+  <li>Earlier, IPCop automatically detected the NIC for the GREEN interface but 
+      the NIC for the RED interface is still undetermined. It will ask you if you 
+      wish to change the current settings. Hit OK.</li>
+ <li>IPCop will find the available driver and give you the option to assign it 
+      to RED. Hit OK.<br />
+<img src="images/card_assignment.jpg" alt="Card Assignment" /></li>
+ <li>You will then get a success screen saying all the cards have been assigned</li>
+ <li>At the Network configuration menu select Address settings and then select 
+      the RED interface.</li>
+ <li>Because the RED interface is the outside network, the IP address is set by 
+      DHCP so select DHCP from the list of options and hit OK.
+<br /><img src="images/red_interface.jpg" alt="RED Interface" /></li>
+ <li>Back at the address settings screen select Done.</li>
+ <li>At the Network configuration menu select DNS and Gateway settings</li>
+ <li>For Primary DNS enter 158.59.255.10. For the Secondary DNS enter 
+ 158.59.255.11. For Default Gateway enter 192.168.208.1 and hit OK.
+<br /><img src="images/dns_and_gateway_settings.jpg" alt="DNS and Gateway Settings" /></li>     
+ <li>Back at the Network configuration screen select Done.</li>
+ <li>At DHCP Server Configuration page, mark the Enabled option. </li>
+ <li>Enter the starting and ending address for the IPs to be assigned. 
+    For example, start at 192.168.208.100 and end at 192.168.208.200 IP adresses.
+<br /><img src="images/dhcp_server_configuration.jpg" alt="DCHP Configuration"/></li>
+ <li>For the Primary DNS enter 158.59.255.10. Secondary DNS is 158.59.255.11. Click Ok.</li>
+ <li>Assign the Root, Admin and Backup passwords
+<br /><img src="file:///home/bbuso/getting-down-with/ipcop/images/root_password.jpg" /></li>
+ <li>Setup is Complete
+</li>
+</ol>
+
+
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+</li>
+
+<li>
+</li>
+</ol>
+</div>
+
+<footer>
+<hr>
+<p>Congratulations, you have finished Lesson 4;</p>
+<p><a href="lesson5.html">next lesson</a> |
+<a href="index.html">home page</a></p>
+<div id="foot"></div>
+</footer>
+
+</body>
+</html>

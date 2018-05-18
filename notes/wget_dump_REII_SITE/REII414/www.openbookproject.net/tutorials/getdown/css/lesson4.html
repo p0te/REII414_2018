@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>
+The <a href="http://en.wikipedia.org/wiki/Document_Object_Model">Document
+Object Model</a> (<b>DOM</b>) is set of conventions by which web browsers
+access and manipulate objects within a web page.
+</p>
+<p>
+What is most important to us as web designers learning CSS is the way the DOM
+organizes elements in a web page in a mathematical
+<a href="http://en.wikipedia.org/wiki/Tree_%28graph_theory%29">tree</a>.  We
+need to understand this tree structure and the concepts associated with it to
+use advanced CSS selectors.
+</p>
+
+<h2>HTML Element Tree</h2>
+<p>
+Here is the element tree for the <code>inline.html</code> document that you
+worked with in the exercises from the last lesson:
+</p>
+<p>
+<img src="images/lesson4/HTMLDOMTree.png" alt="HTML DOM Tree Diagram">
+</p>
+<p>
+We will use this example to illustrate the relationships among elements in
+the tree.
+</p>
+
+<h2>Relationships Among Elements in the Tree</h2>
+<p>
+The <b>root</b> of our element tree is the <code>html</code> element.  It is
+the only element at the <b>top level</b> of the tree.
+</p>
+<p>
+A <b>path</b> is a sequence of connected elements moving down from a given
+element away from the root.  Each element in a path has to be below the
+previous one, so <code>section--p--sub</code> and
+<code>footer--a--strong</code> are paths, but <code>a--footer--a</code>
+is not, because the first connection, <code>a--footer</code>, is going up
+instead of down.
+</p>
+<p>
+With an understanding of path, it is possible to describe the following
+relationships among elements in our element tree:
+</p>
+<div class="source" style="width: 800px;">
+<dl>
+  <dt>Parent</dt>
+  <dd>
+  The element connected <i>above</i> another element in the element tree is
+  called the <b>parent</b> of that element. In our example, the
+  <code>h1</code>, <code>section</code>, and the <code>footer</code> elements
+  all have the <code>body</code> element as their parent.
+  </dd>
+
+  <dt>Child</dt>
+  <dd>
+  The element connected <i>below</i> another element in the element tree is
+  called the <b>child</b> of that element. In our example, the
+  <code>section</code> element has four children, all of which are paragraphs.
+  </dd>
+
+  <dt>Sibling</dt>
+  <dd>
+  Two elements with the same parent element are called <b>sibling</b> elements.
+  The two <code>a</code> elements that are children of the <code>footer</code>
+  element are siblings. So are the four <code>p</code> elements that are
+  children of the <code>section</code> element.
+  </dd>
+
+  <dt>Ancestor</dt>
+  <dd>
+  Any element that preceeds a given element in the path from the root
+  (<code>html</code>) to the given element is called an <b>ancestor</b> of
+  that element.  The <code>body</code> element is the ancestor of all the
+  <code>p</code> elements.  The <code>footer</code> element is the ancestor
+  of two of the <code>strong</code> elements.  The parent of a given element
+  is also its ancestor, but so is its parent's parent, and so forth.
+  </dd>
+
+  <dt>Decendent</dt>
+  <dd>
+  If a given element has another element as an ancestor, the given element is
+  called a <b>decentent</b> of the other element.  The <code>kbd</code>
+  element is the decendent of the <code>section</code> element.  Two of the
+  <code>strong</code> elements are decendents of the <code>footer</code>
+  element.
+  </dd>
+</dl>
+</div>
+</section>
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Name all the ancestors of the <code>kbd</code> element.</li>
+  <li>Name all the decendents of the <code>footer</code> element.</li>
+  <li>Name all the siblings of the <code>code</code> element.</li>
+  <li>Which element in this document has the most child elements?</li>
+  <li>Sketch out an element tree on a piece of paper for a document that
+  has elements that satisfy each of the following relationships:
+  <ul>
+    <li>An <code>html</code> element at the root (top) of the element tree.
+    </li>
+    <li>The <code>head</code> element has the required <code>meta</code>
+    and <code>title</code> elements as children to be a valid html 5 document,
+    and a <code>style</code> child element for CSS.</li> 
+
+    <li>The <code>body</code> element has a <code>header</code> element, two
+    <code>section</code> elements, and a <code>footer</code> element, in that
+    order, as children.</li>
+
+    <li>The <code>header</code> element has an <code>h1</code> element followed
+    by a <code>nav</code> element as children.</li>
+
+    <li>The <code>nav</code> element has five <code>a</code> elements as
+    children.</li>
+
+    <li>Both <code>section</code> elements have the same children: an
+    <code>h1</code> element followed an <code>h2</code> element followed by
+    an <code>ol</code> element followed by another <code>h2</code> element and
+    then another <code>ol</code> element.</li>
+
+    <li>All the <code>ol</code> elements have four <code>li</code> elements
+    as children.</li>
+
+    <li>The <code>footer</code> element has two <code>a</code> elements as
+    children, and each of the <code>a</code> elements has a single
+    <code>strong</code> element as a child.</li>
+  </ul></li>
+
+  <li>Create a new document named <code>webskills.html</code> with all the
+  elements from the element tree you drew in the previous exercise. Add a
+  line at the top of the document containing the DOCTYPE:
+  <pre>
+  &lt;!DOCTYPE html&gt;</pre></li>
+
+  <li>Use the table in <a href="resources/lesson4/contents.html">this</a>
+  document to fill in the contents of each element.  When you finish, your
+  web page should look something like
+  <a href="screenshots/lesson4/webskills_html.png">this</a>.  You will
+  style this document in the next lesson.</li>
+</ol>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

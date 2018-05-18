@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8. HTTP requests &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="9. Functional Programming" href="ch09.html" />
+    <link rel="prev" title="7. Browser Events" href="ch07.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch09.html" title="9. Functional Programming"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch07.html" title="7. Browser Events"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="http-requests">
+<span id="http-requests-chapter"></span><h1>8. HTTP requests<a class="headerlink" href="#http-requests" title="Permalink to this headline">¶</a></h1>
+<p>As mentioned in <a class="reference internal" href="ch05.html#web-programming-chapter"><em>Web programming: A crash course</em></a>, communication on the World Wide
+Web happens over the HTTP protocol. A simple request might look like this::</p>
+<div class="highlight-python"><div class="highlight"><pre>GET /files/fruit.txt HTTP/1.1
+Host: eloquentjavascript.net
+User-Agent: The Imaginary Browser
+</pre></div>
+</div>
+<p>Which asks for the file <tt class="docutils literal"><span class="pre">files/fruit.txt</span></tt> from the server at
+<tt class="docutils literal"><span class="pre">eloquentjavascript.net</span></tt>. In addition, it specifies that this request uses
+version 1.1 of the HTTP protocol ― version 1.0 is also still in use, and works
+slightly differently. The <tt class="docutils literal"><span class="pre">Host</span></tt> and <tt class="docutils literal"><span class="pre">User-Agent</span></tt> lines follow a pattern:
+They start with a word that identifies the information they contain, followed
+by a colon and the actual information. These are called &#8220;headers&#8221;. The
+<tt class="docutils literal"><span class="pre">User-Agent</span></tt> header tells the server which browser (or other kind of program)
+is being used to make the request. Other kinds of headers are often sent along,
+for example to state the types of documents that the client can understand, or
+the language that it prefers.</p>
+<p>When given the above request, the server might send the following response::</p>
+<div class="highlight-python"><div class="highlight"><pre>HTTP/1.1 200 OK
+Last-Modified: Mon, 23 Jul 2007 08:41:56 GMT
+Content-Length: 24
+Content-Type: text/plain
+
+apples, oranges, bananas
+</pre></div>
+</div>
+<p>The first line indicates again the version of the HTTP protocol, followed by
+the status of the request. In this case the status code is <tt class="docutils literal"><span class="pre">200</span></tt>, meaning
+&#8216;OK, nothing out of the ordinary happened, I am sending you the file&#8217;. This is
+followed by a few headers, indicating (in this case) the last time the file was
+modified, its length, and its type (plain text). After the headers you get a
+blank line, followed by the file itself.</p>
+<p>Apart from requests starting with <tt class="docutils literal"><span class="pre">GET</span></tt>, which indicates the client just
+wants to fetch a document, the word <tt class="docutils literal"><span class="pre">POST</span></tt> can also be used to indicate some
+information will be sent along with the request, which the server is expected
+to process in some way.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These are not the only types of requests. There is also <tt class="docutils literal"><span class="pre">HEAD</span></tt>, to
+request just the headers for a document, not its content, <tt class="docutils literal"><span class="pre">PUT</span></tt>, to add a
+document to a server, and <tt class="docutils literal"><span class="pre">DELETE</span></tt>, to delete a document. These are not
+used by browsers, and often not supported by web-servers, but ― if you add
+server-side programs to support them ― they can be useful.</p>
+</div>
+<hr class="docutils" />
+<p>When you click a link, submit a form, or in some other way encourage your
+browser to go to a new page, it will do an HTTP request and immediately unload
+the old page to show the newly loaded document. In typical situations, this is
+just what you want ― it is how the web traditionally works. Sometimes, however,
+a JavaScript program wants to communicate with the server without re-loading
+the page. The &#8220;Load&#8221; button in the console, for example, can load files without
+leaving the page.</p>
+<p>To be able to do things like that, the JavaScript program must make the HTTP
+request itself. Contemporary browsers provide an interface for this. As with
+opening new windows, this interface is subject to some restrictions. To prevent
+a script from doing anything scary, it is only allowed to make HTTP requests to
+the domain that the current page came from.</p>
+<hr class="docutils" />
+<p>An object used to make an HTTP request can, on most browsers, be created by
+doing <tt class="docutils literal"><span class="pre">new</span> <span class="pre">XMLHttpRequest()</span></tt>. Older versions of Internet Explorer, which
+originally invented these objects, require you to do <tt class="docutils literal"><span class="pre">new</span>
+<span class="pre">ActiveXObject(&quot;Msxml2.XMLHTTP&quot;)</span></tt> or, on even older versions, <tt class="docutils literal"><span class="pre">new</span>
+<span class="pre">ActiveXObject(&quot;Microsoft.XMLHTTP&quot;)</span></tt>.  <tt class="docutils literal"><span class="pre">ActiveXObject</span></tt> is Internet Explorer&#8217;s
+interface to various kinds of browser add-ons. We are already used to writing
+incompatibility-wrappers by now, so let us do so again:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">makeHttpObject</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span><span class="k">return</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="k">try</span> <span class="p">{</span><span class="k">return</span> <span class="k">new</span> <span class="nx">ActiveXObject</span><span class="p">(</span><span class="s2">&quot;Msxml2.XMLHTTP&quot;</span><span class="p">);}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{}</span>
+    <span class="k">try</span> <span class="p">{</span><span class="k">return</span> <span class="k">new</span> <span class="nx">ActiveXObject</span><span class="p">(</span><span class="s2">&quot;Microsoft.XMLHTTP&quot;</span><span class="p">);}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{}</span>
+
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;Could not create HTTP request object.&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="nx">makeHttpObject</span><span class="p">()));</span>
+</pre></div>
+</div>
+<p>The wrapper tries to create the object in all three ways, using <tt class="docutils literal"><span class="pre">try</span></tt> and
+<tt class="docutils literal"><span class="pre">catch</span></tt> to detect which ones fail. If none of the ways work, which might be
+the case on older browsers or browsers with strict security settings, it raises
+and error.</p>
+<p>Now why is this object called an <em>XML</em> HTTP request? This is a bit of a
+misleading name. XML is a way to store textual data. It uses tags and
+attributes like HTML, but is more structured and flexible ― to store your own
+kinds of data, you may define your own types of XML tags. These HTTP request
+objects have some built-in functionality for dealing with retrieved XML
+documents, which is why they have XML in their name. They can also handle other
+types of documents, though, and in my experience they are used just as often
+for non-XML requests.</p>
+<hr class="docutils" />
+<p>Now that we have our HTTP object, we can use it to make a request similar the
+example shown above.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">makeHttpObject</span><span class="p">();</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;files/fruit.txt&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">open</span></tt> method is used to configure a request. In this case we choose to
+make a <tt class="docutils literal"><span class="pre">GET</span></tt> request for our <tt class="docutils literal"><span class="pre">fruit.txt</span></tt> file. The URL given here is
+relative, it does not contain the <tt class="docutils literal"><span class="pre">http://</span></tt> part or a server name, which
+means it will look for the file on the server that the current document came
+from. The third parameter, <tt class="docutils literal"><span class="pre">false</span></tt>, will be discussed in a moment. After
+<tt class="docutils literal"><span class="pre">open</span></tt> has been called, the actual request can be made with the <tt class="docutils literal"><span class="pre">send</span></tt>
+method.  When the request is a <tt class="docutils literal"><span class="pre">POST</span></tt> request, the data to be sent to the
+server (as a string) can be passed to this method. For <tt class="docutils literal"><span class="pre">GET</span></tt> requests, one
+should just pass <tt class="docutils literal"><span class="pre">null</span></tt>.</p>
+<p>After the request has been made, the <tt class="docutils literal"><span class="pre">responseText</span></tt> property of the request
+object contains the content of the retrieved document.  The headers that the
+server sent back can be inspected with the <tt class="docutils literal"><span class="pre">getResponseHeader</span></tt> and
+<tt class="docutils literal"><span class="pre">getAllResponseHeaders</span></tt> functions. The first looks up a specific header, the
+second gives us a string containing all the headers. These can occasionally be
+useful to get some extra information about the document.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">getAllResponseHeaders</span><span class="p">());</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">getResponseHeader</span><span class="p">(</span><span class="s2">&quot;Date&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>If, for some reason, you want to add headers to the request that is sent to the
+server, you can do so with the <tt class="docutils literal"><span class="pre">setRequestHeader</span></tt> method. This takes two
+strings as arguments, the name and the value of the header.</p>
+<p>The response code, which was <tt class="docutils literal"><span class="pre">200</span></tt> in the example, can be found under the
+<tt class="docutils literal"><span class="pre">status</span></tt> property. When something went wrong, this cryptic code will indicate
+it. For example, <tt class="docutils literal"><span class="pre">404</span></tt> means the file you asked for did not exist. The
+<tt class="docutils literal"><span class="pre">statusText</span></tt> contains a slightly less cryptic description of the status.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">statusText</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When you want to check whether a request succeeded, comparing the <tt class="docutils literal"><span class="pre">status</span></tt> to
+<tt class="docutils literal"><span class="pre">200</span></tt> is usually enough. In theory, the server might in some situations
+return the code <tt class="docutils literal"><span class="pre">304</span></tt> to indicate that the older version of the document,
+which the browser has stored in its &#8220;cache&#8221;, is still up to date. But it seems
+that browsers shield you from this by setting the <tt class="docutils literal"><span class="pre">status</span></tt> to <tt class="docutils literal"><span class="pre">200</span></tt> even
+when it is <tt class="docutils literal"><span class="pre">304</span></tt>. Also, if you are doing a request over a non-HTTP protocol,
+such as FTP, the <tt class="docutils literal"><span class="pre">status</span></tt> will not be usable because the protocol does not
+use HTTP status codes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Not only the &#8216;XML&#8217; part of the <tt class="docutils literal"><span class="pre">XMLHttpRequest</span></tt> name is misleading ― the
+object can also be used for request over protocols other than HTTP, so
+<tt class="docutils literal"><span class="pre">Request</span></tt> is the only meaningful part we have left.</p>
+</div>
+<hr class="docutils" />
+<p>When a request is done as in the example above, the call to the <tt class="docutils literal"><span class="pre">send</span></tt> method
+does not return until the request is finished. This is convenient, because it
+means the <tt class="docutils literal"><span class="pre">responseText</span></tt> is available after the call to <tt class="docutils literal"><span class="pre">send</span></tt>, and we can
+start using it immediately.  There is a problem, though. When the server is
+slow, or the file is big, doing a request might take quite a while. As long as
+this is happening, the program is waiting, which causes the whole browser to
+wait. Until the program finishes, the user can not do anything, not even scroll
+the page. Pages that run on a local network, which is fast and reliable, might
+get away with doing requests like this.  Pages on the big great unreliable
+Internet, on the other hand, should not.</p>
+<p>When the third argument to <tt class="docutils literal"><span class="pre">open</span></tt> is <tt class="docutils literal"><span class="pre">true</span></tt>, the request is set to be
+&#8220;asynchronous&#8221;. This means that <tt class="docutils literal"><span class="pre">send</span></tt> will return right away, while the
+request happens in the background.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;files/fruit.xml&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<span class="nx">show</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>But wait a moment, and...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">print</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>&#8220;Waiting a moment&#8221; could be implemented with <tt class="docutils literal"><span class="pre">setTimeout</span></tt> or something like
+that, but there is a better way. A request object has a <tt class="docutils literal"><span class="pre">readyState</span></tt>
+property, indicating the state it is in. This will become <tt class="docutils literal"><span class="pre">4</span></tt> when the
+document has been fully loaded, and have a smaller value before that. To react
+to changes in this status, you can set the <tt class="docutils literal"><span class="pre">onreadystatechange</span></tt> property of
+the object to a function. This function will be called every time the state
+changes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">0</span></tt> (&#8216;uninitialized&#8217;) is the state of the object before <tt class="docutils literal"><span class="pre">open</span></tt> is
+called on it. Calling <tt class="docutils literal"><span class="pre">open</span></tt> moves it to <tt class="docutils literal"><span class="pre">1</span></tt> (&#8216;open&#8217;). Calling <tt class="docutils literal"><span class="pre">send</span></tt>
+makes it proceed to <tt class="docutils literal"><span class="pre">2</span></tt> (&#8216;sent&#8217;). When the server responds, it goes to
+<tt class="docutils literal"><span class="pre">3</span></tt> (&#8216;receiving&#8217;). Finally, <tt class="docutils literal"><span class="pre">4</span></tt> means &#8216;loaded&#8217;.</p>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;files/fruit.xml&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>When the file retrieved by the request object is an XML document, the request&#8217;s
+<tt class="docutils literal"><span class="pre">responseXML</span></tt> property will hold a representation of this document. This
+representation works like the DOM objects discussed in <a class="reference internal" href="ch06.html#dom-chapter"><em>The Document-Object Model</em></a>,
+except that it doesn&#8217;t have HTML-specific functionality, such as <tt class="docutils literal"><span class="pre">style</span></tt> or
+<tt class="docutils literal"><span class="pre">innerHTML</span></tt>. <tt class="docutils literal"><span class="pre">responseXML</span></tt> gives us a document object, whose
+<tt class="docutils literal"><span class="pre">documentElement</span></tt> property refers to the outer tag of the XML document.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">catalog</span> <span class="o">=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">responseXML</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">catalog</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Such XML documents can be used to exchange structured information with the
+server. Their form ― tags contained inside other tags ― is often very suitable
+to store things that would be tricky to represent as simple flat text. The DOM
+interface is rather clumsy for extracting information though, and XML documents
+are notoriously wordy: The <tt class="docutils literal"><span class="pre">fruit.xml</span></tt> document looks like a lot, but all it
+says is &#8220;apples are red, oranges are orange, and bananas are yellow&#8221;.</p>
+<hr class="docutils" />
+<p>As an alternative to XML, JavaScript programmers have come up with something
+called <a class="reference external" href="http://www.json.org">JSON</a>. This uses the basic notation of
+JavaScript values to represent &#8220;hierarchical&#8221; information in a more minimalist
+way. A JSON document is a file containing a single JavaScript object or array,
+which in turn contains any number of other objects, arrays, strings, numbers,
+booleans, or <tt class="docutils literal"><span class="pre">null</span></tt> values. For an example, look at <tt class="docutils literal"><span class="pre">fruit.json</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;files/fruit.json&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Such a piece of text can be converted to a normal JavaScript value by using the
+<tt class="docutils literal"><span class="pre">eval</span></tt> function. Parentheses should be added around it before calling
+<tt class="docutils literal"><span class="pre">eval</span></tt>, because otherwise JavaScript might interpret an object (enclosed by
+braces) as a block of code, and produce an error.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">evalJSON</span><span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="nx">json</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">fruit</span> <span class="o">=</span> <span class="nx">evalJSON</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">fruit</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When running <tt class="docutils literal"><span class="pre">eval</span></tt> on a piece of text, you have to keep in mind that this
+means you let the piece of text run whichever code it wants. Since JavaScript
+only allows us to make requests to our own domain, you will usually know
+exactly what kind of text you are getting, and this is not a problem. In other
+situations, it might be unsafe.</p>
+<hr class="docutils" />
+<p>When making lots of requests, we do, of course, not want to repeat the whole
+<tt class="docutils literal"><span class="pre">open</span></tt>, <tt class="docutils literal"><span class="pre">send</span></tt>, <tt class="docutils literal"><span class="pre">onreadystatechange</span></tt> ritual every time. A very simple
+wrapper could look like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">simpleHttpRequest</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">success</span><span class="p">,</span> <span class="nx">failure</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">makeHttpObject</span><span class="p">();</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="nx">url</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+    <span class="nx">request</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">status</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span>
+                <span class="nx">success</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">failure</span><span class="p">)</span>
+                <span class="nx">failure</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">status</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">statusText</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="nx">simpleHttpRequest</span><span class="p">(</span><span class="s2">&quot;files/fruit.txt&quot;</span><span class="p">,</span> <span class="nx">print</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The function retrieves the url it is given, and calls the function it is given
+as a second argument with the content. When a third argument is given, this is
+used to indicate failure ― a non-<tt class="docutils literal"><span class="pre">200</span></tt> status code.</p>
+<p>To be able to do more complex requests, the function could be made to accept
+extra parameters to specify the method (<tt class="docutils literal"><span class="pre">GET</span></tt> or <tt class="docutils literal"><span class="pre">POST</span></tt>), an optional
+string to post as data, a way to add extra headers, and so on. When you have so
+many arguments, you&#8217;d probably want to pass them as an arguments-object as seen
+in <a class="reference internal" href="ch12.html#modularity-chapter"><em>Modularity</em></a>.</p>
+<hr class="docutils" />
+<p>Some websites make use of intensive communication between the programs running
+on the client and the programs running on the server. For such systems, it can
+be practical to think of some HTTP requests as calls to functions that run on
+the server. The client makes request to URLs that identify the functions,
+giving the arguments as URL parameters or <tt class="docutils literal"><span class="pre">POST</span></tt> data. The server then calls
+the function, and puts the result into JSON or XML document that it sends back.
+If you write a few convenient support functions, this can make calling
+server-side functions almost as easy as calling client-side ones... except, of
+course, that you do not get their results instantly.</p>
+<div class="section" id="exercises">
+<h2>8.1. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="exercises/ch08/ch08s01.html#ch08s01"><em>Chapter 08 Exercise Set 1</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch09.html" title="9. Functional Programming"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch07.html" title="7. Browser Events"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Getting Down with the Unix CLI: Lesson 2</title>
+<style type="text/css">
+@import url(gdw.css);
+@import url(lesson.css);
+</style>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body onload="addHeader(); addFooter()">
+<div id="head"></div>
+
+<h1>Lesson 2: Files and the file system</h1>
+
+
+<h2>Files</h2>
+<p>
+A <a href="http://en.wikipedia.org/wiki/Computer_file">file</a> on a modern
+computer system is a named block of
+<a href="http://en.wikipedia.org/wiki/Information">information</a> accessible
+to a
+<a href="http://en.wikipedia.org/wiki/Computer_program">computer program</a>
+and stored on some type of
+<a href="http://en.wikipedia.org/wiki/Non-volatile_memory">non-volatile memory
+</a>.
+</p>
+<p>
+Files can contain both programs and
+<a href="http://en.wikipedia.org/wiki/Data">data</a>, and data files can store
+text, images, sound, video, and many other kinds of data.  The two most common
+types of data files for web designers are
+<a href="http://en.wikipedia.org/wiki/Text_file">text files</a> and
+<a href="http://en.wikipedia.org/wiki/Digital_image">image files</a>.
+</p>
+
+
+<h2>File systems and directories</h2>
+<p>
+Operating systems organize files through the use of a 
+<a href="http://en.wikipedia.org/wiki/File_system">file system</a>.  File
+systems provide tools for the management of files and
+<a href="http://en.wikipedia.org/wiki/Directory_%28file_systems%29">
+directories</a>.  A directory (or <i>folder</i>) is a special type of file that
+can contain other files and directories within it.  Directories are used to
+organize files to make them easier to find.
+</p>
+<p>
+Since a directory can have directories inside it, and those directories can
+directories inside them, and so on, we end up with a
+<a href="http://en.wikipedia.org/wiki/Tree_structure">tree structure</a> for
+the file system.
+</p>
+<p style="text-align: center;">
+<img src="images/lesson2/webappdev_tree_view.png" alt="Tree view of webappdev">
+</p>
+<p>
+The screenshot above shows the
+<a href="http://en.wikipedia.org/wiki/Tree_%28Unix%29">tree</a> program display
+of a directory named <code>webappdev</code> that has four subdirectories named
+<code>css</code>, <code>html</code>, <code>unix</code>, and <code>vim</code>.
+Each of these subdirectories has two more subdirectories named
+<code>examples</code> and <code>notes</code>.  The <code>notes</code> directory
+under <code>unix</code> contains two files, <code>lesson1.txt</code> and
+<code>lesson2.txt</code>.
+</p>
+
+
+<h2>Paths</h2>
+<p>
+A modern computer system has hundreds of thousands of files and directories.
+By utilizing the tree structure of the file system, it becomes possible to
+organize and manage these hundreds of thousands of files.
+</p>
+
+<h3>Absolute Paths</h3>
+<p>
+At the top of the Unix file system is what is called the <b>root directory</b>,
+which is always just <code>/</code> in Unix.  The <b>absolute path</b> to
+any file in the filesystem is the sequence of directories, starting from the
+root and ending with the file.
+</p>
+<p>
+The easiest way to show how this works is by example.  The following diagram
+shows part of a Unix filesystem tree.
+</p>
+<p>
+<img src="images/lesson2/UnixDirectoryTree.png" alt="Unix directory tree">
+</p>
+<p>
+The absolute path to the file <code>lesson1.txt</code> is:
+</p>
+<pre class="source" style="width: 480px;">
+/home/jelkner/webappdev/unix/notes/lesson1.txt
+</pre>
+
+
+<h3>Relative Paths and the Current Working Directory</h3>
+<p>
+The absolute path to a file in the file system can be long, and it is normally
+the case that the user is interested in files that are located in only one
+small part of the system, located <q>near</q> the user.  By
+<q>near the user</q> we mean near in the tree to the user's
+<a href="http://en.wikipedia.org/wiki/Current_working_directory">current
+working directory</a>.
+</p>
+<p>
+Again, it's much easier to show you than to tell you.
+</p>
+<p style="text-align: center;">
+<img src="images/lesson2/pwd_inside_webappdev.png" alt="Inside webappdev">
+</p>
+<p>
+The screenshot above shows the
+<a href="http://en.wikipedia.org/wiki/Pwd">pwd</a> program displaying the
+current working directory as <code>/home/jelkner/webappdev</code>.  Next
+it shows <a href="http://en.wikipedia.org/wiki/Ls">ls</a> being run, with
+the <code>css</code>, <code>html</code>, <code>unix</code>, and
+<code>vim</code> directories as output.  Lastly, <code>tree</code> is run
+again, this time with no
+<a href="http://en.wikipedia.org/wiki/Command-line_argument#Arguments">
+argument</a>.
+</p>
+<p>
+The relative path from the current working directory to the file
+<code>lesson1.txt</code> is:
+</p>
+<pre class="source" style="width: 240px;">
+unix/notes/lesson1.txt
+</pre>
+<p>
+Notice that relative paths <b>do not</b> start with a slash (<code>/</code>).
+</p>
+
+
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>
+  What is <i>information</i>?  Do you think this is an easy or difficult term
+  to define?  Why?
+  </li>
+
+  <li>
+  Read over the wikipedia article on <i>computer program</i>.  In your own
+  words, summarize what a computer program is.
+  </li> 
+
+  <li>
+  According to <a href="http://www.wikipedia.org">Wikipedia</a>, what is
+  <i>non-volatile memory</i>?  Give examples of non-volatile memory (or
+  <q>storage</q>) on the computer systems you use.  What do you think
+  <i>volatile memory</i> is?
+  </li> 
+</ol>
+</div>
+
+
+<footer>
+<hr>
+<p>Congratulations, you have finished Lesson 2;</p>
+<p><a href="lesson3.html">next lesson</a> |
+<a href="index.html">home page</a></p>
+<div id="foot"></div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>13. Regular Expressions &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="Appendix A: More (obscure) control structures" href="app_a.html" />
+    <link rel="prev" title="12. Modularity" href="ch12.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="app_a.html" title="Appendix A: More (obscure) control structures"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch12.html" title="12. Modularity"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="regular-expressions">
+<span id="regular-expressions-chapter"></span><h1>13. Regular Expressions<a class="headerlink" href="#regular-expressions" title="Permalink to this headline">¶</a></h1>
+<p>At various points in the previous chapters, we had to look for patterns in
+string values. In <a class="reference internal" href="ch03.html#objects-and-arrays-chapter"><em>Data structures: Objects and Arrays</em></a> we extracted date values
+from strings by writing out the precise positions at which the numbers that
+were part of the date could be found. Later, in
+<a class="reference internal" href="ch09.html#functional-programming-chapter"><em>Functional Programming</em></a>, we saw some particularly ugly pieces of
+code for finding certain types of characters in a string, for example the
+characters that had to be escaped in HTML output.</p>
+<p>Regular expressions are a language for describing patterns in strings. They
+form a small, separate language, which is embedded inside JavaScript (and in
+various other programming languages, in one way or another). It is not a very
+readable language ― big regular expressions tend to be completely unreadable.
+But, it is a useful tool, and can really simplify string-processing programs.</p>
+<hr class="docutils" />
+<p>Just like strings get written between quotes, regular expression patterns get
+written between slashes (<tt class="docutils literal"><span class="pre">/</span></tt>). This means that slashes inside the expression
+have to be escaped.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">slash</span> <span class="o">=</span> <span class="sr">/\//</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;AC/DC&quot;</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">slash</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">search</span></tt> method resembles <tt class="docutils literal"><span class="pre">indexOf</span></tt>, but it searches for a regular
+expression instead of a string. Patterns specified by regular expressions can
+do a few things that strings can not do.  For a start, they allow some of their
+elements to match more than a single character. In
+<a class="reference internal" href="ch09.html#functional-programming-chapter"><em>Functional Programming</em></a>, when extracting mark-up from a document,
+we needed to find the first asterisk or opening brace in a string. That could
+be done like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">asteriskOrBrace</span> <span class="o">=</span> <span class="sr">/[\{\*]/</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">story</span> <span class="o">=</span>
+    <span class="s2">&quot;We noticed the *giant sloth*, hanging from a giant branch.&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">story</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">asteriskOrBrace</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">[</span></tt> and <tt class="docutils literal"><span class="pre">]</span></tt> characters have a special meaning inside a regular
+expression. They can enclose a set of characters, and they mean &#8216;any of these
+characters&#8217;. Most non-alphanumeric characters have some special meaning inside
+a regular expression, so it is a good idea to always escape them with a
+backslash when you use them to refer to the actual characters.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In this case, the backslashes were not really necessary, because the
+characters occur between <tt class="docutils literal"><span class="pre">[</span></tt> and <tt class="docutils literal"><span class="pre">]</span></tt>, but it is easier to just escape
+them anyway, so you won&#8217;t have to think about it.</p>
+</div>
+<hr class="docutils" />
+<p>There are a few shortcuts for sets of characters that are needed often. The dot
+(<tt class="docutils literal"><span class="pre">.</span></tt>) can be used to mean &#8220;any character that is not a newline&#8221;, an escaped
+&#8216;d&#8217; (<tt class="docutils literal"><span class="pre">\d</span></tt>) means &#8216;any digit&#8217;, an escaped &#8216;w&#8217; (<tt class="docutils literal"><span class="pre">\w</span></tt>) matches any
+alphanumeric character (including underscores, for some reason), and an escaped
+&#8216;s&#8217; (<tt class="docutils literal"><span class="pre">\s</span></tt>) matches any white-space (tab, newline, space) character.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">digitSurroundedBySpace</span> <span class="o">=</span> <span class="sr">/\s\d\s/</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;1a 2 3d&quot;</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">digitSurroundedBySpace</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The escaped &#8216;d&#8217;, &#8216;w&#8217;, and &#8216;s&#8217; can be replaced by their capital letter to mean
+their opposite. For example, <tt class="docutils literal"><span class="pre">\S</span></tt> matches any character that is <em>not</em>
+white-space. When using <tt class="docutils literal"><span class="pre">[</span></tt> and <tt class="docutils literal"><span class="pre">]</span></tt>, a pattern can be inverted by starting
+with a <tt class="docutils literal"><span class="pre">^</span></tt> character:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">notABC</span> <span class="o">=</span> <span class="sr">/[^ABC]/</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;ABCBACCBBADABC&quot;</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">notABC</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>As you can see, the way regular expressions use characters to express patterns
+makes them A) very short, and B) very hard to read.</p>
+<hr class="docutils" />
+<p>Sometimes you need to make sure a pattern starts at the beginning of a string,
+or ends at its end. For this, the special characters <tt class="docutils literal"><span class="pre">^</span></tt> and <tt class="docutils literal"><span class="pre">$</span></tt> can be
+used. The first matches the start of the string, the second the end.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="sr">/a+/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;blah&quot;</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="sr">/^a+$/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;blah&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The first regular expression matches any string that contains an <tt class="docutils literal"><span class="pre">a</span></tt>
+character, the second only those strings that consist entirely of <tt class="docutils literal"><span class="pre">a</span></tt>
+characters.</p>
+<p>Note that regular expressions are objects, and have methods. Their <tt class="docutils literal"><span class="pre">test</span></tt>
+method returns a boolean indicating whether the given string matches the
+expression.</p>
+<p>The code <tt class="docutils literal"><span class="pre">\b</span></tt> matches a &#8216;word boundary&#8217;, which can be punctuation,
+white-space, or the start or end of the string.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="sr">/cat/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;concatenate&quot;</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="sr">/\bcat\b/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;concatenate&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Parts of a pattern can be allowed to be repeated a number of times.  Putting an
+asterisk (<tt class="docutils literal"><span class="pre">*</span></tt>) after an element allows it to be repeated any number of times,
+including zero. A plus (<tt class="docutils literal"><span class="pre">+</span></tt>) does the same, but requires the pattern to occur
+at least one time. A question mark (<tt class="docutils literal"><span class="pre">?</span></tt>) makes an element &#8216;optional&#8217; ― it can
+occur zero or one times.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">parenthesizedText</span> <span class="o">=</span> <span class="sr">/\(.*\)/</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Its (the sloth&#39;s) claws were gigantic!&quot;</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">parenthesizedText</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>When necessary, braces can be used to be more precise about the amount of times
+an element may occur. A number between braces (<tt class="docutils literal"><span class="pre">{4}</span></tt>) gives the exact amount
+of times it must occur. Two numbers with a comma between them (<tt class="docutils literal"><span class="pre">{3,10}</span></tt>)
+indicate that the pattern must occur at least as often as the first number, and
+at most as often as the second one. Similarly, <tt class="docutils literal"><span class="pre">{2,}</span></tt> means two or more
+occurrences, while <tt class="docutils literal"><span class="pre">{,4}</span></tt> means four or less.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">datePattern</span> <span class="o">=</span> <span class="sr">/\d{1,2}\/\d\d?\/\d{4}/</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;born 15/11/2003 (mother Spot): White Fang&quot;</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">datePattern</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The pieces <tt class="docutils literal"><span class="pre">/\d{1,2}/</span></tt> and <tt class="docutils literal"><span class="pre">/\d\d?/</span></tt> both express &#8216;one or two digits&#8217;.</p>
+<hr class="docutils" />
+<p>Part of a regular expression can be grouped together with parentheses. This
+allows us to use <tt class="docutils literal"><span class="pre">*</span></tt> and such on more than one character. For example:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">cartoonCrying</span> <span class="o">=</span> <span class="sr">/boo(hoo+)+/i</span><span class="p">;</span>
+<span class="nx">show</span><span class="p">(</span><span class="s2">&quot;Then, he exclaimed &#39;Boohoooohoohooo&#39;&quot;</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">cartoonCrying</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Where did the <tt class="docutils literal"><span class="pre">i</span></tt> at the end of that regular expression come from? After the
+closing slash, &#8216;options&#8217; may be added to a regular expression. An <tt class="docutils literal"><span class="pre">i</span></tt>, here,
+means the expression is case-insensitive, which allows the lower-case B in the
+pattern to match the upper-case one in the string.</p>
+<p>A pipe character (<tt class="docutils literal"><span class="pre">|</span></tt>) is used to allow a pattern to make a choice between
+two elements. For example:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">holyCow</span> <span class="o">=</span> <span class="sr">/(sacred|holy) (cow|bovine|bull|taurus)/i</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">holyCow</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;Sacred bovine!&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Often, looking for a pattern is just a first step in extracting something from
+a string. In previous chapters, this extraction was done by calling a string&#8217;s
+<tt class="docutils literal"><span class="pre">indexOf</span></tt> and <tt class="docutils literal"><span class="pre">slice</span></tt> methods a lot.  Now that we are aware of the
+existence of regular expressions, we can use the <tt class="docutils literal"><span class="pre">match</span></tt> method instead. When
+a string is matched against a regular expression, the result will be <tt class="docutils literal"><span class="pre">null</span></tt>
+if the match failed, or an array of matched strings if it succeeded.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;No&quot;</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/Yes/</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;... yes&quot;</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/yes/</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Giant Ape&quot;</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/giant (\w+)/i</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The first element in the returned array is always the part of the string that
+matched the pattern. As the last example shows, when there are parenthesized
+parts in the pattern, the parts they match are also added to the array. Often,
+this makes extracting pieces of string very easy.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">parenthesized</span> <span class="o">=</span> <span class="nx">prompt</span><span class="p">(</span><span class="s2">&quot;Tell me something&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">).</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\((.*)\)/</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">parenthesized</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;You parenthesized &#39;&quot;</span><span class="p">,</span> <span class="nx">parenthesized</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>The <tt class="docutils literal"><span class="pre">replace</span></tt> method of string values, which we saw in
+<a class="reference internal" href="ch09.html#functional-programming-chapter"><em>Functional Programming</em></a>, can be given a regular expression as its
+first argument.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Borobudur&quot;</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[ou]/g</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Notice the <tt class="docutils literal"><span class="pre">g</span></tt> character after the regular expression. It stands for
+&#8216;global&#8217;, and means that every part of the string that matches the pattern
+should be replaced. When this <tt class="docutils literal"><span class="pre">g</span></tt> is omitted, only the first <tt class="docutils literal"><span class="pre">&quot;o&quot;</span></tt> would be
+replaced.</p>
+<p>Sometimes it is necessary to keep parts of the replaced strings.  For example,
+we have a big string containing the names of people, one name per line, in the
+format &#8220;Lastname, Firstname&#8221;. We want to swap these names, and remove the
+comma, to get a simple &#8220;Firstname Lastname&#8221; format.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">names</span> <span class="o">=</span> <span class="s2">&quot;Picasso, Pablo\nGauguin, Paul\nVan Gogh, Vincent&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">names</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/([\w ]+), ([\w ]+)/g</span><span class="p">,</span> <span class="s2">&quot;$2 $1&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">$1</span></tt> and <tt class="docutils literal"><span class="pre">$2</span></tt> the replacement string refer to the parenthesized parts
+in the pattern. <tt class="docutils literal"><span class="pre">$1</span></tt> is replaced by the text that matched against the first
+pair of parentheses, <tt class="docutils literal"><span class="pre">$2</span></tt> by the second, and so on, up to <tt class="docutils literal"><span class="pre">$9</span></tt>.</p>
+<p>If you have more than 9 parentheses parts in your pattern, this will no longer
+work. But there is one more way to replace pieces of a string, which can also
+be useful in some other tricky situations.  When the second argument given to
+the <tt class="docutils literal"><span class="pre">replace</span></tt> method is a function value instead of a string, this function
+is called every time a match is found, and the matched text is replaced by
+whatever the function returns. The arguments given to the function are the
+matched elements, similar to the values found in the arrays returned by
+<tt class="docutils literal"><span class="pre">match</span></tt>: The first one is the whole match, and after that comes one argument
+for every parenthesized part of the pattern.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">eatOne</span><span class="p">(</span><span class="nx">match</span><span class="p">,</span> <span class="nx">amount</span><span class="p">,</span> <span class="nx">unit</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">amount</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">amount</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">amount</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">unit</span> <span class="o">=</span> <span class="nx">unit</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">unit</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">amount</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">unit</span> <span class="o">=</span> <span class="nx">unit</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span><span class="p">;</span>
+        <span class="nx">amount</span> <span class="o">=</span> <span class="s2">&quot;no&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">amount</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="nx">unit</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">stock</span> <span class="o">=</span> <span class="s2">&quot;1 lemon, 2 cabbages, and 101 eggs&quot;</span><span class="p">;</span>
+<span class="nx">stock</span> <span class="o">=</span> <span class="nx">stock</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/(\d+) (\w+)/g</span><span class="p">,</span> <span class="nx">eatOne</span><span class="p">);</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">stock</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>There are cases where the pattern you need to match against is not known while
+you are writing the code. Say we are writing a (very simple-minded) obscenity
+filter for a message board. We only want to allow messages that do not contain
+obscene words. The administrator of the board can specify a list of words that
+he or she considers unacceptable.</p>
+<p>The most efficient way to check a piece of text for a set of words is to use a
+regular expression. If we have our word list as an array, we can build the
+regular expression like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">badWords</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ape&quot;</span><span class="p">,</span> <span class="s2">&quot;monkey&quot;</span><span class="p">,</span> <span class="s2">&quot;simian&quot;</span><span class="p">,</span> <span class="s2">&quot;gorilla&quot;</span><span class="p">,</span> <span class="s2">&quot;evolution&quot;</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">pattern</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="nx">badWords</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;|&quot;</span><span class="p">),</span> <span class="s2">&quot;i&quot;</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nx">isAcceptable</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="o">!</span><span class="nx">pattern</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">isAcceptable</span><span class="p">(</span><span class="s2">&quot;Mmmm, grapes.&quot;</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">isAcceptable</span><span class="p">(</span><span class="s2">&quot;No more of that monkeybusiness, now.&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>We could add <tt class="docutils literal"><span class="pre">\b</span></tt> patterns around the words, so that the thing about grapes
+would not be classified as unacceptable. That would also make the second one
+acceptable, though, which is probably not correct. Obscenity filters are hard
+to get right (and usually way too annoying to be a good idea).</p>
+<p>The first argument to the <tt class="docutils literal"><span class="pre">RegExp</span></tt> constructor is a string containing the
+pattern, the second argument can be used to add case-insensitivity or
+globalness. When building a string to hold the pattern, you have to be careful
+with backslashes. Because, normally, backslashes are removed when a string is
+interpreted, any backslashes that must end up in the regular expression itself
+have to be escaped:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">digits</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">RegExp</span><span class="p">(</span><span class="s2">&quot;\\d+&quot;</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">digits</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="s2">&quot;101&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>The most important thing to know about regular expressions is that they exist,
+and can greatly enhance the power of your string-mangling code. They are so
+cryptic that you&#8217;ll probably have to look up the details on them the first ten
+times you want to make use of them. Persevere, and you will soon be
+off-handedly writing expressions that look like occult gibberish</p>
+<p><img alt="image0" src="_images/xkcd_regular_expressions.png" />
+(Comic by <a class="reference external" href="http://xkcd.com">Randall Munroe</a>.)</p>
+<div class="section" id="exercises">
+<h2>13.1. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="exercises/ch13/ch13s01.html#ch13s01"><em>Chapter 13 Exercise Set 1</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="app_a.html" title="Appendix A: More (obscure) control structures"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch12.html" title="12. Modularity"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

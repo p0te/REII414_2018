@@ -1,0 +1,565 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>2. Functions &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="3. Data structures: Objects and Arrays" href="ch03.html" />
+    <link rel="prev" title="1. Basic JavaScript: values, variables, and control flow" href="ch01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch03.html" title="3. Data structures: Objects and Arrays"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch01.html" title="1. Basic JavaScript: values, variables, and control flow"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="functions">
+<span id="functions-chapter"></span><span id="index-0"></span><h1>2. Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
+<p>A program often needs to do the same thing in different places.  Repeating all
+the necessary statements every time is tedious and error-prone. It would be
+better to put them in one place, and have the program take a detour through
+there whenever necessary. This is what
+<a class="reference external" href="http://en.wikipedia.org/wiki/Function_%28computer_science%29">functions</a>
+were invented for: They are canned code that a program can go through whenever
+it wants. Putting a string on the screen requires quite a few statements, but
+when we have a <tt class="docutils literal"><span class="pre">alert</span></tt> function we can just write <tt class="docutils literal"><span class="pre">alert(&quot;Aleph&quot;)</span></tt> and be
+done with it.</p>
+<p>To view functions merely as canned chunks of code doesn&#8217;t do them justice
+though. When needed, they can play the role of pure functions, algorithms,
+indirections, abstractions, decisions, modules, continuations, data structures,
+and more. Being able to effectively use functions is a necessary skill for any
+kind of serious programming. This chapter provides an introduction into the
+subject, <a class="reference internal" href="ch09.html#functional-programming-chapter"><em>Functional Programming</em></a> discusses the subtleties of
+functions in more depth.</p>
+<div class="section" id="pure-functions">
+<span id="index-1"></span><h2>2.1. Pure functions<a class="headerlink" href="#pure-functions" title="Permalink to this headline">¶</a></h2>
+<p>Pure functions, for a start, are the things that were called functions in the
+mathematics classes that I hope you have been subjected to at some point in
+your life. Taking the cosine or the absolute value of a number is a pure
+function of one argument.  Addition is a pure function of two arguments.</p>
+<p>The defining properties of pure functions are that they always return the same
+value when given the same arguments, and never have side effects. They take
+some arguments, return a value based on these arguments, and do not monkey
+around with anything else.</p>
+<p>In JavaScript, addition is an operator, but it could be wrapped in a function
+like this (and as pointless as this looks, we will come across situations where
+it is actually useful):</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">add</span></tt> is the name of the function. <tt class="docutils literal"><span class="pre">a</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are the names of the two
+<strong>arguments</strong>. <tt class="docutils literal"><span class="pre">return</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">b;</span></tt> is the <strong>body of the function</strong>.</p>
+<p>The keyword <tt class="docutils literal"><span class="pre">function</span></tt> is always used when creating a new function. When it
+is followed by a variable name, the resulting function will be stored under
+this name. After the name comes a list of argument names, and then finally the
+body of the function.  Unlike those around the body of <tt class="docutils literal"><span class="pre">while</span></tt> loops or
+<tt class="docutils literal"><span class="pre">if</span></tt> statements, the braces around a function body are obligatory.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Technically, this wouldn&#8217;t have been necessary, but I suppose the designers
+of JavaScript felt it would clarify things if function bodies always had
+braces.</p>
+</div>
+<p>The keyword <a class="reference external" href="http://en.wikipedia.org/wiki/Return_statement">return</a>,
+followed by an expression, is used to determine the
+value the function returns. When control comes across a <tt class="docutils literal"><span class="pre">return</span></tt> statement,
+it immediately jumps out of the current function and gives the returned value
+to the code that called the function. A <tt class="docutils literal"><span class="pre">return</span></tt> statement without an
+expression after it will cause the function to return <tt class="docutils literal"><span class="pre">undefined</span></tt>.</p>
+<p>A body can, of course, have more than one statement in it. Here is a function
+for computing powers (with positive, integer exponents):</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">power</span><span class="p">(</span><span class="nx">base</span><span class="p">,</span> <span class="nx">exponent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">count</span> <span class="o">&lt;</span> <span class="nx">exponent</span><span class="p">;</span> <span class="nx">count</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">result</span> <span class="o">*=</span> <span class="nx">base</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">power</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">));</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you solved the power exercise from <a class="reference internal" href="exercises/ch01/ch01s01.html#ch01s01"><em>Chapter 1 Exercise Set 1</em></a>, this technique for
+computing a power should look familiar.</p>
+</div>
+<p>Creating a variable (<tt class="docutils literal"><span class="pre">result</span></tt>) and updating it are side effects.  Didn&#8217;t I
+just say pure functions had no side effects?</p>
+<p>A variable created inside a function exists only inside the function. This is
+fortunate, or a programmer would have to come up with a different name for
+every variable she needs throughout a program. Because <tt class="docutils literal"><span class="pre">result</span></tt> only exists
+inside <tt class="docutils literal"><span class="pre">power</span></tt>, the changes to it only last until the function returns, and
+from the perspective of code that calls it there are no side effects.</p>
+<hr class="docutils" />
+<p>Pure functions have two very nice properties. They are easy to think about, and
+they are easy to re-use.</p>
+<p>If a function is pure, a call to it can be seen as a thing in itself. When you
+are not sure that it is working correctly, you can test it by calling it
+directly from the console, which is simple because it does not depend on any
+context.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Technically, a pure function can not use the value of any external
+variables. These values might change, and this could make the function
+return a different value for the same arguments. In practice, the
+programmer may consider some variables &#8220;constant&#8221; ― they are not expected
+to change ― and consider functions that use only constant variables pure.
+Variables that contain a function value are often good examples of constant
+variables.</p>
+</div>
+<p>It is easy to make these tests automatic ― to write a program that tests a
+specific function. Non-pure functions might return different values based on
+all kinds of factors, and have side effects that might be hard to test and
+think about.</p>
+<p>Because pure functions are self-sufficient, they are likely to be useful and
+relevant in a wider range of situations than non-pure ones. Take <tt class="docutils literal"><span class="pre">alert</span></tt>, for
+example. This function&#8217;s usefulness depends on the browser&#8217;s ability to pop up
+a display window for output.  Without that special browser support, the
+function is useless. We can imagine a related function, let&#8217;s call it
+<tt class="docutils literal"><span class="pre">format</span></tt>, that takes a value as an argument and returns a string that
+represents this value.  This function is useful in more situations than
+<tt class="docutils literal"><span class="pre">alert</span></tt>.</p>
+<p>Of course, <tt class="docutils literal"><span class="pre">format</span></tt> does not solve the same problem as <tt class="docutils literal"><span class="pre">alert</span></tt> (since it
+doesn&#8217;t display anything to the program user), and no pure function is going to
+be able to solve that problem, because it requires a side effect. In many
+cases, non-pure functions are precisely what you need. In other cases, a
+problem can be solved with a pure function but the non-pure variant is much
+more convenient or efficient.</p>
+<p>Thus, when something can easily be expressed as a pure function, write it that
+way. But never feel dirty for writing non-pure functions.</p>
+<hr class="docutils" id="index-2" />
+<p>Functions with side effects do not have to contain a <tt class="docutils literal"><span class="pre">return</span></tt> statement. If
+no <tt class="docutils literal"><span class="pre">return</span></tt> statement is encountered, the function returns <tt class="docutils literal"><span class="pre">undefined</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">yell</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">message</span> <span class="o">+</span> <span class="s2">&quot;!!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">yell</span><span class="p">(</span><span class="s2">&quot;Yow&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scope">
+<span id="index-3"></span><h2>2.2. Scope<a class="headerlink" href="#scope" title="Permalink to this headline">¶</a></h2>
+<p>The names of the arguments of a function are available as variables inside it.
+They will refer to the values of the arguments the function is being called
+with, and like normal variables created inside a function, they do not exist
+outside it. Aside from the top-level environment, there are smaller, local
+environments created by function calls. When looking up a variable inside a
+function, the local environment is checked first, and only if the variable does
+not exist there is it looked up in the top-level environment. This makes it
+possible for variables inside a function to &#8220;shadow&#8221; top-level variables that
+have the same name.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">printIsAlert</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">print</span> <span class="o">=</span> <span class="nx">alert</span>
+    <span class="nx">print</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">printIsAlert</span><span class="p">(</span><span class="s2">&quot;Troglodites&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The variables in this local environment are only visible to the code inside the
+function. If this function calls another function, the newly called function
+does not see the variables inside the first function:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">variable</span> <span class="o">=</span> <span class="s2">&quot;top-level&quot;</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">printVariable</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;inside printVariable, the variable holds &#39;&quot;</span> <span class="o">+</span>
+          <span class="nx">variable</span> <span class="o">+</span> <span class="s2">&quot;&#39;.&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">test</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">variable</span> <span class="o">=</span> <span class="s2">&quot;local&quot;</span><span class="p">;</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;inside test, the variable holds &#39;&quot;</span> <span class="o">+</span> <span class="nx">variable</span> <span class="o">+</span> <span class="s2">&quot;&#39;.&quot;</span><span class="p">);</span>
+    <span class="nx">printVariable</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nx">test</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>However, and this is a subtle but extremely useful phenomenon, when a function
+is defined <em>inside</em> another function, its local environment will be based on
+the local environment that surrounds it instead of the top-level environment.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">variable</span> <span class="o">=</span> <span class="s2">&quot;top-level&quot;</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">parentFunction</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">variable</span> <span class="o">=</span> <span class="s2">&quot;local&quot;</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">childFunction</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">variable</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">childFunction</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="nx">parentFunction</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>What this comes down to is that which variables are visible inside a function
+is determined by the place of that function in the program text. All variables
+that were defined <em>above</em> a function&#8217;s definition are visible, which means both
+those in function bodies that enclose it, and those at the top-level of the
+program. This approach to variable visibility is called
+<a class="reference external" href="http://en.wikipedia.org/wiki/Lexical_scoping">lexical scoping</a>.</p>
+<hr class="docutils" />
+<p>People who have experience with other programming languages might expect that a
+block of code (between braces) also produces a new local environment. Not in
+JavaScript. Functions are the only things that create a new scope. You are
+allowed to use free-standing blocks like this...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">something</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">something</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Inside: &quot;</span> <span class="o">+</span> <span class="nx">something</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Outside: &quot;</span> <span class="o">+</span> <span class="nx">something</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>... but the <tt class="docutils literal"><span class="pre">something</span></tt> inside the block refers to the same variable as the
+one outside the block. In fact, although blocks like this are allowed, they are
+utterly pointless. Most people agree that this is a bit of a design blunder by
+the designers of JavaScript, and
+<a class="reference external" href="http://en.wikipedia.org/wiki/ECMAScript_Harmony">ECMAScript Harmony</a> will
+add some way to define variables that stay inside blocks (the <tt class="docutils literal"><span class="pre">let</span></tt> keyword).</p>
+<hr class="docutils" />
+<p>Here is a case that might surprise you:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">variable</span> <span class="o">=</span> <span class="s2">&quot;top-level&quot;</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">parentFunction</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">variable</span> <span class="o">=</span> <span class="s2">&quot;local&quot;</span><span class="p">;</span>
+    <span class="kd">function</span> <span class="nx">childFunction</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">variable</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">childFunction</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">parentFunction</span><span class="p">();</span>
+<span class="nx">child</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">parentFunction</span></tt> <em>returns</em> its internal function, and the code at the bottom
+calls this function. Even though <tt class="docutils literal"><span class="pre">parentFunction</span></tt> has finished executing at
+this point, the local environment where <tt class="docutils literal"><span class="pre">variable</span></tt> has the value <tt class="docutils literal"><span class="pre">&quot;local&quot;</span></tt>
+still exists, and <tt class="docutils literal"><span class="pre">childFunction</span></tt> still uses it. This phenomenon is called
+<a class="reference external" href="http://en.wikipedia.org/wiki/Closure_%28computer_science%29">closure</a>.</p>
+<hr class="docutils" />
+<p>Apart from making it very easy to quickly see in which part of a program a
+variable will be available by looking at the shape of the program text, lexical
+scoping also allows us to <em>synthesize</em> functions. By using some of the
+variables from an enclosing function, an inner function can be made to do
+different things.  Imagine we need a few different but similar functions, one
+that adds 2 to its argument, one that adds 5, and so on.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">makeAddFunction</span><span class="p">(</span><span class="nx">amount</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">number</span> <span class="o">+</span> <span class="nx">amount</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">add</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">addTwo</span> <span class="o">=</span> <span class="nx">makeAddFunction</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">addFive</span> <span class="o">=</span> <span class="nx">makeAddFunction</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">addTwo</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">addFive</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>On top of the fact that different functions can contain variables of the same
+name without getting tangled up, these scoping rules also allow functions to
+call <em>themselves</em> without running into problems. A function that calls itself
+is called recursive.  Recursion allows for some interesting definitions. Look
+at this implementation of <tt class="docutils literal"><span class="pre">power</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">power</span><span class="p">(</span><span class="nx">base</span><span class="p">,</span> <span class="nx">exponent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">exponent</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="nx">base</span> <span class="o">*</span> <span class="nx">power</span><span class="p">(</span><span class="nx">base</span><span class="p">,</span> <span class="nx">exponent</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is rather close to the way mathematicians define exponentiation, and to me
+it looks a lot nicer than the earlier version. It sort of loops, but there is
+no <tt class="docutils literal"><span class="pre">while</span></tt>, <tt class="docutils literal"><span class="pre">for</span></tt>, or even a local side effect to be seen. By calling
+itself, the function produces the same effect.</p>
+<p>There is one important problem though: In most browsers, this second version is
+about ten times slower than the first one. In JavaScript, running through a
+simple loop is a lot cheaper than calling a function multiple times.</p>
+<hr class="docutils" />
+<p>The dilemma of speed versus elegance is an interesting one. It not only occurs
+when deciding for or against recursion. In many situations, an elegant,
+intuitive, and often short solution can be replaced by a more convoluted but
+faster solution.</p>
+<p>In the case of the <tt class="docutils literal"><span class="pre">power</span></tt> function above the un-elegant version is still
+sufficiently simple and easy to read. It doesn&#8217;t make very much sense to
+replace it with the recursive version. Often, though, the concepts a program is
+dealing with get so complex that giving up some efficiency in order to make the
+program more straightforward becomes an attractive choice.</p>
+<p>The basic rule, which has been repeated by many programmers and with which I
+wholeheartedly agree, is to not worry about efficiency until your program is
+provably too slow. When it is, find out which parts are too slow, and start
+exchanging elegance for efficiency in those parts.</p>
+<p>Of course, the above rule doesn&#8217;t mean one should start ignoring performance
+altogether. In many cases, like the <tt class="docutils literal"><span class="pre">power</span></tt> function, not much simplicity is
+gained by the &#8220;elegant&#8221; approach. In other cases, an experienced programmer can
+see right away that a simple approach is never going to be fast enough.</p>
+<p>The reason I am making a big deal out of this is that surprisingly many
+programmers focus fanatically on efficiency, even in the smallest details. The
+result is bigger, more complicated, and often less correct programs, which take
+longer to write than their more straightforward equivalents and often run only
+marginally faster.</p>
+</div>
+<div class="section" id="the-stack">
+<span id="index-4"></span><h2>2.3. The stack<a class="headerlink" href="#the-stack" title="Permalink to this headline">¶</a></h2>
+<p>But I was talking about recursion. A concept closely related to recursion is a
+thing called the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Call_stack">stack</a>. When a function is called,
+control is given to the body of that function. When that body returns, the code
+that called the function is resumed. While the body is running, the computer
+must remember the context from which the function was called, so that it knows
+where to continue afterwards.  The place where this context is stored is called
+the stack.</p>
+<p>The fact that it is called &#8220;stack&#8221; has to do with the fact that, as we saw, a
+function body can again call a function. Every time a function is called,
+another context has to be stored. One can visualise this as a stack of
+contexts. Every time a function is called, the current context is thrown on top
+of the stack. When a function returns, the context on top is taken off the
+stack and resumed.</p>
+<p>This stack requires space in the computer&#8217;s memory to be stored.  When the
+stack grows too big, the computer will give up with a message like &#8220;out of
+stack space&#8221; or &#8220;too much recursion&#8221;. This is something that has to be kept in
+mind when writing recursive functions.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">chicken</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">egg</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">egg</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">chicken</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">chicken</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot; came first.&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In addition to demonstrating a very interesting way of writing a broken
+program, this example shows that a function does not have to call itself
+directly to be recursive. If it calls another function which (directly or
+indirectly) calls the first function again, it is still recursive.</p>
+<hr class="docutils" />
+<p>Recursion is not always just a less-efficient alternative to looping. Some
+problems are much easier to solve with recursion than with loops. Most often
+these are problems that require exploring or processing several <em>branches</em>,
+each of which might branch out again into more branches.</p>
+<p>Consider this puzzle: By starting from the number 1 and repeatedly either
+adding 5 or multiplying by 3, an infinite amount of new numbers can be
+produced. How would you write a function that, given a number, tries to find a
+sequence of additions and multiplications that produce that number?</p>
+<p>For example, the number 13 could be reached by first multiplying 1 by 3, and
+then adding 5 twice. The number 15 can not be reached at all.</p>
+<p>Here is the solution:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">findSequence</span><span class="p">(</span><span class="nx">goal</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">find</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">history</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">start</span> <span class="o">==</span> <span class="nx">goal</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nx">history</span><span class="p">;</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">start</span> <span class="o">&gt;</span> <span class="nx">goal</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="nx">find</span><span class="p">(</span><span class="nx">start</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="nx">history</span> <span class="o">+</span> <span class="s2">&quot; + 5)&quot;</span><span class="p">)</span> <span class="o">||</span>
+                   <span class="nx">find</span><span class="p">(</span><span class="nx">start</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="nx">history</span> <span class="o">+</span> <span class="s2">&quot; * 3)&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">find</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">findSequence</span><span class="p">(</span><span class="mi">24</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Note that it doesn&#8217;t necessarily find the <em>shortest</em> sequence of operations, it
+is satisfied when it finds any sequence at all.</p>
+<p>The inner <tt class="docutils literal"><span class="pre">find</span></tt> function, by calling itself in two different ways, explores
+both the possibility of adding 5 to the current number and of multiplying it by
+<cite>3</cite>. When it finds the number, it returns the <tt class="docutils literal"><span class="pre">history</span></tt> string, which is used
+to record all the operators that were performed to get to this number. It also
+checks whether the current number is bigger than <tt class="docutils literal"><span class="pre">goal</span></tt>, because if it is, we
+should stop exploring this branch, it is not going to give us our number.</p>
+<p>The use of the <tt class="docutils literal"><span class="pre">||</span></tt> operator in the example can be read as &#8216;return the
+solution found by adding 5 to <tt class="docutils literal"><span class="pre">start</span></tt>, and if that fails, return the solution
+found by multiplying <tt class="docutils literal"><span class="pre">start</span></tt> by 3&#8217;. It could also have been written in a more
+wordy way like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">else</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">found</span> <span class="o">=</span> <span class="nx">find</span><span class="p">(</span><span class="nx">start</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="nx">history</span> <span class="o">+</span> <span class="s2">&quot; + 5)&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">found</span> <span class="o">==</span> <span class="kc">null</span><span class="p">)</span>
+        <span class="nx">found</span> <span class="o">=</span> <span class="nx">find</span><span class="p">(</span><span class="nx">start</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">history</span> <span class="o">+</span> <span class="s2">&quot; * 3&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">found</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Even though function definitions occur as statements between the rest of the
+program, they are not part of the same time-line:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;The future says: &quot;</span><span class="p">,</span> <span class="nx">future</span><span class="p">());</span>
+
+<span class="kd">function</span> <span class="nx">future</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s2">&quot;We STILL have no flying cars.&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>What is happening is that the computer looks up all function definitions, and
+stores the associated functions, <em>before</em> it starts executing the rest of the
+program. The same happens with functions that are defined inside other
+functions. When the outer function is called, the first thing that happens is
+that all inner functions are added to the new environment.</p>
+<hr class="docutils" />
+<p>There is another way to define function values, which more closely resembles
+the way other values are created. When the <tt class="docutils literal"><span class="pre">function</span></tt> keyword is used in a
+place where an expression is expected, it is treated as an expression producing
+a function value. Functions created in this way do not have to be given a name
+(though it is allowed to give them one).</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Note the semicolon after the definition of <tt class="docutils literal"><span class="pre">add</span></tt>. Normal function definitions
+do not need these, but this statement has the same general structure as <tt class="docutils literal"><span class="pre">var</span>
+<span class="pre">add</span> <span class="pre">=</span> <span class="pre">22;</span></tt>, and thus requires the semicolon.</p>
+<p>This kind of function value is called an anonymous function, because it does
+not have a name. Sometimes it is useless to give a function a name, like in the
+<tt class="docutils literal"><span class="pre">makeAddFunction</span></tt> example we saw earlier:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">makeAddFunction</span><span class="p">(</span><span class="nx">amount</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+               <span class="k">return</span> <span class="nx">number</span> <span class="o">+</span> <span class="nx">amount</span><span class="p">;</span>
+           <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Since the function named <tt class="docutils literal"><span class="pre">add</span></tt> in the first version of <tt class="docutils literal"><span class="pre">makeAddFunction</span></tt>
+was referred to only once, the name does not serve any purpose and we might as
+well directly return the function value.</p>
+<hr class="docutils" />
+<p>Try the following:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="s2">&quot;Good Evening&quot;</span><span class="p">,</span> <span class="s2">&quot;How do you do?&quot;</span><span class="p">,</span> <span class="s2">&quot;Goodbye&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The function <tt class="docutils literal"><span class="pre">alert</span></tt> officially only accepts one argument. Yet when you call
+it like this, the computer does not complain at all, but just ignores the other
+arguments.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>You can, apparently, even get away with passing too few arguments.  When an
+argument is not passed, its value inside the function is <tt class="docutils literal"><span class="pre">undefined</span></tt>.</p>
+<p>Of course, the downside of this is that it is also possible to accidentally
+pass the wrong number of arguments to functions that expect a fixed amount of
+them, like <tt class="docutils literal"><span class="pre">alert</span></tt>, and never be told about it.</p>
+<p>In the next chapter, we will see a way in which a function body can get at the
+exact list of arguments that were passed to it. This can be useful, as it makes
+it possible to have a function accept any number of arguments.</p>
+</div>
+<div class="section" id="more-about-strings">
+<h2>2.4. More about strings<a class="headerlink" href="#more-about-strings" title="Permalink to this headline">¶</a></h2>
+<p>We were introduced to strings in <a class="reference internal" href="ch01.html#values-chapter"><em>Basic JavaScript: values, variables, and control flow</em></a>, and now we will learn
+a bit more about them.  Strings are sequences of <strong>characters</strong>, each of which
+can be accessed using an index, like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">fruit</span> <span class="o">=</span> <span class="s2">&quot;banana&quot;</span><span class="p">;</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">fruit</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">fruit</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">fruit</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>The first <tt class="docutils literal"><span class="pre">alert</span></tt> will display <tt class="docutils literal"><span class="pre">b</span></tt>, the second <tt class="docutils literal"><span class="pre">a</span></tt>, and the third <tt class="docutils literal"><span class="pre">n</span></tt>.</p>
+<p>Why start at 0? People tend to start counting from 1. As unintuitive as it
+seems, numbering the elements in a collection from 0 is often more practical.
+Just go with it for now, it will grow on you.</p>
+<p>Strings also keep track of the the number of characters they contain, in a
+<em>property</em> called <tt class="docutils literal"><span class="pre">length</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">fruit</span> <span class="o">=</span> <span class="s2">&quot;banana&quot;</span><span class="p">;</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">fruit</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This will display <tt class="docutils literal"><span class="pre">6</span></tt>, the number of characters in <tt class="docutils literal"><span class="pre">banana</span></tt>.</p>
+<p>You will learn more about properties in <a class="reference internal" href="ch03.html#objects-and-arrays-chapter"><em>Data structures: Objects and Arrays</em></a>.</p>
+</div>
+<div class="section" id="glossary">
+<h2>2.5. Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-arguments">arguments</dt>
+<dd>Values passed to a function in a function call that act as local
+variables within the function.</dd>
+<dt id="term-body-of-a-function">body of a function</dt>
+<dd>A sequence of statements occuring after the function name and
+arguments that are executed when the function is called.</dd>
+<dt id="term-function">function</dt>
+<dd>A portion of code within a larger program that performs a specific
+task.</dd>
+<dt id="term-pure-function">pure function</dt>
+<dd>A function that does not produce any side effects.</dd>
+<dt id="term-scope">scope</dt>
+<dd>An enclosing context for values and expressions in a computer program.</dd>
+</dl>
+</div>
+<div class="section" id="exercises">
+<h2>2.6. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="exercises/ch02/ch02s01.html#ch02s01"><em>Chapter 2 Exercise Set 1</em></a></li>
+<li><a class="reference internal" href="exercises/ch02/ch02s02.html#ch02s02"><em>Chapter 2 Exercise Set 2</em></a></li>
+<li><a class="reference internal" href="exercises/ch02/ch02s03.html#ch02s03"><em>Chapter 2 Exercise Set 3</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch03.html" title="3. Data structures: Objects and Arrays"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch01.html" title="1. Basic JavaScript: values, variables, and control flow"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

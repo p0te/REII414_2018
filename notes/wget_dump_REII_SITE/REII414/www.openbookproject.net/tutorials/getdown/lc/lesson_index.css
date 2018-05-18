@@ -1,0 +1,20 @@
+/* Style the Unordered List on the Front Page */
+div#lesson_index {
+    text-align: center;
+}
+div#lesson_index h1 {
+    color: #99F;
+    font-size: 1.8em;
+}
+div#lesson_index ul {
+    display: block;
+    text-align: left;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+div#lesson_index ul li {
+    list-style-type: none;
+}
+div#lesson_index ul a {
+    text-decoration: none;
+}

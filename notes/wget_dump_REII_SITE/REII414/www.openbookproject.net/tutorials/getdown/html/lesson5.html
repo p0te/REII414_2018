@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>HTML tables are designed to hold <i>tabular data</i>, like this:</p>
+<table class="source" style="width: 360px;">
+<tr>
+<td>
+<table>
+  <tr><th colspan="2">Web Growth Summary (*)</th></tr>
+  <tr><th>Month</th><th>Number of Web Sites</th></tr>
+  <tr><td>6/93</td><td>130</td></tr>
+  <tr><td>12/93</td><td>623</td></tr>
+  <tr><td>6/94</td><td>2,738</td></tr>
+  <tr><td>12/94</td><td>10,022</td></tr>
+  <tr><td>6/95</td><td>23,500</td></tr>
+  <tr><td>1/96</td><td>100,000</td></tr>
+  <tr><td>6/96</td><td>230,000 (est)</td></tr>
+  <tr><td>1/97</td><td>650,000 (est)</td></tr>
+</table>
+</td>
+</tr>
+</table>
+
+<p>The source code for this table looks like this:</p>
+<table class="source" style="width: 600px;">
+<tr>
+<td>
+<pre>&lt;table&gt;
+  &lt;tr&gt;&lt;th colspan="2"&gt;Web Growth Summary (*)&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;th&gt;Month&lt;/th&gt;&lt;th&gt;Number of Web Sites&lt;/th&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;6/93&lt;/td&gt;&lt;td&gt;130&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;12/93&lt;/td&gt;&lt;td&gt;623&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;6/94&lt;/td&gt;&lt;td&gt;2,738&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;12/94&lt;/td&gt;&lt;td&gt;10,022&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;6/95&lt;/td&gt;&lt;td&gt;23,500&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;1/96&lt;/td&gt;&lt;td&gt;100,000&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;6/96&lt;/td&gt;&lt;td&gt;230,000 (est)&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;1/97&lt;/td&gt;&lt;td&gt;650,000 (est)&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+</td>
+</tr>
+</table>
+
+<p>Here are the elements used with tables:</p>
+<div class="source" style="width: 600px;">
+<dl>
+ <dt><code>&lt;table&gt;&lt;/table&gt;</code></dt>
+
+ <dd>This element encloses the entire table. Put <code>&lt;table&gt;</code> at
+ the start of the table and <code>&lt;/table&gt;</code> at the end of it.</dd>
+
+ <dt><code>&lt;tr&gt;&lt;/tr&gt;</code></dt>
+ <dd>Table row - one row of the table.</dd>
+
+ <dt><code>&lt;th&gt;&lt;/th&gt;</code></dt>
+ <dd>Table heading - default attributes of this element are usually bold and
+ centered. Use it to put headings on your table.</dd>
+
+ <dt><code>&lt;td&gt;&lt;/td&gt;</code></dt>
+ <dd>Table data - this specifies one cell of the table (as does 
+ <code>th</code>). Each table row should have the same number of these, unless
+ the <code>colspan="x"</code> attribute <em>inside</em> the openning tag to
+ indicate that it spans more than one column.</dd>
+</dl>
+</div>
+
+<p>
+Tables must have the same number of columns in each row.  Columns are
+implicitely determined by the number of table data cells (or table data
+headings) that occur in each row.  This means that you need to make sure each
+row in your table has the same number of <code>td</code> or <code>th</code>
+elements.
+</p>
+<p>
+Using the <code>colspan="x"</code> attribute (where <code>x</code> is the
+number of columns spanned) inside a <code>td</code> or <code>th</code> makes
+it take up the space of <code>x</code> columns in the table.  In the
+Web Growth Summary example above, the first row had a single table heading
+element that spanned both columns of the table.
+</p>
+</section>
+
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+    <li>
+    <p>Once again, copy <code>minimal_page.html</code> to a new file named
+    <code>decbinocthex.html</code> and set the title and a top level heading to
+    <q>Table I</q>.  Use what you've learned in this lesson to produce the
+    following table(**) inside the new document:</p>
+
+    <p><img src="images/decbinocthextable.png"
+    alt="Table of Decimal, Binary, Octal, Hexidecimal Values" /></p>
+   
+    <p>Put a level 2 heading above this table labeled <q>Decimal, Binary,
+    Octal, and Hex</q>. Your completed <code>decbinocthex.html</code>
+    Should look something like
+    <a href="screenshots/lesson5/decbinocthex_html.png">this</a></p>
+    </li>
+
+    <li><p>In a file named <code>mytable.html</code>, create another table with
+    your own data.  If you like sports, maybe a table with a column for team
+    names and columns for wins, losses, and ties.</p>
+
+    <p>As usual, set the title and a top level heading to the same thing.
+    This time call it <q>Table II</q>. Put a level 2 heading above your table
+    with an appropriate description inside.</p></li>
+</ol>
+
+<cite>(*) From Matthew K. Gray's website @
+<a href="http://www.mit.edu/people/mkgray/net/web-growth-summary.html">
+http://www.mit.edu/people/mkgray/net/web-growth-summary.html</a></cite>
+
+<cite>(**) The table shown here is an image so that the source for it is not
+available and the exercise is more challenging ;-)
+</cite>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+\documentclass{article}
+\usepackage{listings} 
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fullflexible,
+  frame=single,
+  breaklines=true,
+}
+\title{SQL summary}
+\author{MJ Bezuidfenhout, credit to Jaques Steyn}
+\begin{document}
+\maketitle
+\section{Creating tables}
+\subsection{Syntax}
+\begin{lstlisting}
+CREATE TABLE tablename (column1 data type [constraint] [,column2 data type [constraint] ] [,
+
+PRIMARY KEY (column1 [, column2]) ] [,FOREIGN KEY (column1 [, column2]) REFERENCES tablename] [,CONSTRAINT constraint ] );
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+	CREATE TABLE VENDOR (V_CODE INTEGER NOT NULL UNIQUE,V_NAME VARCHAR(35) NOT NULL,V_CONTACT VARCHAR(25) NOT NULL,
+
+V_AREACODE CHAR(3) NOT NULL,V_PHONE CHAR(8) NOT NULL,
+
+V_STATE CHAR(2) NOT NULL,V_ORDER CHAR(1) NOT NULL,
+
+PRIMARY KEY (V_CODE));
+\end{lstlisting}
+
+\section{SQL Indexes}
+\subsection{Syntax}
+\begin{lstlisting}
+CREATE [UNIQUE]INDEX indexname ON tablename(column1 [, column2])
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+CREATE INDEX P_INDATEX ON PRODUCT(P_INDATE);
+
+CREATE UNIQUE INDEX P_CODEX ON PRODUCT(P_CODE);
+\end{lstlisting}
+
+\section{Adding Table Rows}
+\subsection{Syntax}
+\begin{lstlisting}
+INSERT INTO tablename VALUES (value1, value2, …, valuen)
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+INSERT INTO VENDOR VALUES (21225,'Bryson, Inc.','Smithson','615','223-3234','TN','Y');
+
+INSERT INTO VENDOR VALUES (21226,'Superloo, Inc.','Flushing','904','215-8995','FL','N');\end{lstlisting}
+
+\section{Listing Table rows}
+\subsection{Syntax}
+\begin{lstlisting}
+SELECT columnlist FROM tablename;
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+SELECT * FROM PRODUCT;
+
+SELECT P_CODE, P_DESCRIPT, P_INDATE, P_QOH, P_MIN, P_PRICE, P_DISCOUNT, V_CODE FROM PRODUCT;
+\end{lstlisting}
+
+\section{Updating table Rows}
+\subsection{Syntax}
+\begin{lstlisting}
+UPDATE tablename SET columnname = expression [, columnname = expression] [WHERE conditionlist ];
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+UPDATE PRODUCT SET P_INDATE = '18-JAN-2016' WHERE P_CODE = '13-Q2/P2';
+
+UPDATE PRODUCT SET P_INDATE = '18-JAN-2016', P_PRICE = 17.99, P_MIN = 10
+
+WHERE P_CODE = '13-Q2/P2';
+\end{lstlisting}
+
+\section{Deleting Table rows}
+\subsection{Syntax}
+\begin{lstlisting}
+DELETE FROM tablename [WHERE conditionlist ];
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+DELETE FROM PRODUCT WHERE P_CODE = 'BRT-345';
+\end{lstlisting}
+
+\section{Selecting rows with conditional restrictions}
+\subsection{Syntax}
+\begin{lstlisting}
+SELECT columnlist FROM tablelist [WHERE conditionlist ];
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+SELECT P_DESCRIPT, P_INDATE, P_PRICE, V_CODE FROM PRODUCT
+WHERE V_CODE = 21344;
+SELECT P_DESCRIPT, P_QOH, P_PRICE, V_CODE FROM PRODUCT
+WHERE V_CODE <> 21344;
+
+\end{lstlisting}
+
+\section{Logical Operators: AND, OR, NOT}
+\subsection{Syntax}
+\begin{lstlisting}
+SELECT P_DESCRIPT, P_INDATE, P_PRICE, V_CODE FROM PRODUCT
+WHERE V_CODE = 21344 OR V_CODE = 24288;
+
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+SELECT P_DESCRIPT, P_INDATE, P_PRICE, V_CODE FROM PRODUCT
+WHERE P_PRICE < 50 AND P_INDATE > '15-Jan-2016';
+
+SELECT P_DESCRIPT, P_INDATE, P_PRICE, V_CODE FROM PRODUCT
+WHERE (P_PRICE < 50 AND P_INDATE > '15-Jan-2016') OR V_CODE = 24288;
+
+SELECT * FROM PRODUCT WHERE NOT (V_CODE = 21344);
+
+\end{lstlisting}
+
+\subsection{List of operators}
+\begin{lstlisting}
+BETWEEN: Used to check whether an attribute value is within a range
+IS NULL: Used to check whether an attribute value is null
+LIKE: Used to check whether an attribute value matches a given string pattern
+IN: Used to check whether an attribute value matches any value within a value list
+EXISTS: Used to check whether a subquery returns any rows
+	
+\end{lstlisting}
+
+\section{Aditional Data Definition Commands}
+\subsection{Syntax}
+\begin{lstlisting}
+
+ALTER TABLE tablename {ADD | MODIFY} ( columnname datatype [ {ADD | MODIFY}
+columnname datatype] );
+
+
+ALTER TABLE tablename ADD constraint [ ADD constraint ];
+
+ALTER TABLE tablename DROP {PRIMARY KEY | COLUMN columnname | CONSTRAINT
+constraintname };
+\end{lstlisting}
+
+\section{Ordering a Listing}
+\subsection{Syntax}
+\begin{lstlisting}
+	SELECT columnlist FROM tablelist [WHERE conditionlist ] [ORDER BY columnlist [ASC | DESC]];
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+SELECT P_CODE, P_DESCRIPT, P_QOH, P_PRICE FROM PRODUCT ORDER BY P_PRICE;	
+\end{lstlisting}
+
+\section{Grouping Data}
+\subsection{Syntax}
+\begin{lstlisting}
+SELECT columnlist FROM tablelist [WHERE conditionlist ][GROUP BY columnlist ][HAVING conditionlist ][ORDER BY columnlist [ASC | DESC] ];
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+
+SELECT V_CODE, P_CODE, P_DESCRIPT, P_PRICE FROM PRODUCT GROUP BY V_CODE;
+SELECT V_CODE, SUM(P_QOH * P_PRICE) AS TOTCOST FROM PRODUCT GROUP BY V_CODE HAVING (SUM(P_QOH * P_PRICE) > 500) ORDER BY SUM(P_QOH * P_PRICE) DESC;
+
+\end{lstlisting}
+
+
+\section{Joining Database Tables}
+\subsection{Syntax}
+\begin{lstlisting}
+
+SELECT P_DESCRIPT, P_PRICE, V_NAME, V_CONTACT,V_AREACODE, V_PHONE
+FROM PRODUCT, VENDOR WHERE PRODUCT.V_CODE = VENDOR.V_CODE;
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+
+SELECT PRODUCT.P_DESCRIPT, PRODUCT.P_PRICE,VENDOR.V_NAME, VENDOR.V_CONTACT,VENDOR.V_AREACODE, VENDOR.V_PHONE
+FROM PRODUCT, VENDOR WHERE PRODUCT.V_CODE = VENDOR.V_CODE
+ORDER BY PRODUCT.P_PRICE;
+
+SELECT P_DESCRIPT, P_PRICE, V_NAME, V_CONTACT,V_AREACODE, V_PHONE
+FROM PRODUCT, VENDOR WHERE PRODUCT.V_CODE = VENDOR.V_CODE
+AND P_INDATE > '15-Jan-2016';
+
+SELECT CUS_LNAME, INVOICE.INV_NUMBER, INV_DATE, P_DESCRIPT
+FROM CUSTOMER, INVOICE, LINE, PRODUCT
+WHERE CUSTOMER.CUS_CODE = INVOICE.CUS_CODE
+AND INVOICE.INV_NUMBER = LINE.INV_NUMBER AND LINE.P_CODE = PRODUCT.P_CODE AND CUSTOMER.CUS_CODE = 10014
+ORDER BY INV_NUMBER;
+
+\end{lstlisting}
+
+\section{Joining Database Tables using an Alias}
+\subsection{Syntax}
+\begin{lstlisting}
+
+SELECT P_DESCRIPT, P_PRICE, V_NAME, V_CONTACT, V_AREACODE,V_PHONE
+FROM PRODUCT P, VENDOR V WHERE P.V_CODE = V.V_CODE ORDER BY P_PRICE;
+\end{lstlisting}
+
+\section{Recursive Joins}
+\subsection{Syntax}
+\begin{lstlisting}
+	FROM EMP E, EMP M WHERE E.EMP_MGR=M.EMP_NUM ORDER BY E.EMP_MGR;
+\end{lstlisting}
+
+\section{SQL Join operators}
+\subsection{Syntax}
+\begin{lstlisting}
+	
+SELECT P_CODE, P_DESCRIPT, P_PRICE, V_NAME FROM PRODUCT, VENDOR
+WHERE PRODUCT.V_CODE = VENDOR.V_CODE;
+\end{lstlisting}
+
+\section{Cross Joins}
+\subsection{Syntax}
+\begin{lstlisting}
+	SELECT column-list FROM table1 CROSS JOIN table2
+\end{lstlisting}
+\subsection{example}
+\begin{lstlisting}
+	
+SELECT * FROM INVOICE CROSS JOIN LINE;
+
+SELECT INVOICE.INV_NUMBER, CUS_CODE, INV_DATE, P_CODE
+FROM INVOICE CROSS JOIN LINE;
+
+SELECT INVOICE.INV_NUMBER, CUS_CODE, INV_DATE, P_CODE
+FROM INVOICE, LINE;
+\end{lstlisting}
+
+\section{Natural Joins}
+\subsection{Syntax}
+\begin{lstlisting}
+	SELECT column-list FROM table1 NATURAL JOIN table2
+\end{lstlisting}
+\subsection{example}
+\begin{lstlisting}
+	
+SELECT CUS_CODE, CUS_LNAME, INV_NUMBER, INV_DATE
+FROM CUSTOMER NATURAL JOIN INVOICE;
+
+SELECT INV_NUMBER, P_CODE, P_DESCRIPT, LINE_UNITS, LINE_PRICE
+FROM INVOICE NATURAL JOIN LINE NATURAL JOIN PRODUCT;
+\end{lstlisting}
+
+\section{Join Using Clause}
+\subsection{Syntax}
+\begin{lstlisting}
+SELECT column-list FROM table1 JOIN table2 USING (common-column)	
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+SELECT INV_NUMBER, P_CODE, P_DESCRIPT, LINE_UNITS, LINE_PRICE
+FROM INVOICE JOIN LINE USING (INV_NUMBER) JOIN PRODUCT
+USING (P_CODE);
+	
+\end{lstlisting}
+
+\section{Join ON Clause}
+\subsection{Syntax}
+\begin{lstlisting}
+	SELECT column-list FROM table1 JOIN table2 ON join-condition
+\end{lstlisting}
+\subsection{Example}
+\begin{lstlisting}
+SELECT INVOICE.INV_NUMBER, PRODUCT.P_CODE, P_DESCRIPT, LINE_UNITS, LINE_PRICE
+FROM INVOICE JOIN LINE ON INVOICE.INV_NUMBER = LINE.INV_NUMBER
+JOIN PRODUCT ON LINE.P_CODE = PRODUCT.P_CODE;
+
+SELECT E.EMP_MGR, M.EMP_LNAME, E.EMP_NUM, E.EMP_LNAME
+FROM EMP E JOIN EMP M ON E.EMP_MGR = M.EMP_NUM ORDER BY E.EMP_MGR;
+
+\end{lstlisting}
+
+\section{Outer Joins}
+\subsection{Syntax}
+\begin{lstlisting}
+SELECT column-list FROM table1 LEFT [OUTER] JOIN table2 ON join-condition	
+\end{lstlisting}
+\section{Example}
+\begin{lstlisting}
+SELECT P_CODE, VENDOR.V_CODE, V_NAME
+FROM VENDOR LEFT JOIN PRODUCT ON VENDOR. V_CODE = PRODUCT.V_CODE;
+
+\end{lstlisting}
+
+\subsection{Explanation}
+\begin{lstlisting}
+The right outer join returns not only the rows matching the join condition (that is, rows with matching values in the common column), it returns the rows in the right table with unmatched values in the left table. The syntax is:
+SELECT column-list FROM table1 RIGHT [OUTER] JOIN table2 ON join-condition
+
+SELECT P_CODE, VENDOR.V_CODE, V_NAME
+FROM VENDOR RIGHT JOIN PRODUCT ON VENDOR. V_CODE = PRODUCT.V_CODE;
+
+The full outer join returns not only the rows matching the join condition (that is, rows with matching values in the common column), it returns all of the rows with unmatched values in the table on either side. The syntax is:
+SELECT column-list FROM table1 FULL [OUTER] JOIN table2 ON join-condition
+
+SELECT P_CODE, VENDOR.V_CODE, V_NAME
+FROM VENDOR FULL JOIN PRODUCT ON VENDOR.
+V_CODE = PRODUCT.V_CODE;
+	
+\end{lstlisting}
+\section{Triggers}
+\subsection{syntax}
+\begin{lstlisting}
+	CREATE OR REPLACE TRIGGER trigger_name
+[BEFORE / AFTER] [DELETE / INSERT / UPDATE OF column_name] ON table_name
+[FOR EACH ROW]
+[DECLARE]
+[variable_namedata type[:=initial_value] ]
+BEGIN
+PL/SQL instructions;
+\end{lstlisting}
+
+\end{document}

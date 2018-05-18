@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 2 Exercise Set 3 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 3 Exercise Set 1" href="../ch03/ch03s01.html" />
+    <link rel="prev" title="Chapter 2 Exercise Set 2" href="ch02s02.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch03/ch03s01.html" title="Chapter 3 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch02s02.html" title="Chapter 2 Exercise Set 2"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-2-exercise-set-3">
+<span id="ch02s03"></span><h1>Chapter 2 Exercise Set 3<a class="headerlink" href="#chapter-2-exercise-set-3" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="countdigits-s">
+<h2><tt class="docutils literal"><span class="pre">countDigits(s)</span></tt><a class="headerlink" href="#countdigits-s" title="Permalink to this headline">¶</a></h2>
+<p>Write a function <tt class="docutils literal"><span class="pre">countDigits</span></tt> that takes a string, <tt class="docutils literal"><span class="pre">s</span></tt>, as an argument and
+returns the number of digits in <tt class="docutils literal"><span class="pre">s</span></tt>.  <tt class="docutils literal"><span class="pre">countDigits(&quot;1,</span> <span class="pre">2,</span> <span class="pre">buckle</span> <span class="pre">my</span> <span class="pre">shoe&quot;)</span></tt>
+should return <tt class="docutils literal"><span class="pre">2</span></tt>, for example, and <tt class="docutils literal"><span class="pre">countDigits(&quot;no</span> <span class="pre">digits</span> <span class="pre">in</span> <span class="pre">here&quot;)</span></tt>
+should return <tt class="docutils literal"><span class="pre">0</span></tt>.</p>
+</div>
+<div class="section" id="count-ch-s">
+<h2><tt class="docutils literal"><span class="pre">count(ch,</span> <span class="pre">s)</span></tt><a class="headerlink" href="#count-ch-s" title="Permalink to this headline">¶</a></h2>
+<p>Write a function named <tt class="docutils literal"><span class="pre">count</span></tt> that takes two arguments, a character, <tt class="docutils literal"><span class="pre">ch</span></tt>,
+and a string, <tt class="docutils literal"><span class="pre">s</span></tt>, and returns the number of times that <tt class="docutils literal"><span class="pre">ch</span></tt> appears in
+<tt class="docutils literal"><span class="pre">s</span></tt>. <tt class="docutils literal"><span class="pre">count(&quot;i&quot;,</span> <span class="pre">&quot;Mississippi&quot;)</span></tt> will return <tt class="docutils literal"><span class="pre">4</span></tt>, and
+<tt class="docutils literal"><span class="pre">count(&quot;x&quot;,</span> <span class="pre">&quot;I</span> <span class="pre">am</span> <span class="pre">the</span> <span class="pre">Walrus&quot;)</span></tt> will return <tt class="docutils literal"><span class="pre">0</span></tt>.</p>
+</div>
+<div class="section" id="reverse-s">
+<h2><tt class="docutils literal"><span class="pre">reverse(s)</span></tt><a class="headerlink" href="#reverse-s" title="Permalink to this headline">¶</a></h2>
+<p>Write a function <tt class="docutils literal"><span class="pre">reverse</span></tt> that takes a string, <tt class="docutils literal"><span class="pre">s</span></tt>, as an argument and
+returns a string with the letters of <tt class="docutils literal"><span class="pre">s</span></tt> in reverse order.  <tt class="docutils literal"><span class="pre">reverse(&quot;cat&quot;)</span></tt>
+should return <tt class="docutils literal"><span class="pre">&quot;tac&quot;</span></tt> and <tt class="docutils literal"><span class="pre">reverse(&quot;JavaScript&quot;)</span></tt> should return
+<tt class="docutils literal"><span class="pre">&quot;tpircSavaJ&quot;</span></tt>.</p>
+</div>
+<div class="section" id="mirror-s">
+<h2><tt class="docutils literal"><span class="pre">mirror(s)</span></tt><a class="headerlink" href="#mirror-s" title="Permalink to this headline">¶</a></h2>
+<p>Write a function <tt class="docutils literal"><span class="pre">mirror</span></tt> that takes a string, <tt class="docutils literal"><span class="pre">s</span></tt>, as an argument and
+returns the letters in <tt class="docutils literal"><span class="pre">s</span></tt> followed by the letters in <tt class="docutils literal"><span class="pre">s</span></tt> backwards.
+<tt class="docutils literal"><span class="pre">mirror(&quot;yes&quot;)</span></tt> should return <tt class="docutils literal"><span class="pre">&quot;yessey&quot;</span></tt> and <tt class="docutils literal"><span class="pre">mirror(&quot;JS&quot;)</span></tt> should
+return <tt class="docutils literal"><span class="pre">&quot;JSSJ&quot;</span></tt>.</p>
+</div>
+<div class="section" id="removecharacter-ch-s">
+<h2><tt class="docutils literal"><span class="pre">removeCharacter(ch,</span> <span class="pre">s)</span></tt><a class="headerlink" href="#removecharacter-ch-s" title="Permalink to this headline">¶</a></h2>
+<p>Write a function <tt class="docutils literal"><span class="pre">removeCharacter</span></tt> that takes two arguments, a character,
+<tt class="docutils literal"><span class="pre">ch</span></tt>, and a string, <tt class="docutils literal"><span class="pre">s</span></tt>, and returns a string with all the characters
+in <tt class="docutils literal"><span class="pre">s</span></tt> execpt <tt class="docutils literal"><span class="pre">ch</span></tt>.  <tt class="docutils literal"><span class="pre">removeCharacter(&quot;a&quot;,</span> <span class="pre">&quot;apple&quot;)</span></tt> should return
+<tt class="docutils literal"><span class="pre">&quot;pple&quot;</span></tt>.  <tt class="docutils literal"><span class="pre">removeCharacter(&quot;a&quot;,</span> <span class="pre">&quot;banana&quot;)</span></tt> should return <tt class="docutils literal"><span class="pre">&quot;bnn&quot;</span></tt>, and
+<tt class="docutils literal"><span class="pre">removeCharacter(&quot;i&quot;,</span> <span class="pre">&quot;Mississippi&quot;)</span></tt> should return <tt class="docutils literal"><span class="pre">&quot;Msssspp&quot;</span></tt>.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch03/ch03s01.html" title="Chapter 3 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch02s02.html" title="Chapter 2 Exercise Set 2"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

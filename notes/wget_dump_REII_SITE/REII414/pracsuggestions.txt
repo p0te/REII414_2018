@@ -1,0 +1,12 @@
+#1
+Create a mathematical database that can deliver mathematical equations and/or examples.
+Searches contain key words and the database uses the keywords to find equations and examples
+relative to the search keywords.
+The database does not necessarily need to revolve around mathematics, further ideas are:
+Audio/Music compared via lyrics or key words.
+Movies compared via actor name, or keywords.
+
+#2
+My suggestion is for us to create a website that sells different products and shows their prices and allows customers to choose the product and  quantity they want. So basically an online shopping store.
+
+

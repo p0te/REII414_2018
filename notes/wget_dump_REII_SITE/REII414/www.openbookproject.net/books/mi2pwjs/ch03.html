@@ -1,0 +1,1009 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>3. Data structures: Objects and Arrays &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="4. Error Handling" href="ch04.html" />
+    <link rel="prev" title="2. Functions" href="ch02.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch04.html" title="4. Error Handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch02.html" title="2. Functions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="data-structures-objects-and-arrays">
+<span id="objects-and-arrays-chapter"></span><h1>3. Data structures: Objects and Arrays<a class="headerlink" href="#data-structures-objects-and-arrays" title="Permalink to this headline">¶</a></h1>
+<p>This chapter will be devoted to solving a few simple problems. In the process,
+we will discuss two new types of values &#8211; <strong>objects</strong> and <strong>arrays</strong> &#8211; and
+look at some techniques related to them.</p>
+<p>Consider the following situation: Your crazy aunt Emily, who is rumored to have
+over fifty cats living with her (you never managed to count them), regularly
+sends you e-mails to keep you up to date on her exploits. They usually look
+like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>Dear nephew,
+Your mother told me you have taken up skydiving. Is this true? You
+watch yourself, young man! Remember what happened to my husband?
+And that was only from the second floor!
+Anyway, things are very exciting here. I have spent all week trying
+to get the attention of Mr. Drake, the nice gentleman who moved in
+next door, but I think he is afraid of cats. Or allergic to them? I
+am going to try putting Fat Igor on his shoulder next time I see
+him, very curious what will happen.
+Also, the scam I told you about is going better than expected. I
+have already gotten back five &quot;payments&quot;, and only one complaint.
+It is starting to make me feel a bit bad though. And you are right
+that it is probably illegal in some way.
+(... etc ...)
+Much love, Aunt Emily
+died 04/27/2006: Black Leclère
+born 04/05/2006 (mother Lady Penelope): Red Lion, Doctor Hobbles
+the 3rd, Little Iroquois
+</pre></div>
+</div>
+<p>To humor the old dear, you would like to keep track of the genealogy of her
+cats, so you can add things like &#8220;P.S. I hope Doctor Hobbles the 2nd enjoyed
+his birthday this Saturday!&#8221;, or &#8220;How is old Lady Penelope doing? She&#8217;s five
+years old now, isn&#8217;t she?&#8221;, preferably without accidentally asking about dead
+cats. You are in the possession of a large quantity of old e-mails from your
+aunt, and fortunately she is very consistent in always putting information
+about the cats&#8217; births and deaths at the end of her mails in precisely the same
+format.</p>
+<p>You are hardly inclined to go through all those mails by hand.  Fortunately, we
+were just in need of an example problem, so we will try to work out a program
+that does the work for us. For a start, we write a program that gives us a list
+of cats that are still alive after the last e-mail.</p>
+<p>Before you ask, at the start of the correspondence, aunt Emily had only a
+single cat: Spot. (She was still rather conventional in those days.)</p>
+<hr class="docutils" />
+<img alt="Cat's Eyes" src="_images/eyes.png" />
+<hr class="docutils" />
+<p>It usually pays to have some kind of clue what one&#8217;s program is going to do
+before starting to type. Here&#8217;s a plan:</p>
+<ol class="arabic simple">
+<li>Start with a set of cat names that has only &#8220;Spot&#8221; in it.</li>
+<li>Go over every e-mail in our archive, in chronological order.</li>
+<li>Look for paragraphs that start with &#8220;born&#8221; or &#8220;died&#8221;.</li>
+<li>Add the names from paragraphs that start with &#8220;born&#8221; to our set
+of names.</li>
+<li>Remove the names from paragraphs that start with &#8220;died&#8221; from our
+set.</li>
+</ol>
+<p>Where taking the names from a paragraph goes like this:</p>
+<ol class="arabic simple">
+<li>Find the colon in the paragraph.</li>
+<li>Take the part after this colon.</li>
+<li>Split this part into separate names by looking for commas.</li>
+</ol>
+<p>It may require some suspension of disbelief to accept that aunt Emily always
+used this exact format, and that she never forgot or misspelled a name, but
+that is just how your aunt is.</p>
+<div class="section" id="properties">
+<span id="index-0"></span><h2>3.1. Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h2>
+<p>First, let me tell you about properties. A lot of JavaScript values have other
+values associated with them. These associations are called <strong>properties</strong>.
+We have already seen the string property, <tt class="docutils literal"><span class="pre">length</span></tt>, which refers to a number,
+the amount of characters in that string.</p>
+<p>Properties can be accessed in two ways:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="s2">&quot;purple haze&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">text</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The second way is a shorthand for the first, and it only works when the name of
+the property would be a valid variable name ― when it doesn&#8217;t have any spaces
+or symbols in it and does not start with a digit character.</p>
+<p>The values <tt class="docutils literal"><span class="pre">null</span></tt> and <tt class="docutils literal"><span class="pre">undefined</span></tt> do not have any properties.  Trying to
+read properties from such a value produces an error. Try the following code, if
+only to get an idea about the kind of error-message your browser produces in
+such a case (which, for some browsers, can be rather cryptic).</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">nothing</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">nothing</span><span class="p">.</span><span class="nx">length</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objects">
+<span id="index-1"></span><h2>3.2. Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h2>
+<p>The properties of a string value can not be changed. There are quite a few more
+than just <tt class="docutils literal"><span class="pre">length</span></tt>, as we will see, but you are not allowed to add or remove
+any.</p>
+<p>This is different with values of the type object. Their main role is to hold
+other values. They have, you could say, their own set of tentacles in the form
+of properties. You are free to modify these, remove them, or add new ones.</p>
+<p>An object can be written like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="p">{</span><span class="nx">color</span><span class="o">:</span> <span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Spot&quot;</span><span class="p">,</span> <span class="nx">size</span><span class="o">:</span> <span class="mi">46</span><span class="p">};</span>
+<span class="nx">cat</span><span class="p">.</span><span class="nx">size</span> <span class="o">=</span> <span class="mi">47</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">size</span><span class="p">);</span>
+<span class="k">delete</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">size</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">size</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Like variables, each property attached to an object is labelled by a string.
+The first statement creates an object in which the property <tt class="docutils literal"><span class="pre">&quot;color&quot;</span></tt> holds
+the string <tt class="docutils literal"><span class="pre">&quot;gray&quot;</span></tt>, the property <tt class="docutils literal"><span class="pre">&quot;name&quot;</span></tt> is attached to the string
+<tt class="docutils literal"><span class="pre">&quot;Spot&quot;</span></tt>, and the property <tt class="docutils literal"><span class="pre">&quot;size&quot;</span></tt> refers to the number <tt class="docutils literal"><span class="pre">46</span></tt>. The second
+statement gives the property named <tt class="docutils literal"><span class="pre">size</span></tt> a new value, which is done in the
+same way as modifying a variable.</p>
+<p>The keyword <tt class="docutils literal"><span class="pre">delete</span></tt> cuts off properties. Trying to read a non-existent
+property gives the value <tt class="docutils literal"><span class="pre">undefined</span></tt>.</p>
+<p>If a property that does not yet exist is set with the <tt class="docutils literal"><span class="pre">=</span></tt> operator, it is
+added to the object.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">empty</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">empty</span><span class="p">.</span><span class="nx">notReally</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">empty</span><span class="p">.</span><span class="nx">notReally</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Properties whose names are not valid variable names have to be quoted when
+creating the object, and approached using brackets:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">thing</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;gabba gabba&quot;</span><span class="o">:</span> <span class="s2">&quot;hey&quot;</span><span class="p">,</span> <span class="s2">&quot;5&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">};</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">thing</span><span class="p">[</span><span class="s2">&quot;5&quot;</span><span class="p">]);</span>
+<span class="nx">thing</span><span class="p">[</span><span class="s2">&quot;5&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">thing</span><span class="p">[</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]);</span>
+<span class="k">delete</span> <span class="nx">thing</span><span class="p">[</span><span class="s2">&quot;gabba gabba&quot;</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>As you can see, the part between the brackets can be any expression. It is
+converted to a string to determine the property name it refers to. One can even
+use variables to name properties:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">propertyName</span> <span class="o">=</span> <span class="s2">&quot;length&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="s2">&quot;mainline&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">text</span><span class="p">[</span><span class="nx">propertyName</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-in-operator">
+<span id="index-2"></span><h2>3.3. The <tt class="docutils literal"><span class="pre">in</span></tt> operator<a class="headerlink" href="#the-in-operator" title="Permalink to this headline">¶</a></h2>
+<p>The operator <tt class="docutils literal"><span class="pre">in</span></tt> can be used to test whether an object has a certain
+property. It produces a boolean.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">blob</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="nx">blob</span><span class="p">.</span><span class="k">this</span> <span class="o">=</span> <span class="mi">42</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;this&quot;</span> <span class="k">in</span> <span class="nx">blob</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;that&quot;</span> <span class="k">in</span> <span class="nx">blob</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The first <tt class="docutils literal"><span class="pre">alert</span></tt> returns <tt class="docutils literal"><span class="pre">true</span></tt> and the second <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
+<p>When a property of an object is set to refer back to the object itself, strange
+things happen.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">chineseBox</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">chineseBox</span><span class="p">.</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">chineseBox</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;content&quot;</span> <span class="k">in</span> <span class="nx">chineseBox</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;content&quot;</span> <span class="k">in</span> <span class="nx">chineseBox</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;content&quot;</span> <span class="k">in</span> <span class="nx">chineseBox</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;content&quot;</span> <span class="k">in</span> <span class="nx">chineseBox</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">content</span><span class="p">.</span><span class="nx">content</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="object-references">
+<h2>3.4. Object references<a class="headerlink" href="#object-references" title="Permalink to this headline">¶</a></h2>
+<p>As you can see, object values can change. The types of values discussed in
+<a class="reference internal" href="ch01.html#values-chapter"><em>Basic JavaScript: values, variables, and control flow</em></a> are all immutable, it is impossible to change an existing
+value of those types. You can combine them and derive new values from them, but
+when you take a specific string value, the text inside it can not change. With
+objects, on the other hand, the content of a value can be modified by changing
+its properties.</p>
+<p>When we have two numbers, <tt class="docutils literal"><span class="pre">120</span></tt> and <tt class="docutils literal"><span class="pre">120</span></tt>, they can for all practical
+purposes be considered the precise same number. With objects, there is a
+difference between having two references to the same object and having two
+different objects that contain the same properties. Consider the following
+code:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">object1</span> <span class="o">=</span> <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="mi">10</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">object2</span> <span class="o">=</span> <span class="nx">object1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">object3</span> <span class="o">=</span> <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="mi">10</span><span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">object1</span> <span class="o">==</span> <span class="nx">object2</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">object1</span> <span class="o">==</span> <span class="nx">object3</span><span class="p">);</span>
+
+<span class="nx">object1</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">object2</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">object3</span><span class="p">.</span><span class="nx">value</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">object1</span></tt> and <tt class="docutils literal"><span class="pre">object2</span></tt> are two variables grasping the <em>same</em> value. There
+is only one actual object, which is why changing <tt class="docutils literal"><span class="pre">object1</span></tt> also changes the
+value of <tt class="docutils literal"><span class="pre">object2</span></tt>. The variable <tt class="docutils literal"><span class="pre">object3</span></tt> points to another object, which
+initially contains the same properties as <tt class="docutils literal"><span class="pre">object1</span></tt>, but lives a separate
+life.</p>
+<p>JavaScript&#8217;s <tt class="docutils literal"><span class="pre">==</span></tt> operator, when comparing objects, will only return <tt class="docutils literal"><span class="pre">true</span></tt>
+if both values given to it are the precise same value. Comparing different
+objects with identical contents will give <tt class="docutils literal"><span class="pre">false</span></tt>. This is useful in some
+situations, but unpractical in others.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Now would be a great time to complete <a class="reference internal" href="exercises/ch03/ch03s01.html#set-of-names-exercise"><em>Set of names</em></a> from the
+exercise set.</p>
+</div>
+<p>Object values can play a lot of different roles. Behaving like a set is only
+one of those. We will see a few other roles in this chapter, and
+<a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a> shows another important way of using objects.</p>
+<p id="index-3">In the <a class="reference external" href="http://en.wikipedia.org/wiki/Algorithm">algorithm</a> for the cat
+problem, it talks about going over all the e-mails in an archive. What does
+this archive look like? And where does it come from?</p>
+<p>Don&#8217;t worry about the second question for now.
+<a class="reference internal" href="ch08.html#http-requests-chapter"><em>HTTP requests</em></a> talks about some ways to import data into your
+programs, but for now we will use a function that simulates the behavior we
+are looking for. Before getting to that, however, we have a few more things to
+learn...</p>
+</div>
+<div class="section" id="arrays">
+<span id="index-4"></span><h2>3.5. Arrays<a class="headerlink" href="#arrays" title="Permalink to this headline">¶</a></h2>
+<p>The way in which the archive is stored is still an interesting question. It
+contains a number of e-mails. An e-mail can be a string, that should be
+obvious. The whole archive could be put into one huge string, but that is
+hardly practical. What we want is a collection of separate strings.</p>
+<p>Collections of things are what objects are used for. One could make an object
+like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mailArchive</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;the first e-mail&quot;</span><span class="o">:</span> <span class="s2">&quot;Dear nephew, ...&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;the second e-mail&quot;</span><span class="o">:</span> <span class="s2">&quot;...&quot;</span>
+                   <span class="cm">/* and so on ... */</span><span class="p">};</span>
+</pre></div>
+</div>
+<p>But that makes it hard to go over the e-mails from start to end ― how does the
+program guess the name of these properties? This can be solved by more
+predictable property names:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mailArchive</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="o">:</span> <span class="s2">&quot;Dear nephew, ... (mail number 1)&quot;</span><span class="p">,</span>
+                   <span class="mi">1</span><span class="o">:</span> <span class="s2">&quot;(mail number 2)&quot;</span><span class="p">,</span>
+                   <span class="mi">2</span><span class="o">:</span> <span class="s2">&quot;(mail number 3)&quot;</span><span class="p">};</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">current</span> <span class="k">in</span> <span class="nx">mailArchive</span><span class="p">;</span> <span class="nx">current</span><span class="o">++</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Processing e-mail #&quot;</span> <span class="o">+</span> <span class="nx">current</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">mailArchive</span><span class="p">[</span><span class="nx">current</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>Luck has it that there is a special kind of object specifically for this kind
+of use. It is called an
+<a class="reference external" href="http://en.wikipedia.org/wiki/Array_data_structure">array</a>,
+and it provides some conveniences, such as a <tt class="docutils literal"><span class="pre">length</span></tt> property that contains
+the amount of values in the array, and a number of operations useful for this
+kind of collection.</p>
+<p>New arrays can be created using brackets (<tt class="docutils literal"><span class="pre">[</span></tt> and <tt class="docutils literal"><span class="pre">]</span></tt>):</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mailArchive</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mail one&quot;</span><span class="p">,</span> <span class="s2">&quot;mail two&quot;</span><span class="p">,</span> <span class="s2">&quot;mail three&quot;</span><span class="p">];</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">current</span> <span class="o">&lt;</span> <span class="nx">mailArchive</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">current</span><span class="o">++</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Processing e-mail #&quot;</span> <span class="o">+</span> <span class="nx">current</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nx">mailArchive</span><span class="p">[</span><span class="nx">current</span><span class="p">]);</span>
+</pre></div>
+</div>
+<p>In this example, the numbers of the elements are not specified explicitly
+anymore. The first one automatically gets the number 0, the second the number
+1, and so on.</p>
+<p>As we saw with strings, we start counting from 0.</p>
+<p>Starting at element 0 also means that in a collection with <tt class="docutils literal"><span class="pre">X</span></tt> elements, the
+last element can be found at position <tt class="docutils literal"><span class="pre">X</span> <span class="pre">-</span> <span class="pre">1</span></tt>. This is why the <tt class="docutils literal"><span class="pre">for</span></tt> loop
+in the example checks for <tt class="docutils literal"><span class="pre">current</span> <span class="pre">&lt;</span> <span class="pre">mailArchive.length</span></tt>. There is no element
+at position <tt class="docutils literal"><span class="pre">mailArchive.length</span></tt>, so as soon as <tt class="docutils literal"><span class="pre">current</span></tt> has that value,
+we stop looping.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Now would be a great time to complete <a class="reference internal" href="exercises/ch03/ch03s01.html#range-exercise"><em>range(n)</em></a> from the
+exercise set.</p>
+</div>
+</div>
+<div class="section" id="methods">
+<span id="index-5"></span><h2>3.6. methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+<p>Both string and array objects contain, in addition to the <tt class="docutils literal"><span class="pre">length</span></tt> property,
+a number of properties that refer to function values.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">doh</span> <span class="o">=</span> <span class="s2">&quot;Doh&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">doh</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">doh</span><span class="p">.</span><span class="nx">toUpperCase</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>Every string has a <tt class="docutils literal"><span class="pre">toUpperCase</span></tt> property. When called, it will return a copy
+of the string, in which all letters have been converted to uppercase. There is
+also <tt class="docutils literal"><span class="pre">toLowerCase</span></tt>. Guess what that does.</p>
+<p>Notice that, even though the call to <tt class="docutils literal"><span class="pre">toUpperCase</span></tt> does not pass any
+arguments, the function does somehow have access to the string <tt class="docutils literal"><span class="pre">&quot;Doh&quot;</span></tt>, the
+value of which it is a property. How this works precisely is described in
+<a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a>.</p>
+<p>Properties that contain functions are generally called <strong>methods</strong>, as in
+&#8220;<tt class="docutils literal"><span class="pre">toUpperCase</span></tt> is a method of a string object&#8221;.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mack</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="nx">mack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;Mack&quot;</span><span class="p">);</span>
+<span class="nx">mack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;the&quot;</span><span class="p">);</span>
+<span class="nx">mack</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;Knife&quot;</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">mack</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">mack</span><span class="p">.</span><span class="nx">pop</span><span class="p">());</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">mack</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The method <tt class="docutils literal"><span class="pre">push</span></tt>, which is associated with arrays, can be used to add values
+to it. It could have been used in the last exercise, as an alternative to
+<tt class="docutils literal"><span class="pre">result[i]</span> <span class="pre">=</span> <span class="pre">i</span></tt>. Then there is <tt class="docutils literal"><span class="pre">pop</span></tt>, the opposite of <tt class="docutils literal"><span class="pre">push</span></tt>: it takes
+off and returns the last value in the array. <tt class="docutils literal"><span class="pre">join</span></tt> builds a single big
+string from an array of strings. The parameter it is given is pasted between
+the values in the array.</p>
+<hr class="docutils" />
+<p>Coming back to those cats, we now know that an array would be a good way to
+store the archive of e-mails. We will use the function <a class="reference internal" href="resources/ch03/retrieveMails.html#retrievemails"><em>retrieveMails</em></a>
+to get hold of this array.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Click on the link to <a class="reference internal" href="resources/ch03/retrieveMails.html#retrievemails"><em>retrieveMails</em></a> and copy and paste the function
+into a firefox JavaScript scratchpad before you add the code below that
+calls it (see <a class="reference internal" href="app_c.html#dev-env-appendix"><em>Appendix C: Development Environment</em></a>).</p>
+</div>
+<p>Going over the emails to process them one after another is no longer rocket
+science either:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mailArchive</span> <span class="o">=</span> <span class="nx">retrieveMails</span><span class="p">();</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">mailArchive</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">email</span> <span class="o">=</span> <span class="nx">mailArchive</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Processing e-mail #&quot;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">);</span>
+    <span class="c1">// Do more things...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We have also decided on a way to represent the set of cats that are alive. The
+next problem, then, is to find the paragraphs in an e-mail that start with
+<tt class="docutils literal"><span class="pre">&quot;born&quot;</span></tt> or <tt class="docutils literal"><span class="pre">&quot;died&quot;</span></tt>.</p>
+</div>
+<div class="section" id="split-and-join">
+<span id="index-6"></span><h2>3.7. <tt class="docutils literal"><span class="pre">split</span></tt> and <tt class="docutils literal"><span class="pre">join</span></tt><a class="headerlink" href="#split-and-join" title="Permalink to this headline">¶</a></h2>
+<p>The first question that comes up is what exactly a paragraph is. In this case,
+the string value itself can&#8217;t help us much: JavaScript&#8217;s concept of text does
+not go any deeper than the &#8220;sequence of characters&#8221; idea, so we must define
+paragraphs in those terms.</p>
+<p>Earlier, we saw that there is such a thing as a newline character.  These are
+what most people use to split paragraphs. We consider a paragraph, then, to be
+a part of an e-mail that starts at a newline character or at the start of the
+content, and ends at the next newline character or at the end of the content.</p>
+<p>And we don&#8217;t even have to write the algorithm for splitting a string into
+paragraphs ourselves. Strings already have a method named <tt class="docutils literal"><span class="pre">split</span></tt>, which is
+(almost) the opposite of the <tt class="docutils literal"><span class="pre">join</span></tt> method of arrays. It splits a string into
+an array, using the string given as its argument to determine in which places
+to cut.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">words</span> <span class="o">=</span> <span class="s2">&quot;Cities of the Interior&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">words</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Thus, cutting on newlines (<tt class="docutils literal"><span class="pre">&quot;\n&quot;</span></tt>), can be used to split an e-mail into
+paragraphs.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Try your hand at <a class="reference internal" href="exercises/ch03/ch03s01.html#split-and-join-exercise"><em>split and join</em></a> from the exercise set
+before reading on....</p>
+</div>
+</div>
+<div class="section" id="charat-and-slice">
+<span id="index-7"></span><h2>3.8. <tt class="docutils literal"><span class="pre">charAt</span></tt> and <tt class="docutils literal"><span class="pre">slice</span></tt><a class="headerlink" href="#charat-and-slice" title="Permalink to this headline">¶</a></h2>
+<p>Paragraphs that do not start with either &#8220;born&#8221; or &#8220;died&#8221; can be ignored by the
+program. How do we test whether a string starts with a certain word? The method
+<tt class="docutils literal"><span class="pre">charAt</span></tt> can be used to get a specific character from a string.
+<tt class="docutils literal"><span class="pre">x.charAt(0)</span></tt> gives the first character, <tt class="docutils literal"><span class="pre">1</span></tt> is the second one, and so on.
+One way to check whether a string starts with &#8220;born&#8221; is:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">paragraph</span> <span class="o">=</span> <span class="s2">&quot;born 15-11-2003 (mother Spot): White Fang&quot;</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;b&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">paragraph</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;o&quot;</span> <span class="o">&amp;&amp;</span>
+      <span class="nx">paragraph</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">paragraph</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>But that gets a bit clumsy ― imagine checking for a word of ten characters.
+There is something to be learned here though: when a line gets ridiculously
+long, it can be spread over multiple lines.  The result can be made easier to
+read by lining up the start of the new line with the first element on the
+original line that plays a similar role.</p>
+<p>Strings also have a method called <tt class="docutils literal"><span class="pre">slice</span></tt>. It copies out a piece of the
+string, starting from the character at the position given by the first
+argument, and ending before (not including) the character at the position given
+by the second one. This allows the check to be written in a shorter way.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;born&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>The following function, called <tt class="docutils literal"><span class="pre">startsWith</span></tt>, takes two arguments, both
+strings. It returns <tt class="docutils literal"><span class="pre">true</span></tt> when the first argument starts with the characters
+in the second argument, and <tt class="docutils literal"><span class="pre">false</span></tt> otherwise.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">startsWith</span><span class="p">(</span><span class="nx">string</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">string</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">==</span> <span class="nx">pattern</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">startsWith</span><span class="p">(</span><span class="s2">&quot;rotation&quot;</span><span class="p">,</span> <span class="s2">&quot;rot&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>What happens when <tt class="docutils literal"><span class="pre">charAt</span></tt> or <tt class="docutils literal"><span class="pre">slice</span></tt> are used to take a piece of a string
+that does not exist? Will the <tt class="docutils literal"><span class="pre">startsWith</span></tt> I showed still work when the
+pattern is longer than the string it is matched against?</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Pip&quot;</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="mi">250</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Nop&quot;</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">));</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">charAt</span></tt> will return <tt class="docutils literal"><span class="pre">&quot;&quot;</span></tt> when there is no character at the given position,
+and <tt class="docutils literal"><span class="pre">slice</span></tt> will simply leave out the part of the new string that does not
+exist.</p>
+<p>So yes, that version of <tt class="docutils literal"><span class="pre">startsWith</span></tt> works. When <tt class="docutils literal"><span class="pre">startsWith(&quot;Idiots&quot;,</span> <span class="pre">&quot;Most</span>
+<span class="pre">honoured</span> <span class="pre">colleagues&quot;)</span></tt> is called, the call to <tt class="docutils literal"><span class="pre">slice</span></tt> will, because
+<tt class="docutils literal"><span class="pre">string</span></tt> does not have enough characters, always return a string that is
+shorter than <tt class="docutils literal"><span class="pre">pattern</span></tt>. Because of that, the comparison with <tt class="docutils literal"><span class="pre">==</span></tt> will
+return <tt class="docutils literal"><span class="pre">false</span></tt>, which is correct.</p>
+<p>It helps to always take a moment to consider abnormal (but valid) inputs for a
+program. These are usually called corner cases, and it is very common for
+programs that work perfectly on all the &#8220;normal&#8221; inputs to screw up on corner
+cases.</p>
+<hr class="docutils" />
+<p>The only part of the cat-problem that is still unsolved is the extraction of
+names from a paragraph. The algorithm was this:</p>
+<ol class="arabic simple">
+<li>Find the colon in the paragraph.</li>
+<li>Take the part after this colon.</li>
+<li>Split this part into separate names by looking for commas.</li>
+</ol>
+<p>This has to happen both for paragraphs that start with <tt class="docutils literal"><span class="pre">&quot;died&quot;</span></tt>, and
+paragraphs that start with <tt class="docutils literal"><span class="pre">&quot;born&quot;</span></tt>. It would be a good idea to put it into a
+function, so that the two pieces of code that handle these different kinds of
+paragraphs can both use it.</p>
+</div>
+<div class="section" id="indexof">
+<span id="index-8"></span><h2>3.9. <tt class="docutils literal"><span class="pre">indexOf</span></tt><a class="headerlink" href="#indexof" title="Permalink to this headline">¶</a></h2>
+<p>Strings have an <tt class="docutils literal"><span class="pre">indexOf</span></tt> method that can be used to find the (first)
+position of a character or sub-string within that string.  Also, when <tt class="docutils literal"><span class="pre">slice</span></tt>
+is given only one argument, it will return the part of the string from the
+given position all the way to the end.</p>
+<p>The following function, <tt class="docutils literal"><span class="pre">catNames</span></tt>, takes a paragraph as an argument and
+returns an array of names:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">catNames</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">colon</span> <span class="o">=</span> <span class="nx">paragraph</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">paragraph</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">colon</span> <span class="o">+</span> <span class="mi">2</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">catNames</span><span class="p">(</span><span class="s2">&quot;born 09/20/2004 (mother Yellow Bess): &quot;</span> <span class="o">+</span>
+               <span class="s2">&quot;Doctor Hobbles the 2nd, Noog&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The tricky part, which the original description of the algorithm ignored, is
+dealing with spaces after the colon and the commas. The <tt class="docutils literal"><span class="pre">+</span> <span class="pre">2</span></tt> used when
+slicing the string is needed to leave out the colon itself and the space after
+it. The argument to <tt class="docutils literal"><span class="pre">split</span></tt> contains both a comma and a space, because that
+is what the names are really separated by, rather than just a comma.</p>
+<p>This function does not do any checking for problems. We assume, in this case,
+that the input is always correct.</p>
+<hr class="docutils" />
+<p>All that remains now is putting the pieces together. One way to do that looks
+like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mailArchive</span> <span class="o">=</span> <span class="nx">retrieveMails</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">livingCats</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Spot&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">};</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">mail</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">mail</span> <span class="o">&lt;</span> <span class="nx">mailArchive</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">mail</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">paragraphs</span> <span class="o">=</span> <span class="nx">mailArchive</span><span class="p">[</span><span class="nx">mail</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">paragraph</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">paragraph</span> <span class="o">&lt;</span> <span class="nx">paragraphs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">paragraph</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">paragraph</span><span class="p">],</span> <span class="s2">&quot;born&quot;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">names</span> <span class="o">=</span> <span class="nx">catNames</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">paragraph</span><span class="p">]);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">name</span> <span class="o">&lt;</span> <span class="nx">names</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">name</span><span class="o">++</span><span class="p">)</span>
+                <span class="nx">livingCats</span><span class="p">[</span><span class="nx">names</span><span class="p">[</span><span class="nx">name</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">paragraph</span><span class="p">],</span> <span class="s2">&quot;died&quot;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">names</span> <span class="o">=</span> <span class="nx">catNames</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">paragraph</span><span class="p">]);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">name</span> <span class="o">&lt;</span> <span class="nx">names</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">name</span><span class="o">++</span><span class="p">)</span>
+                <span class="k">delete</span> <span class="nx">livingCats</span><span class="p">[</span><span class="nx">names</span><span class="p">[</span><span class="nx">name</span><span class="p">]];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">livingCats</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>That is quite a big, dense chunk of code. We&#8217;ll look into making it a bit
+lighter in a moment. But first let us look at our results. We know how to check
+whether a specific cat survives:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="s2">&quot;Spot&quot;</span> <span class="k">in</span> <span class="nx">livingCats</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Spot lives!&quot;</span><span class="p">);</span>
+<span class="k">else</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Good old Spot, may she rest in peace.&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>But how do we list all the cats that are alive? The <tt class="docutils literal"><span class="pre">in</span></tt> keyword has a
+somewhat different meaning when it is used together with <tt class="docutils literal"><span class="pre">for</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">cat</span> <span class="k">in</span> <span class="nx">livingCats</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">cat</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>A loop like that will go over the names of the properties in an object, which
+allows us to enumerate all the names in our set.</p>
+</div>
+<div class="section" id="helper-functions">
+<span id="index-9"></span><h2>3.10. Helper functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h2>
+<p>Some pieces of code look like an impenetrable jungle. The example solution to
+the cat problem suffers from this. One way to make some light shine through it
+is to just add some strategic blank lines.  This makes it look better, but
+doesn&#8217;t really solve the problem.</p>
+<p>What is needed here is to break the code up. We already wrote two <strong>helper
+functions</strong>, <tt class="docutils literal"><span class="pre">startsWith</span></tt> and <tt class="docutils literal"><span class="pre">catNames</span></tt>, which both take care of a small,
+understandable part of the problem. Let us continue doing this.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">addToSet</span><span class="p">(</span><span class="nx">set</span><span class="p">,</span> <span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">set</span><span class="p">[</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">removeFromSet</span><span class="p">(</span><span class="nx">set</span><span class="p">,</span> <span class="nx">values</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="k">delete</span> <span class="nx">set</span><span class="p">[</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">]];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>These two functions take care of the adding and removing of names from the set.
+That already cuts out the two most inner loops from the solution:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">livingCats</span> <span class="o">=</span> <span class="p">{</span><span class="nx">Spot</span><span class="o">:</span> <span class="kc">true</span><span class="p">};</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">mail</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">mail</span> <span class="o">&lt;</span> <span class="nx">mailArchive</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">mail</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">paragraphs</span> <span class="o">=</span> <span class="nx">mailArchive</span><span class="p">[</span><span class="nx">mail</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">paragraph</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">paragraph</span> <span class="o">&lt;</span> <span class="nx">paragraphs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">paragraph</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">paragraph</span><span class="p">],</span> <span class="s2">&quot;born&quot;</span><span class="p">))</span>
+            <span class="nx">addToSet</span><span class="p">(</span><span class="nx">livingCats</span><span class="p">,</span> <span class="nx">catNames</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">paragraph</span><span class="p">]));</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">paragraph</span><span class="p">],</span> <span class="s2">&quot;died&quot;</span><span class="p">))</span>
+            <span class="nx">removeFromSet</span><span class="p">(</span><span class="nx">livingCats</span><span class="p">,</span> <span class="nx">catNames</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">paragraph</span><span class="p">]));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Quite an improvement, if I may say so myself.</p>
+<p>Why do <tt class="docutils literal"><span class="pre">addToSet</span></tt> and <tt class="docutils literal"><span class="pre">removeFromSet</span></tt> take the set as an argument? They
+could use the variable <tt class="docutils literal"><span class="pre">livingCats</span></tt> directly, if they wanted to. The reason
+is that this way they are not completely tied to our current problem. If
+<tt class="docutils literal"><span class="pre">addToSet</span></tt> directly changed <tt class="docutils literal"><span class="pre">livingCats</span></tt>, it would have to be called
+<tt class="docutils literal"><span class="pre">addCatsToCatSet</span></tt>, or something similar. The way it is now, it is a more
+generally useful tool.</p>
+<p>Even if we are never going to use these functions for anything else, which is
+quite probable, it is useful to write them like this. Because they are &#8216;self
+sufficient&#8217;, they can be read and understood on their own, without needing to
+know about some external variable called <tt class="docutils literal"><span class="pre">livingCats</span></tt>.</p>
+<p>The functions are not pure: They change the object passed as their <tt class="docutils literal"><span class="pre">set</span></tt>
+argument. This makes them slightly trickier than real pure functions, but still
+a lot less confusing than functions that run amok and change any value or
+variable they please.</p>
+<hr class="docutils" />
+<p>We continue breaking the algorithm into pieces:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">findLivingCats</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">mailArchive</span> <span class="o">=</span> <span class="nx">retrieveMails</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">livingCats</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Spot&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">};</span>
+
+    <span class="kd">function</span> <span class="nx">handleParagraph</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">,</span> <span class="s2">&quot;born&quot;</span><span class="p">))</span>
+            <span class="nx">addToSet</span><span class="p">(</span><span class="nx">livingCats</span><span class="p">,</span> <span class="nx">catNames</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">));</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">,</span> <span class="s2">&quot;died&quot;</span><span class="p">))</span>
+            <span class="nx">removeFromSet</span><span class="p">(</span><span class="nx">livingCats</span><span class="p">,</span> <span class="nx">catNames</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">mail</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">mail</span> <span class="o">&lt;</span> <span class="nx">mailArchive</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">mail</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">paragraphs</span> <span class="o">=</span> <span class="nx">mailArchive</span><span class="p">[</span><span class="nx">mail</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">paragraphs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="nx">handleParagraph</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">livingCats</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">howMany</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">cat</span> <span class="k">in</span> <span class="nx">findLivingCats</span><span class="p">())</span>
+    <span class="nx">howMany</span><span class="o">++</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;There are &quot;</span><span class="p">,</span> <span class="nx">howMany</span><span class="p">,</span> <span class="s2">&quot; cats.&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The whole algorithm is now encapsulated by a function. This means that it does
+not leave a mess after it runs: <tt class="docutils literal"><span class="pre">livingCats</span></tt> is now a local variable in the
+function, instead of a top-level one, so it only exists while the function
+runs. The code that needs this set can call <tt class="docutils literal"><span class="pre">findLivingCats</span></tt> and use the
+value it returns.</p>
+<p>It seemed to me that making <tt class="docutils literal"><span class="pre">handleParagraph</span></tt> a separate function also
+cleared things up. But this one is so closely tied to the cat-algorithm that it
+is meaningless in any other situation. On top of that, it needs access to the
+<tt class="docutils literal"><span class="pre">livingCats</span></tt> variable. Thus, it is a perfect candidate to be a
+function-inside-a-function. When it lives inside <tt class="docutils literal"><span class="pre">findLivingCats</span></tt>, it is
+clear that it is only relevant there, and it has access to the variables of its
+parent function.</p>
+<p>This solution is actually <em>bigger</em> than the previous one. Still, it is tidier
+and I hope you&#8217;ll agree that it is easier to read.</p>
+</div>
+<div class="section" id="date-objects">
+<span id="index-10"></span><h2>3.11. <tt class="docutils literal"><span class="pre">Date</span></tt> objects<a class="headerlink" href="#date-objects" title="Permalink to this headline">¶</a></h2>
+<p>The program still ignores a lot of the information that is contained in the
+e-mails. There are birth-dates, dates of death, and the names of mothers in
+there.</p>
+<p>To start with the dates: What would be a good way to store a date?  We could
+make an object with three properties, <tt class="docutils literal"><span class="pre">year</span></tt>, <tt class="docutils literal"><span class="pre">month</span></tt>, and <tt class="docutils literal"><span class="pre">day</span></tt>, and
+store numbers in them.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">when</span> <span class="o">=</span> <span class="p">{</span><span class="nx">year</span><span class="o">:</span> <span class="mi">1980</span><span class="p">,</span> <span class="nx">month</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">day</span><span class="o">:</span> <span class="mi">1</span><span class="p">};</span>
+</pre></div>
+</div>
+<p>But JavaScript already provides a kind of object for this purpose.  Such an
+object can be created by using the keyword <tt class="docutils literal"><span class="pre">new</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">when</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1980</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">when</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Just like the notation with braces and colons we have already seen, <tt class="docutils literal"><span class="pre">new</span></tt> is
+a way to create object values. Instead of specifying all the property names and
+values, a function is used to build up the object. This makes it possible to
+define a kind of standard procedure for creating objects. Functions like this
+are called constructors, and in <a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a> we will see how to write
+them.</p>
+<p>The <tt class="docutils literal"><span class="pre">Date</span></tt> constructor can be used in different ways.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1980</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">2007</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>As you can see, these objects can store a time of day as well as a date. When
+not given any arguments, an object representing the current time and date is
+created. Arguments can be given to ask for a specific date and time. The order
+of the arguments is year, month, day, hour, minute, second, milliseconds. These
+last four are optional, they become 0 when not given.</p>
+<p>The month numbers these objects use go from 0 to 11, which can be confusing.
+Especially since day numbers <em>do</em> start from 1.</p>
+</div>
+<div class="section" id="get-methods">
+<span id="index-11"></span><h2>3.12. <tt class="docutils literal"><span class="pre">get</span></tt> methods<a class="headerlink" href="#get-methods" title="Permalink to this headline">¶</a></h2>
+<p>The content of a <tt class="docutils literal"><span class="pre">Date</span></tt> object can be inspected with a number of <tt class="docutils literal"><span class="pre">get...</span></tt>
+methods.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">today</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Year: &quot;</span><span class="p">,</span> <span class="nx">today</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">(),</span> <span class="s2">&quot;, month: &quot;</span><span class="p">,</span>
+      <span class="nx">today</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">(),</span> <span class="s2">&quot;, day: &quot;</span><span class="p">,</span> <span class="nx">today</span><span class="p">.</span><span class="nx">getDate</span><span class="p">());</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hour: &quot;</span><span class="p">,</span> <span class="nx">today</span><span class="p">.</span><span class="nx">getHours</span><span class="p">(),</span> <span class="s2">&quot;, minutes: &quot;</span><span class="p">,</span>
+      <span class="nx">today</span><span class="p">.</span><span class="nx">getMinutes</span><span class="p">(),</span> <span class="s2">&quot;, seconds: &quot;</span><span class="p">,</span> <span class="nx">today</span><span class="p">.</span><span class="nx">getSeconds</span><span class="p">());</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Day of week: &quot;</span><span class="p">,</span> <span class="nx">today</span><span class="p">.</span><span class="nx">getDay</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>All of these, except for <tt class="docutils literal"><span class="pre">getDay</span></tt>, also have a <tt class="docutils literal"><span class="pre">set...</span></tt> variant that can be
+used to change the value of the date object.</p>
+<p>Inside the object, a date is represented by the amount of milliseconds it is
+away from January 1st 1970. You can imagine this is quite a large number.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">today</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">today</span><span class="p">.</span><span class="nx">getTime</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>A very useful thing to do with dates is comparing them.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">wallFall</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1989</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">gulfWarOne</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1990</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">wallFall</span> <span class="o">&lt;</span> <span class="nx">gulfWarOne</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">wallFall</span> <span class="o">==</span> <span class="nx">wallFall</span><span class="p">);</span>
+<span class="c1">// but</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">wallFall</span> <span class="o">==</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1989</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Comparing dates with <tt class="docutils literal"><span class="pre">&lt;</span></tt>, <tt class="docutils literal"><span class="pre">&gt;</span></tt>, <tt class="docutils literal"><span class="pre">&lt;=</span></tt>, and <tt class="docutils literal"><span class="pre">&gt;=</span></tt> does exactly what you
+would expect. When a date object is compared to itself with <tt class="docutils literal"><span class="pre">==</span></tt> the result
+is <tt class="docutils literal"><span class="pre">true</span></tt>, which is also good. But when <tt class="docutils literal"><span class="pre">==</span></tt> is used to compare a date
+object to a different, equal date object, we get <tt class="docutils literal"><span class="pre">false</span></tt>. Huh?</p>
+<p>As mentioned earlier, <tt class="docutils literal"><span class="pre">==</span></tt> will return <tt class="docutils literal"><span class="pre">false</span></tt> when comparing two different
+objects, even if they contain the same properties.  This is a bit clumsy and
+error-prone here, since one would expect <tt class="docutils literal"><span class="pre">&gt;=</span></tt> and <tt class="docutils literal"><span class="pre">==</span></tt> to behave in a more
+or less similar way. Testing whether two dates are equal can be done like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">wallFall1</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1989</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+    <span class="nx">wallFall2</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1989</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">wallFall1</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">==</span> <span class="nx">wallFall2</span><span class="p">.</span><span class="nx">getTime</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>In addition to a date and time, <tt class="docutils literal"><span class="pre">Date</span></tt> objects also contain information about
+a timezone. When it is one o&#8217;clock in Amsterdam, it can, depending on the time
+of year, be noon in London, and seven in the morning in New York. Such times
+can only be compared when you take their time zones into account. The
+<tt class="docutils literal"><span class="pre">getTimezoneOffset</span></tt> function of a <tt class="docutils literal"><span class="pre">Date</span></tt> can be used to find out how many
+minutes it differs from GMT (Greenwich Mean Time).</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">now</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">();</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">now</span><span class="p">.</span><span class="nx">getTimezoneOffset</span><span class="p">());</span>
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Complete <a class="reference internal" href="exercises/ch03/ch03s01.html#extract-date-exercise"><em>extractDate(s)</em></a> from the exercise set before reading
+further....</p>
+</div>
+</div>
+<div class="section" id="records">
+<span id="index-12"></span><h2>3.13. Records<a class="headerlink" href="#records" title="Permalink to this headline">¶</a></h2>
+<p>Storing cats will work differently from now on. Instead of just putting the
+value <tt class="docutils literal"><span class="pre">true</span></tt> into the set, we store an object with information about the cat.
+When a cat dies, we do not remove it from the set, we just add a property
+<tt class="docutils literal"><span class="pre">death</span></tt> to the object to store the date on which the creature died.</p>
+<p>This means our <tt class="docutils literal"><span class="pre">addToSet</span></tt> and <tt class="docutils literal"><span class="pre">removeFromSet</span></tt> functions have become
+useless. Something similar is needed, but it must also store birth-dates and,
+later, the mother&#8217;s name.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">catRecord</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">birthdate</span><span class="p">,</span> <span class="nx">mother</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">birth</span><span class="o">:</span> <span class="nx">birthdate</span><span class="p">,</span> <span class="nx">mother</span><span class="o">:</span> <span class="nx">mother</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">addCats</span><span class="p">(</span><span class="nx">set</span><span class="p">,</span> <span class="nx">names</span><span class="p">,</span> <span class="nx">birthdate</span><span class="p">,</span> <span class="nx">mother</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">names</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">set</span><span class="p">[</span><span class="nx">names</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">catRecord</span><span class="p">(</span><span class="nx">names</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">birthdate</span><span class="p">,</span> <span class="nx">mother</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">deadCats</span><span class="p">(</span><span class="nx">set</span><span class="p">,</span> <span class="nx">names</span><span class="p">,</span> <span class="nx">deathdate</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">names</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="nx">set</span><span class="p">[</span><span class="nx">names</span><span class="p">[</span><span class="nx">i</span><span class="p">]].</span><span class="nx">death</span> <span class="o">=</span> <span class="nx">deathdate</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">catRecord</span></tt> is a separate function for creating these storage objects. It
+might be useful in other situations, such as creating the object for Spot.
+<a class="reference external" href="http://en.wikipedia.org/wiki/Record_%28computer_science%29">Record</a> is a
+term often used for objects like this, which are used to group a limited number
+of values.</p>
+</div>
+<div class="section" id="extracting-mother-cats">
+<h2>3.14. Extracting mother cats<a class="headerlink" href="#extracting-mother-cats" title="Permalink to this headline">¶</a></h2>
+<p>So let us try to extract the names of the mother cats from the paragraphs.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;born 11/15/2003 (mother Spot): White Fang&quot;</span>
+</pre></div>
+</div>
+<p>One way to do this would be...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">extractMother</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="nx">paragraph</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;(mother &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;(mother &quot;</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">paragraph</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">paragraph</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">end</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">extractMother</span><span class="p">(</span><span class="s2">&quot;born 11/15/2003 (mother Spot): White Fang&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>Notice how the start position has to be adjusted for the length of <tt class="docutils literal"><span class="pre">&quot;(mother</span>
+<span class="pre">&quot;</span></tt>, because <tt class="docutils literal"><span class="pre">indexOf</span></tt> returns the position of the start of the pattern, not
+its end.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">You will need to complete <a class="reference internal" href="exercises/ch03/ch03s01.html#between-exercise"><em>between(string, start, end)</em></a> from the exercise set
+before continuing with the chapter...</p>
+</div>
+<p>Having <tt class="docutils literal"><span class="pre">between</span></tt> makes it possible to express extractMother in a simpler way:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">extractMother</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">between</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">,</span> <span class="s2">&quot;(mother &quot;</span><span class="p">,</span> <span class="s2">&quot;)&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The new, improved cat-algorithm looks like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">findCats</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">mailArchive</span> <span class="o">=</span> <span class="nx">retrieveMails</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">cats</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Spot&quot;</span><span class="o">:</span> <span class="nx">catRecord</span><span class="p">(</span><span class="s2">&quot;Spot&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">1997</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                <span class="s2">&quot;unknown&quot;</span><span class="p">)};</span>
+
+    <span class="kd">function</span> <span class="nx">handleParagraph</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">,</span> <span class="s2">&quot;born&quot;</span><span class="p">))</span>
+            <span class="nx">addCats</span><span class="p">(</span><span class="nx">cats</span><span class="p">,</span> <span class="nx">catNames</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">),</span> <span class="nx">extractDate</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">),</span>
+                    <span class="nx">extractMother</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">));</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">startsWith</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">,</span> <span class="s2">&quot;died&quot;</span><span class="p">))</span>
+            <span class="nx">deadCats</span><span class="p">(</span><span class="nx">cats</span><span class="p">,</span> <span class="nx">catNames</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">),</span> <span class="nx">extractDate</span><span class="p">(</span><span class="nx">paragraph</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">mail</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">mail</span> <span class="o">&lt;</span> <span class="nx">mailArchive</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">mail</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">paragraphs</span> <span class="o">=</span> <span class="nx">mailArchive</span><span class="p">[</span><span class="nx">mail</span><span class="p">].</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">paragraphs</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="nx">handleParagraph</span><span class="p">(</span><span class="nx">paragraphs</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">cats</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">catData</span> <span class="o">=</span> <span class="nx">findCats</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Having that extra data allows us to finally have a clue about the cats aunt
+Emily talks about. A function like this could be useful:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">formatDate</span><span class="p">(</span><span class="nx">date</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">date</span><span class="p">.</span><span class="nx">getMonth</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nx">date</span><span class="p">.</span><span class="nx">getDate</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span>
+           <span class="nx">date</span><span class="p">.</span><span class="nx">getFullYear</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">catInfo</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">name</span> <span class="k">in</span> <span class="nx">data</span><span class="p">))</span>
+        <span class="k">return</span> <span class="s2">&quot;No cat by the name of &quot;</span> <span class="o">+</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot; is known.&quot;</span><span class="p">;</span>
+
+    <span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">name</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot;, born &quot;</span> <span class="o">+</span> <span class="nx">formatDate</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">birth</span><span class="p">)</span> <span class="o">+</span>
+                  <span class="s2">&quot; from mother &quot;</span> <span class="o">+</span> <span class="nx">cat</span><span class="p">.</span><span class="nx">mother</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="s2">&quot;death&quot;</span> <span class="k">in</span> <span class="nx">cat</span><span class="p">)</span>
+        <span class="nx">message</span> <span class="o">+=</span> <span class="s2">&quot;, died &quot;</span> <span class="o">+</span> <span class="nx">formatDate</span><span class="p">(</span><span class="nx">cat</span><span class="p">.</span><span class="nx">death</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">message</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">catInfo</span><span class="p">(</span><span class="nx">catData</span><span class="p">,</span> <span class="s2">&quot;Fat Igor&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The first <tt class="docutils literal"><span class="pre">return</span></tt> statement in <tt class="docutils literal"><span class="pre">catInfo</span></tt> is used as an escape hatch. If
+there is no data about the given cat, the rest of the function is meaningless,
+so we immediately return a value, which prevents the rest of the code from
+running.</p>
+</div>
+<div class="section" id="arguments-length">
+<h2>3.15. <tt class="docutils literal"><span class="pre">arguments.length</span></tt><a class="headerlink" href="#arguments-length" title="Permalink to this headline">¶</a></h2>
+<p>Now that we are familiar with arrays, I can show you something related.
+Whenever a function is called, a special variable named <tt class="docutils literal"><span class="pre">arguments</span></tt> is added
+to the environment in which the function body runs. This variable refers to an
+object that resembles an array. It has a property <tt class="docutils literal"><span class="pre">0</span></tt> for the first argument,
+<tt class="docutils literal"><span class="pre">1</span></tt> for the second, and so on for every argument the function was given. It
+also has a <tt class="docutils literal"><span class="pre">length</span></tt> property.</p>
+<p>This object is not a real array though, it does not have methods like <tt class="docutils literal"><span class="pre">push</span></tt>,
+and it does not automatically update its <tt class="docutils literal"><span class="pre">length</span></tt> property when you add
+something to it. Why not, I never really found out, but this is something one
+needs to be aware of.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">argumentCounter</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;You gave me &quot;</span> <span class="o">+</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="s2">&quot; arguments.&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">argumentCounter</span><span class="p">(</span><span class="s2">&quot;Death&quot;</span><span class="p">,</span> <span class="s2">&quot;Famine&quot;</span><span class="p">,</span> <span class="s2">&quot;Pestilence&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Some functions can take any number of arguments, like <tt class="docutils literal"><span class="pre">argumentCounter</span></tt> does.
+These typically loop over the values in the <tt class="docutils literal"><span class="pre">arguments</span></tt> object to do
+something with them. Others can take optional arguments which, when not given
+by the caller, get some sensible default value.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">number</span><span class="p">,</span> <span class="nx">howmuch</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="nx">howmuch</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">return</span> <span class="nx">number</span> <span class="o">+</span> <span class="nx">howmuch</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">6</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="math-object-properties">
+<h2>3.16. <tt class="docutils literal"><span class="pre">Math</span></tt> object properties<a class="headerlink" href="#math-object-properties" title="Permalink to this headline">¶</a></h2>
+<p>The previous chapter showed the functions <tt class="docutils literal"><span class="pre">Math.max</span></tt> and <tt class="docutils literal"><span class="pre">Math.min</span></tt>. With
+what you know now, you will notice that these are really the properties <tt class="docutils literal"><span class="pre">max</span></tt>
+and <tt class="docutils literal"><span class="pre">min</span></tt> of the object stored under the name <tt class="docutils literal"><span class="pre">Math</span></tt>. This is another role
+that objects can play: A warehouse holding a number of related values.</p>
+<p>There are quite a lot of values inside <tt class="docutils literal"><span class="pre">Math</span></tt>, if they would all have been
+placed directly into the global environment they would, as it is called,
+pollute it. The more names have been taken, the more likely one is to
+accidentally overwrite the value of some variable. For example, it is not a far
+shot to want to name something <tt class="docutils literal"><span class="pre">max</span></tt>.</p>
+<p>Most languages will stop you, or at least warn you, when you are defining a
+variable with a name that is already taken. Not JavaScript.</p>
+<p>In any case, one can find a whole outfit of mathematical functions and
+constants inside <tt class="docutils literal"><span class="pre">Math</span></tt>. All the trigonometric functions are there ― <tt class="docutils literal"><span class="pre">cos</span></tt>,
+<tt class="docutils literal"><span class="pre">sin</span></tt>, <tt class="docutils literal"><span class="pre">tan</span></tt>, <tt class="docutils literal"><span class="pre">acos</span></tt>, <tt class="docutils literal"><span class="pre">asin</span></tt>, <tt class="docutils literal"><span class="pre">atan</span></tt>. π and e, which are written with
+all capital letters (<tt class="docutils literal"><span class="pre">PI</span></tt> and <tt class="docutils literal"><span class="pre">E</span></tt>), which was, at one time, a fashionable
+way to indicate something is a constant. <tt class="docutils literal"><span class="pre">pow</span></tt> is a good replacement for the
+<tt class="docutils literal"><span class="pre">power</span></tt> functions we have been writing, it also accepts negative and
+fractional exponents. <tt class="docutils literal"><span class="pre">sqrt</span></tt> takes square roots. <tt class="docutils literal"><span class="pre">max</span></tt> and <tt class="docutils literal"><span class="pre">min</span></tt> can give
+the maximum or minimum of two values. <tt class="docutils literal"><span class="pre">round</span></tt>, <tt class="docutils literal"><span class="pre">floor</span></tt>, and <tt class="docutils literal"><span class="pre">ceil</span></tt> will
+round numbers to the closest whole number, the whole number below it, and the
+whole number above it respectively.</p>
+<p>There are a number of other values in <tt class="docutils literal"><span class="pre">Math</span></tt>, but this text is an
+introduction, not a reference. References are what you look at when you suspect
+something exists in the language, but need to find out what it is called or how
+it works exactly. Unfortunately, there is no one comprehensive complete
+reference for JavaScript. This is mostly because its current form is the result
+of a chaotic process of different browsers adding different extensions at
+different times. The ECMA standard document that was mentioned in the
+introduction provides a solid documentation of the basic language, but is more
+or less unreadable. For things like the <tt class="docutils literal"><span class="pre">Math</span></tt> object and other elementary
+functionality, a rather good reference can be found
+<a class="reference external" href="https://developer.mozilla.org/en/JavaScript/Reference">here</a>.</p>
+</div>
+<div class="section" id="hidden-properties">
+<h2>3.17. Hidden properties<a class="headerlink" href="#hidden-properties" title="Permalink to this headline">¶</a></h2>
+<p>Maybe you already thought of a way to find out what is available in the
+<tt class="docutils literal"><span class="pre">Math</span></tt> object:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="k">in</span> <span class="nb">Math</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>But alas, nothing appears. Similarly, when you do this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">name</span> <span class="k">in</span> <span class="p">[</span><span class="s2">&quot;Huey&quot;</span><span class="p">,</span> <span class="s2">&quot;Dewey&quot;</span><span class="p">,</span> <span class="s2">&quot;Loui&quot;</span><span class="p">])</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You only see <tt class="docutils literal"><span class="pre">0</span></tt>, <tt class="docutils literal"><span class="pre">1</span></tt>, and <tt class="docutils literal"><span class="pre">2</span></tt>, not <tt class="docutils literal"><span class="pre">length</span></tt>, or <tt class="docutils literal"><span class="pre">push</span></tt>, or <tt class="docutils literal"><span class="pre">join</span></tt>,
+which are definitely also in there. Apparently, some properties of objects are
+hidden. There is a good reason for this: All objects have a few methods, for
+example <tt class="docutils literal"><span class="pre">toString</span></tt>, which converts the object into some kind of relevant
+string, and you do not want to see those when you are, for example, looking for
+the cats that you stored in the object.</p>
+<p>Why the properties of <tt class="docutils literal"><span class="pre">Math</span></tt> are hidden is unclear to me. Someone probably
+wanted it to be a mysterious kind of object.</p>
+<p>All properties your programs add to objects are visible. There is no way to
+make them hidden, which is unfortunate because, as we will see in
+<a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a>, it would be nice to be able to add methods to objects
+without having them show up in our <tt class="docutils literal"><span class="pre">for</span></tt>/<tt class="docutils literal"><span class="pre">in</span></tt> loops.</p>
+</div>
+<div class="section" id="read-only-properties">
+<h2>3.18. Read-only properties<a class="headerlink" href="#read-only-properties" title="Permalink to this headline">¶</a></h2>
+<p>Some properties are read-only, you can get their value but not change it. For
+example, the properties of a string value are all read-only.</p>
+<p>Other properties can be &#8216;watched&#8217;. Changing them causes <em>things</em> to happen. For
+example, lowering the length of an array causes excess elements to be
+discarded:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">array</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Heaven&quot;</span><span class="p">,</span> <span class="s2">&quot;Earth&quot;</span><span class="p">,</span> <span class="s2">&quot;Man&quot;</span><span class="p">];</span>
+<span class="nx">array</span><span class="p">.</span><span class="nx">length</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">array</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In some browsers, objects have a method <tt class="docutils literal"><span class="pre">watch</span></tt>, which can be used to add a
+watcher to your own properties.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">winston</span> <span class="o">=</span> <span class="p">{</span><span class="nx">mind</span><span class="o">:</span> <span class="s2">&quot;compliant&quot;</span><span class="p">};</span>
+<span class="kd">function</span> <span class="nx">watcher</span><span class="p">(</span><span class="nx">propertyName</span><span class="p">,</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">to</span> <span class="o">==</span> <span class="s2">&quot;compliant&quot;</span><span class="p">)</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Doubleplusgood.&quot;</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="nx">print</span><span class="p">(</span><span class="s2">&quot;Transmitting information to Thought Police...&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">winston</span><span class="p">.</span><span class="nx">watch</span><span class="p">(</span><span class="s2">&quot;mind&quot;</span><span class="p">,</span> <span class="nx">watcher</span><span class="p">);</span>
+
+<span class="nx">winston</span><span class="p">.</span><span class="nx">mind</span> <span class="o">=</span> <span class="s2">&quot;rebellious&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="glossary">
+<h2>3.19. Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-algorithm">algorithm</dt>
+<dd>A step by step process for solving a problem.</dd>
+<dt id="term-array">array</dt>
+<dd>A collection of <em>elements</em> (values or variables) selected by an
+<em>index</em>.</dd>
+<dt id="term-helper-function">helper function</dt>
+<dd>A function designed to do part of the work of another program used
+to make the function which uses it more understandable.</dd>
+<dt id="term-method">method</dt>
+<dd>A function associated with an object.</dd>
+<dt id="term-object">object</dt>
+<dd>A collection of values (<em>attributes</em>) and functions (<em>methods</em>) in
+a single data element.</dd>
+<dt id="term-property">property</dt>
+<dd>A value associated with an object.</dd>
+</dl>
+</div>
+<div class="section" id="exercises">
+<h2>3.20. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="exercises/ch03/ch03s01.html#ch03s01"><em>Chapter 3 Exercise Set 1</em></a></li>
+<li><a class="reference internal" href="exercises/ch03/ch03s02.html#ch03s02"><em>Chapter 3 Exercise Set 2</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch04.html" title="4. Error Handling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch02.html" title="2. Functions"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 11 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 12 Exercise Set 1" href="../ch12/ch12s01.html" />
+    <link rel="prev" title="Chapter 10 Exercise Set 1" href="../ch10/ch10s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch12/ch12s01.html" title="Chapter 12 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch10/ch10s01.html" title="Chapter 10 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-11-exercise-set-1">
+<span id="ch11s01"></span><h1>Chapter 11 Exercise Set 1<a class="headerlink" href="#chapter-11-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">The points on the grid will be represented by objects again. In
+<a class="reference internal" href="../../ch10.html#searching-chapter"><em>Searching</em></a> we used three functions, <tt class="docutils literal"><span class="pre">point</span></tt>, <tt class="docutils literal"><span class="pre">addPoints</span></tt>,
+and <tt class="docutils literal"><span class="pre">samePoint</span></tt> to work with points. This time, we will use a constructor
+and two methods. Write the constructor <tt class="docutils literal"><span class="pre">Point</span></tt>, which takes two arguments,
+the x and y coordinates of the point, and produces an object with <tt class="docutils literal"><span class="pre">x</span></tt> and
+<tt class="docutils literal"><span class="pre">y</span></tt> properties.  Give the prototype of this constructor a method <tt class="docutils literal"><span class="pre">add</span></tt>,
+which takes another point as argument and returns a <em>new</em> point whose <tt class="docutils literal"><span class="pre">x</span></tt>
+and <tt class="docutils literal"><span class="pre">y</span></tt> are the sum of the <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt> of the two given points. Also
+add a method <tt class="docutils literal"><span class="pre">isEqualTo</span></tt>, which takes a point and returns a boolean
+indicating whether the <tt class="docutils literal"><span class="pre">this</span></tt> point refers to the same coordinates as the
+given point.</p>
+<p>Apart from the two methods, the <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt> properties are also part of
+the interface of this type of objects: Code which uses point objects may
+freely retrieve and modify <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">Point</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">Point</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">add</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">other</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">other</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">y</span> <span class="o">+</span> <span class="nx">other</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="nx">Point</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">isEqualTo</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">other</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">==</span> <span class="nx">other</span><span class="p">.</span><span class="nx">x</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="p">.</span><span class="nx">y</span> <span class="o">==</span> <span class="nx">other</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">((</span><span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)).</span><span class="nx">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)));</span>
+</pre></div>
+</div>
+<p>Make sure your version of <tt class="docutils literal"><span class="pre">add</span></tt> leaves the <tt class="docutils literal"><span class="pre">this</span></tt> point intact and
+produces a new point object. A method which changes the current point
+instead would be similar to the <tt class="docutils literal"><span class="pre">+=</span></tt> operator, whereas this one is like
+the <tt class="docutils literal"><span class="pre">+</span></tt> operator.</p>
+</li>
+<li><p class="first">We will also need to go over all the elements of the grid, to find the bugs
+we need to move, or to convert the whole thing to a string. To make this
+easy, we can use a higher-order function that takes an action as its
+argument. Add the method <tt class="docutils literal"><span class="pre">each</span></tt> to the prototype of <tt class="docutils literal"><span class="pre">Grid</span></tt>, which takes
+a function of two arguments as its argument. It calls this function for
+every point on the grid, giving it the point object for that point as its
+first argument, and the value that is on the grid at that point as second
+argument.</p>
+<p>Go over the points starting at <tt class="docutils literal"><span class="pre">0</span></tt>,``0``, one row at a time, so that
+<tt class="docutils literal"><span class="pre">1</span></tt>,``0`` is handled before <tt class="docutils literal"><span class="pre">0</span></tt>,``1``. This will make it easier to write
+the <tt class="docutils literal"><span class="pre">toString</span></tt> function of the terrarium later.  (Hint: Put a <tt class="docutils literal"><span class="pre">for</span></tt> loop
+for the <tt class="docutils literal"><span class="pre">x</span></tt> coordinate inside a loop for the <tt class="docutils literal"><span class="pre">y</span></tt> coordinate.)</p>
+<p>It is advisable not to muck about in the <tt class="docutils literal"><span class="pre">cells</span></tt> property of the grid
+object directly, but use <tt class="docutils literal"><span class="pre">valueAt</span></tt> to get at the values.  This way, if we
+decide (for some reason) to use a different method for storing the values,
+we only have to rewrite <tt class="docutils literal"><span class="pre">valueAt</span></tt> and <tt class="docutils literal"><span class="pre">setValueAt</span></tt>, and the other
+methods can stay untouched.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">Grid</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">each</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">y</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span> <span class="nx">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">x</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span> <span class="nx">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+            <span class="nx">action</span><span class="p">(</span><span class="nx">point</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">valueAt</span><span class="p">(</span><span class="nx">point</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Now we can use the <tt class="docutils literal"><span class="pre">each</span></tt> method of the <tt class="docutils literal"><span class="pre">Grid</span></tt> object to build up a
+string. But to make the result readable, it would be nice to have a newline
+at the end of every row. The <tt class="docutils literal"><span class="pre">x</span></tt> coordinate of the positions on the grid
+can be used to determine when the end of a line is reached. Add a method
+<tt class="docutils literal"><span class="pre">toString</span></tt>, which takes no arguments and returns a string which, when
+given to <tt class="docutils literal"><span class="pre">print</span></tt>, shows a nice two-dimensional view of the terrarium.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">Terrarium</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">characters</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">endOfLine</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">grid</span><span class="p">.</span><span class="nx">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">grid</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">point</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">characters</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">characterFromElement</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">point</span><span class="p">.</span><span class="nx">x</span> <span class="o">==</span> <span class="nx">endOfLine</span><span class="p">)</span>
+            <span class="nx">characters</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;\n&quot;</span><span class="p">);</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">characters</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>And to try it out...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">terrarium</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Terrarium</span><span class="p">(</span><span class="nx">thePlan</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">terrarium</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">In the expression <tt class="docutils literal"><span class="pre">bind(testArray.push,</span> <span class="pre">testArray)</span></tt> the name <tt class="docutils literal"><span class="pre">testArray</span></tt>
+still occurs twice. Can you design a function <tt class="docutils literal"><span class="pre">method</span></tt>, which allows you
+to bind an object to one of its methods <em>without</em> naming the object twice?</p>
+<p>It is possible to give the name of the method as a string. This way, the
+<tt class="docutils literal"><span class="pre">method</span></tt> function can look up the correct function value for itself.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">method</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">object</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">apply</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">pushTest</span> <span class="o">=</span> <span class="nx">method</span><span class="p">(</span><span class="nx">testArray</span><span class="p">,</span> <span class="s2">&quot;push&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">When asking a bug to act, we must pass it an object with information about
+its current surroundings. This object will use the direction names we saw
+earlier (<tt class="docutils literal"><span class="pre">&quot;n&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;ne&quot;</span></tt>, etcetera) as property names. Each property holds
+a string of one character, as returned by <tt class="docutils literal"><span class="pre">characterFromElement</span></tt>,
+indicating what the bug can see in that direction.</p>
+<p>Add a method <tt class="docutils literal"><span class="pre">listSurroundings</span></tt> to the <tt class="docutils literal"><span class="pre">Terrarium</span></tt> prototype.  It takes
+one argument, the point at which the bug is currently standing, and returns
+an object with information about the surroundings of that point. When the
+point is at the edge of the grid, use <tt class="docutils literal"><span class="pre">&quot;#&quot;</span></tt> for the directions that go
+outside of the grid, so the bug will not try to move there.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Do not write out all the directions, use the <tt class="docutils literal"><span class="pre">each</span></tt> method on the
+<tt class="docutils literal"><span class="pre">directions</span></tt> dictionary.</p>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">Terrarium</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">listSurroundings</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">center</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="kd">var</span> <span class="nx">grid</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">grid</span><span class="p">;</span>
+    <span class="nx">directions</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">direction</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">place</span> <span class="o">=</span> <span class="nx">center</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">direction</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">grid</span><span class="p">.</span><span class="nx">isInside</span><span class="p">(</span><span class="nx">place</span><span class="p">))</span>
+            <span class="nx">result</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">characterFromElement</span><span class="p">(</span><span class="nx">grid</span><span class="p">.</span><span class="nx">valueAt</span><span class="p">(</span><span class="nx">place</span><span class="p">));</span>
+        <span class="k">else</span>
+            <span class="nx">result</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Note the use of the <tt class="docutils literal"><span class="pre">grid</span></tt> variable to work around the <tt class="docutils literal"><span class="pre">this</span></tt> problem.</p>
+</li>
+<li><p class="first">Create a bug type called <tt class="docutils literal"><span class="pre">DrunkBug</span></tt> which tries to move in a random
+direction every turn, never mind whether there is a wall there. Remember the
+<tt class="docutils literal"><span class="pre">Math.random</span></tt> trick from <a class="reference internal" href="../../ch10.html#searching-chapter"><em>Searching</em></a>.</p>
+<p>To pick a random direction, we will need an array of direction names. We
+could of course just type <tt class="docutils literal"><span class="pre">[&quot;n&quot;,</span> <span class="pre">&quot;ne&quot;,</span> <span class="pre">...]</span></tt>, but that duplicates
+information, and duplicated information makes me nervous. We could also use
+the <tt class="docutils literal"><span class="pre">each</span></tt> method in <tt class="docutils literal"><span class="pre">directions</span></tt> to build the array, which is better
+already.</p>
+<p>But there is clearly a generality to be discovered here. Getting a list of
+the property names in a dictionary sounds like a useful tool to have, so we
+add it to the <tt class="docutils literal"><span class="pre">Dictionary</span></tt> prototype.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">Dictionary</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">names</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">names</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span><span class="nx">names</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">name</span><span class="p">);});</span>
+    <span class="k">return</span> <span class="nx">names</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">directions</span><span class="p">.</span><span class="nx">names</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>A real neurotic programmer would immediately restore symmetry by also adding
+a <tt class="docutils literal"><span class="pre">values</span></tt> method, which returns a list of the values stored in the
+dictionary. But I guess that can wait until we <a class="reference external" href="http://www.c2.com/cgi/wiki?YouArentGonnaNeedIt">need it</a>.</p>
+<p>Here is a way to take a random element from an array:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">randomElement</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">array</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;The array is empty.&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">array</span><span class="p">[</span><span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">)];</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">randomElement</span><span class="p">([</span><span class="s2">&quot;heads&quot;</span><span class="p">,</span> <span class="s2">&quot;tails&quot;</span><span class="p">]));</span>
+</pre></div>
+</div>
+<p>And the bug itself:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">DrunkBug</span><span class="p">()</span> <span class="p">{};</span>
+<span class="nx">DrunkBug</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">act</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">surroundings</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;move&quot;</span><span class="p">,</span> <span class="nx">direction</span><span class="o">:</span> <span class="nx">randomElement</span><span class="p">(</span><span class="nx">directions</span><span class="p">.</span><span class="nx">names</span><span class="p">())};</span>
+<span class="p">};</span>
+<span class="nx">DrunkBug</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">character</span> <span class="o">=</span> <span class="s2">&quot;~&quot;</span><span class="p">;</span>
+
+<span class="nx">creatureTypes</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">DrunkBug</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a <tt class="docutils literal"><span class="pre">LichenEater</span></tt> creature. It starts with an energy of <tt class="docutils literal"><span class="pre">10</span></tt>, and
+behaves in the following way:</p>
+<ul class="simple">
+<li>When it has an energy of 30 or more, and there is room near it, it
+reproduces.</li>
+<li>Otherwise, if there are lichen nearby, it eats a random one.</li>
+<li>Otherwise, if there is space to move, it moves into a random
+nearby empty square.</li>
+<li>Otherwise, it waits.</li>
+</ul>
+<p>Use <tt class="docutils literal"><span class="pre">findDirections</span></tt> and <tt class="docutils literal"><span class="pre">randomElement</span></tt> to check the surroundings and
+to pick directions. Give the lichen-eater <tt class="docutils literal"><span class="pre">&quot;c&quot;</span></tt> as its character
+(pac-man).</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">LichenEater</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">energy</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">LichenEater</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">act</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">surroundings</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">emptySpace</span> <span class="o">=</span> <span class="nx">findDirections</span><span class="p">(</span><span class="nx">surroundings</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">lichen</span> <span class="o">=</span> <span class="nx">findDirections</span><span class="p">(</span><span class="nx">surroundings</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span> <span class="o">&gt;=</span> <span class="mi">30</span> <span class="o">&amp;&amp;</span> <span class="nx">emptySpace</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;reproduce&quot;</span><span class="p">,</span> <span class="nx">direction</span><span class="o">:</span> <span class="nx">randomElement</span><span class="p">(</span><span class="nx">emptySpace</span><span class="p">)};</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">lichen</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;eat&quot;</span><span class="p">,</span> <span class="nx">direction</span><span class="o">:</span> <span class="nx">randomElement</span><span class="p">(</span><span class="nx">lichen</span><span class="p">)};</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">emptySpace</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;move&quot;</span><span class="p">,</span> <span class="nx">direction</span><span class="o">:</span> <span class="nx">randomElement</span><span class="p">(</span><span class="nx">emptySpace</span><span class="p">)};</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;wait&quot;</span><span class="p">};</span>
+<span class="p">};</span>
+<span class="nx">LichenEater</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">character</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span><span class="p">;</span>
+
+<span class="nx">creatureTypes</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">LichenEater</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Find a way to modify the <tt class="docutils literal"><span class="pre">LichenEater</span></tt> to be more likely to survive. Do
+not cheat ― <tt class="docutils literal"><span class="pre">this.energy</span> <span class="pre">+=</span> <span class="pre">100</span></tt> is cheating. If you rewrite the
+constructor, do not forget to re-register it in the <tt class="docutils literal"><span class="pre">creatureTypes</span></tt>
+dictionary, or the terrarium will continue to use the old constructor.</p>
+<p>One approach would be to reduce the randomness of its movement. By always
+picking a random direction, it will often move back and forth without
+getting anywhere. By remembering the last direction it went, and preferring
+that direction, the eater will waste less time, and find food faster.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">CleverLichenEater</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">energy</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">direction</span> <span class="o">=</span> <span class="s2">&quot;ne&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">CleverLichenEater</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">act</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">surroundings</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">emptySpace</span> <span class="o">=</span> <span class="nx">findDirections</span><span class="p">(</span><span class="nx">surroundings</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">lichen</span> <span class="o">=</span> <span class="nx">findDirections</span><span class="p">(</span><span class="nx">surroundings</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">energy</span> <span class="o">&gt;=</span> <span class="mi">30</span> <span class="o">&amp;&amp;</span> <span class="nx">emptySpace</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;reproduce&quot;</span><span class="p">,</span> <span class="nx">direction</span><span class="o">:</span> <span class="nx">randomElement</span><span class="p">(</span><span class="nx">emptySpace</span><span class="p">)};</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">lichen</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;eat&quot;</span><span class="p">,</span> <span class="nx">direction</span><span class="o">:</span> <span class="nx">randomElement</span><span class="p">(</span><span class="nx">lichen</span><span class="p">)};</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">emptySpace</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">surroundings</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">direction</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">direction</span> <span class="o">=</span> <span class="nx">randomElement</span><span class="p">(</span><span class="nx">emptySpace</span><span class="p">);</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;move&quot;</span><span class="p">,</span> <span class="nx">direction</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">direction</span><span class="p">};</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s2">&quot;wait&quot;</span><span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">CleverLichenEater</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">character</span> <span class="o">=</span> <span class="s2">&quot;c&quot;</span><span class="p">;</span>
+
+<span class="nx">creatureTypes</span><span class="p">.</span><span class="nx">register</span><span class="p">(</span><span class="nx">CleverLichenEater</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Try it out using the previous terrarium-plan.</p>
+</li>
+<li><p class="first">A one-link food chain is still a bit rudimentary. Can you write a new
+creature, <tt class="docutils literal"><span class="pre">LichenEaterEater</span></tt> (character <tt class="docutils literal"><span class="pre">&quot;&#64;&quot;</span></tt>), which survives by eating
+lichen-eaters? Try to find a way to make it fit in the ecosystem without
+dying out too quickly. Modify the <tt class="docutils literal"><span class="pre">lichenPlan</span></tt> array to include a few of
+these, and try them out.</p>
+<p>You are on your own here. I failed to find a really good way to prevent
+these creatures from either going extinct right away or gobbling up all
+lichen-eaters and then going extinct. The trick of only eating when it spots
+two pieces of food doesn&#8217;t work very well for them, because their food moves
+around so much it is rare to find two in one place. What does seem to help
+is making the eater-eater really fat (high energy), so that it can survive
+times when lichen-eaters are scarce, and only reproduces slowly, which
+prevents it from exterminating its food source too quickly.</p>
+<p>The lichen and eaters go through a periodic movement ― sometimes lichen are
+abundant, which causes a lot of eaters to be born, which causes the lichen
+to become scarce, which causes the eaters to starve, which causes the lichen
+to become abundant, and so on. You could try to make the lichen-eater-eaters
+&#8216;hibernate&#8217; (use the <tt class="docutils literal"><span class="pre">&quot;wait&quot;</span></tt> action for a while), when they fail to find
+food for a few turns. If you choose the right amount of turns for this
+hibernation, or have them wake up automatically when they smell lots of
+food, this could be a good strategy.</p>
+</li>
+</ol>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch12/ch12s01.html" title="Chapter 12 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch10/ch10s01.html" title="Chapter 10 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

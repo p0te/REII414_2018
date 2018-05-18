@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="1. Basic JavaScript: values, variables, and control flow" href="ch01.html" />
+    <link rel="prev" title="Copyright Notice" href="copyright.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch01.html" title="1. Basic JavaScript: values, variables, and control flow"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="copyright.html" title="Copyright Notice"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>When personal computers were first introduced, most of them came equipped with
+a simple programming language, usually a variant of
+<a class="reference external" href="http://en.wikipedia.org/wiki/BASIC">BASIC</a>. Interacting with the computer
+was closely integrated with this language, and thus every computer-user,
+whether he wanted to or not, would get a taste of it. Now that computers have
+become plentiful and cheap, typical users don&#8217;t get much further than clicking
+things with a mouse. For most people, this works very well. But for those of us
+with a natural inclination towards technological tinkering, the removal of
+programming from every-day computer use presents something of a barrier.</p>
+<p>Fortunately, as an effect of developments in the World Wide Web, it so happens
+that every computer equipped with a modern web-browser also has an environment
+for programming JavaScript. In today&#8217;s spirit of not bothering the user with
+technical details, it is kept well hidden, but a web-page can make it
+accessible, and use it as a platform for learning to program.</p>
+<p>That is what this (hyper-)book tries to do.</p>
+<blockquote>
+<div><em>I do not enlighten those who are not eager to learn, nor arouse
+those who are not anxious to give an explanation themselves. If I
+have presented one corner of the square and they cannot come back
+to me with the other three, I should not go over the points again.</em>
+― Confucius</div></blockquote>
+<p>Besides explaining JavaScript, this book tries to be an introduction to the
+basic principles of programming. Programming, it turns out, is hard. The
+fundamental rules are, most of the time, simple and clear. But programs, while
+built on top of these basic rules, tend to become complex enough to introduce
+their own rules, their own complexity. Because of this, programming is rarely
+simple or predictable. As
+<a class="reference external" href="http://en.wikipedia.org/wiki/Donald_Knuth">Donald Knuth</a>, who is something
+of a founding father of the field, says, it is an <em>art</em>.</p>
+<p>To get something out of this book, more than just passive reading is required.
+Try to stay sharp, make an effort to solve the exercises, and only continue on
+when you are reasonably sure you understand the material that came before.</p>
+<blockquote>
+<div><em>The computer programmer is a creator of universes for which he alone is
+responsible. Universes of virtually unlimited complexity can be created in
+the form of computer programs.</em>
+― Joseph Weizenbaum, Computer Power and Human Reason</div></blockquote>
+<p>A program is many things. It is a piece of text typed by a programmer, it is
+the directing force that makes the computer do what it does, it is data in the
+computer&#8217;s memory, yet it controls the actions performed on this same memory.
+Analogies that try to compare programs to objects we are familiar with tend to
+fall short, but a superficially fitting one is that of a machine. The gears of
+a mechanical watch fit together ingeniously, and if the watchmaker was any
+good, it will accurately show the time for many years. The elements of a
+program fit together in a similar way, and if the programmer knows what he is
+doing, the program will run without crashing.</p>
+<p>A computer is a machine built to act as a host for these immaterial machines.
+Computers themselves can only do stupidly straightforward things. The reason
+they are so useful is that they do these things at an incredibly high speed. A
+program can, by ingeniously combining many of these simple actions, do very
+complicated things.</p>
+<p>To some of us, writing computer programs is a fascinating game. A program is a
+building of thought. It is costless to build, weightless, growing easily under
+our typing hands. If we get carried away, its size and complexity will grow out
+of control, confusing even the one who created it. This is the main problem of
+programming. It is why so much of today&#8217;s software tends to crash, fail, screw
+up.</p>
+<p>When a program works, it is beautiful. The art of programming is the skill of
+controlling complexity. The great program is subdued, made simple in its
+complexity.</p>
+<p>The landscape of programming techniques is enormous, fascinating in its
+diversity, still largely unexplored. It is certainly littered with traps and
+snares, luring the inexperienced programmer into all kinds of horrible
+mistakes, but that only means you should proceed with caution, keep your wits
+about you. As you learn, there will always be new challenges, new territory to
+explore. The programmer who refuses to keep exploring will surely stagnate,
+forget his joy, lose the will to program (and become a manager).</p>
+<hr class="docutils" />
+<p>In the beginning, at the birth of computing, there were no programming
+languages. Programs looked something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>00110001 00000000 00000000
+00110001 00000001 00000001
+00110011 00000001 00000010
+01010001 00001011 00000010
+00100010 00000010 00001000
+01000011 00000001 00000000
+01000001 00000001 00000001
+00010000 00000010 00000000
+01100010 00000000 00000000
+</pre></div>
+</div>
+<p>That is a program to add the numbers from one to ten together, and print out
+the result (1 + 2 + ... + 10 = 55). It could run on a very simple kind of
+computer. To program early computers, it was necessary to set large arrays of
+switches in the right position, or punch holes in strips of cardboard and feed
+them to the computer.  You can imagine how this was a tedious, error-prone
+procedure. Even the writing of simple programs required much cleverness and
+discipline, complex ones were nearly inconceivable.</p>
+<p>Of course, manually entering these arcane patterns of bits (which is what the
+1s and 0s above are generally called) did give the programmer a profound sense
+of being a mighty wizard. And that has to be worth something, in terms of job
+satisfaction.</p>
+<p>Each line of the program contains a single instruction. It could be written in
+English like this:</p>
+<ol class="arabic simple">
+<li>Store the number 0 in memory location 0</li>
+<li>Store the number 1 in memory location 1</li>
+<li>Store the value of memory location 1 in memory location 2</li>
+<li>Subtract the number 11 from the value in memory location 2</li>
+<li>If the value in memory location 2 is the number 0, continue with instruction
+9</li>
+<li>Add the value of memory location 1 to memory location 0</li>
+<li>Add the number 1 to the value of memory location 1</li>
+<li>Continue with instruction 3</li>
+<li>Output the value of memory location 0</li>
+</ol>
+<p>While that is more readable than the binary soup, it is still rather
+unpleasant. It might help to use names instead of numbers for the instructions
+and memory locations:</p>
+<div class="highlight-python"><div class="highlight"><pre> Set &#39;total&#39; to 0
+ Set &#39;count&#39; to 1
+[loop]
+ Set &#39;compare&#39; to &#39;count&#39;
+ Subtract 11 from &#39;compare&#39;
+ If &#39;compare&#39; is zero, continue at [end]
+ Add &#39;count&#39; to &#39;total&#39;
+ Add 1 to &#39;count&#39;
+ Continue at [loop]
+[end]
+ Output &#39;total&#39;
+</pre></div>
+</div>
+<p>At this point it is not too hard to see how the program works. Can you? The
+first two lines give two memory locations their starting values: <tt class="docutils literal"><span class="pre">total</span></tt> will
+be used to build up the result of the program, and <tt class="docutils literal"><span class="pre">count</span></tt> keeps track of the
+number that we are currently looking at. The lines using <tt class="docutils literal"><span class="pre">compare</span></tt> are
+probably the weirdest ones. What the program wants to do is see if <tt class="docutils literal"><span class="pre">count</span></tt> is
+equal to 11, in order to decide whether it can stop yet. Because the machine is
+so primitive, it can only test whether a number is zero, and make a decision
+(jump) based on that. So it uses the memory location labelled <tt class="docutils literal"><span class="pre">compare</span></tt> to
+compute the value of <tt class="docutils literal"><span class="pre">count</span> <span class="pre">-</span> <span class="pre">11</span></tt>, and makes a decision based on that value.
+The next two lines add the value of <tt class="docutils literal"><span class="pre">count</span></tt> to the result, and increment
+<tt class="docutils literal"><span class="pre">count</span></tt> by one every time the program has decided that it is not 11 yet.</p>
+<p>Here is the same program in JavaScript:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">total</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">count</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">total</span> <span class="o">+=</span> <span class="nx">count</span><span class="p">;</span>
+    <span class="nx">count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">total</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This gives us a few more improvements. Most importantly, there is no need to
+specify the way we want the program to jump back and forth anymore. The magic
+word <tt class="docutils literal"><span class="pre">while</span></tt> takes care of that. It continues executing the lines below it as
+long as the condition it was given holds: <tt class="docutils literal"><span class="pre">count</span> <span class="pre">&lt;=</span> <span class="pre">10</span></tt>, which means
+&#8216;<tt class="docutils literal"><span class="pre">count</span></tt> is less than or equal to <tt class="docutils literal"><span class="pre">10</span></tt>&#8216;. Apparently, there is no need
+anymore to create a temporary value and compare that to zero. This was a stupid
+little detail, and the power of programming languages is that they take care of
+stupid little details for us.</p>
+<p>Finally, here is what the program could look like if we happened to have the
+convenient operations <tt class="docutils literal"><span class="pre">print</span></tt>, <tt class="docutils literal"><span class="pre">range</span></tt> and <tt class="docutils literal"><span class="pre">sum</span></tt> available, which
+respectively print out the results of a computation to some convenient output
+location, create a collection of numbers within a range and compute the sum of
+a collection of numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)));</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>In another programming language called <a class="reference external" href="http://python.org">Python</a>, the
+following program much like the hypothetical one above will run and produce
+the result we seek:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="k">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The moral of this story, then, is that the same program can be expressed in
+long and short, unreadable and readable ways. The first version of the program
+was extremely obscure, while this last one is almost English: <tt class="docutils literal"><span class="pre">print</span></tt> the
+<tt class="docutils literal"><span class="pre">sum</span></tt> of the <tt class="docutils literal"><span class="pre">range</span></tt> of numbers from <tt class="docutils literal"><span class="pre">1</span></tt> to <tt class="docutils literal"><span class="pre">10</span></tt>. (We will see in later
+chapters how to build things like <tt class="docutils literal"><span class="pre">sum</span></tt> and <tt class="docutils literal"><span class="pre">range</span></tt>.)</p>
+<p>A good programming language helps the programmer by providing a more abstract
+way to express himself. It hides uninteresting details, provides convenient
+building blocks (such as the <tt class="docutils literal"><span class="pre">while</span></tt> construct), and, most of the time,
+allows the programmer to add building blocks himself (such as the <tt class="docutils literal"><span class="pre">sum</span></tt> and
+<tt class="docutils literal"><span class="pre">range</span></tt> operations).</p>
+<p id="index-0"><a class="reference external" href="http://en.wikipedia.org/wiki/JavaScript">JavaScript</a> is the language that
+is, at the moment, mostly being used to do all kinds of clever and horrible
+things with pages on the World Wide Web. Some people claim that the next
+version of JavaScript will become an important language for other tasks too. I
+am unsure whether that will happen, but if you are interested in programming,
+JavaScript is definitely a useful language to learn.  Even if you do not end up
+doing much web programming, the mind-bending programs I will show you in this
+book will always stay with you, haunt you, and influence the programs you write
+in other languages.</p>
+<p>There are those who will say <em>terrible</em> things about JavaScript.  Many of these
+things are true. When I was for the first time required to write something in
+JavaScript, I quickly came to despise the language. It would accept almost
+anything I typed, but interpret it in a way that was completely different from
+what I meant. This had a lot to do with the fact that I did not have a clue
+what I was doing, but there is also a real issue here: JavaScript is
+ridiculously liberal in what it allows. The idea behind this design was that it
+would make programming in JavaScript easier for beginners. In actuality, it
+mostly makes finding problems in your programs harder, because the system will
+not point them out to you.</p>
+<p>However, the flexibility of the language is also an advantage. It leaves space
+for a lot of techniques that are impossible in more rigid languages, and it can
+be used to overcome some of JavaScript&#8217;s shortcomings. After learning it
+properly, and working with it for a while, I have really learned to <em>like</em> this
+language.</p>
+<hr class="docutils" />
+<p>Contrary to what the name suggests, JavaScript has very little to do with the
+programming language named Java. The similar name was inspired by marketing
+considerations, rather than good judgement.  In 1995, when JavaScript was
+introduced by Netscape, the Java language was being heavily marketed and
+gaining in popularity.  Apparently, someone thought it a good idea to try and
+ride along on this marketing. Now we are stuck with the name.</p>
+<p>Related to JavaScript is a thing called ECMAScript. When browsers other than
+Netscape started to support JavaScript, or something that looked like it, a
+document was written to describe precisely how the language should work. The
+language described in this document is called
+<a class="reference external" href="http://en.wikipedia.org/wiki/ECMAScript">ECMAScript</a>, after the
+organisation that standardised it.</p>
+<p>ECMAScript describes a general-purpose programming language, and does not say
+anything about the integration of this language in an Internet browser.
+JavaScript is ECMAScript plus extra tools for dealing with Internet pages and
+browser windows.</p>
+<p>A few other pieces of software use the language described in the ECMAScript
+document. Most importantly, the
+<a class="reference external" href="http://en.wikipedia.org/wiki/ActionScript">ActionScript</a> language used by
+Flash is based on ECMAScript (though it does not precisely follow the
+standard). Flash is a system for adding things that move and make lots of noise
+to web-pages. Knowing JavaScript won&#8217;t hurt if you ever find yourself learning
+to build Flash movies.</p>
+<p>JavaScript is still evolving. Since this book came out, ECMAScript 5 has been
+released, which is compatible with the version described here, but adds some of
+the functionality we will be writing ourselves as built-in methods. The newest
+generation of browsers provides this expanded version of JavaScript. As of
+2011, &#8216;ECMAScript harmony&#8217;, a more radical extension of the language, is in the
+process of being standardised. You should not worry too much about these new
+versions making the things you learn from this book obsolete. For one thing,
+they will be an extension of the language we have now, so almost everything
+written in this book will still hold.</p>
+<hr class="docutils" />
+<p id="index-1">Most chapters in this book contain quite a lot of <strong>code</strong>. In my experience,
+reading and writing code is an important part of learning to program. Try to
+not just glance over these examples, but read them attentively and understand
+them.  This can be slow and confusing at first, but you will quickly get the
+hang of it. The same goes for the exercises. Don&#8217;t assume you understand them
+until you&#8217;ve actually written a working solution.</p>
+<p>Because of the way the web works, it is always possible to look at the
+JavaScript programs that people put in their web-pages. This can be a good way
+to learn how some things are done. Because most web programmers are not
+&#8220;professional&#8221; programmers, or consider JavaScript programming so uninteresting
+that they never properly learned it, a lot of the code you can find like this
+is of a <em>very</em> bad quality. When learning from ugly or incorrect code, the
+ugliness and confusion will propagate into your own code, so be careful who you
+learn from.</p>
+<div class="section" id="how-to-run-javascript-programs">
+<h2>How to Run JavaScript Programs<a class="headerlink" href="#how-to-run-javascript-programs" title="Permalink to this headline">¶</a></h2>
+<p>Since the only way to learn the art of programming in JavaScript is to write
+lots and lots of your own programs, you should start in right at the beginning
+by using the example programs you see in this book.</p>
+<p>Do not hesitate to modify and try out the example programs. Proceed without
+fear as you try changes that occur to you to see what they do.  The worst that
+could happen is that you create an endless loop. Fortunately, browsers keep an
+eye on the programs running inside them. Whenever one of them is taking
+suspiciously long to finish, they will ask you if you want to cut it off.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">An endless loop is what you get when the condition of the <tt class="docutils literal"><span class="pre">while</span></tt> never
+becomes false, for example if you choose to add <tt class="docutils literal"><span class="pre">0</span></tt> instead of <tt class="docutils literal"><span class="pre">1</span></tt> to
+the count variable in the previous example. Now the program will run
+forever.</p>
+</div>
+<p id="index-2">JavaScript programs are usually meant to be run in the JavaScript interpreter
+that resides inside modern
+<a class="reference external" href="http://en.wikipedia.org/wiki/Web_browser">web browsers</a>.  To test your
+first program, create a minimal, valid HTML 5 web page with a JavaScript
+program in the body between script tags like this:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>Hello World in JavaScript<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Hello, World!&quot;</span><span class="p">);</span>
+<span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For more information on HTML, see <a class="reference external" href="http://www.openbookproject.net/tutorials/getdown/html">Getting Down with HTML</a>.</p>
+</div>
+<p>Most modern browsers provide a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Javascript_Console#Development_tools">JavaScript Console</a>
+that provides a much more powerful <a class="reference external" href="http://en.wikipedia.org/wiki/Integrated_development_environment">development environment</a>
+(see <a class="reference internal" href="app_c.html#dev-env-appendix"><em>Appendix C: Development Environment</em></a> for more information).</p>
+</div>
+<div class="section" id="glossary">
+<h2>Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-code">code</dt>
+<dd>Code is the substance that programs are made of. Every piece of a
+program, whether it is a single line or the whole thing, can be
+referred to as &#8220;code&#8221;.</dd>
+<dt id="term-web-browswer">web browswer</dt>
+<dd>A software application for retrieving and presenting information
+resources on the
+<a class="reference external" href="http://en.wikipedia.org/wiki/World_Wide_Web">World Wide Web</a>.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch01.html" title="1. Basic JavaScript: values, variables, and control flow"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="copyright.html" title="Copyright Notice"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

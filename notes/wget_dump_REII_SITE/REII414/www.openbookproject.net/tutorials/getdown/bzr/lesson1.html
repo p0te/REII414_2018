@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson 1</title>
+<style type="text/css">
+@import url(gdw.css);
+@import url(lesson.css);
+</style>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body onload="addHeader(); addFooter()">
+<div id="head"></div>
+
+<h1>Lesson 1 - Basic bzr</h1>
+
+<p>First let's establish who you are. (Replace the name and email with your
+name and email.)</p>
+<pre class="source"><code>bzr whoami</code>
+"John Doe &lt;john.doe@gmail.com&gt;"
+</pre>
+<p>
+Now if you type <code>bzr whoami</tt> - you should get what you typed in.</p>
+<p>We're going to need a directory:
+</p>
+<pre class="source">
+<tt>mkdir</tt> test_dir
+</pre>
+<p>Now <tt>cd</tt> into that folder. Then, to say that you want to use bzr in
+it:</p>
+<pre class="source"><tt>bzr init</tt></pre>
+<p>Let's create a few subdirectories &amp; files:</p>
+<pre class="source"><tt>mkdir</tt> sub_dir
+<tt>touch</tt> test1.txt test2.txt test3.txt sub_dir/test4.txt
+</pre>
+<p>Next, you want bzr to keep track of all those files and the directory. The
+command <tt>bzr add *</tt> will recursively add every file and directory within
+your current directory</p> <pre class="source"><tt>bzr add *</tt></pre>
+<blockquote><p><b>Note:</b> You'll have to use bzr add whenever you add a new
+file/directory.</p></blockquote> <p>Next, take a snapshot of your files by
+committing them to your branch. Add a message to explain why you made the
+commit:</p> <pre class="source"><tt>bzr commit -m</tt> "Initial import"</pre>
+
+<p>So, you have four files, one in a subdirectory, called sub_dir. Open
+test1.txt; copy and paste (without quotes) this line into the file: "Testing 1,
+2, 3"; save it and go back to the terminal screen.</p> <p>Now when you type
+<tt>bzr diff</tt> you should get something like this:</p>
+
+<pre class="source">=== modified file 'test1.txt'
+--- test1.txt   2008-06-04 15:57:45 +0000
++++ test1.txt   2008-06-04 16:01:37 +0000
+@@ -0,0 +1,1 @@
++Testing 1, 2, 3
+</pre>
+
+<p>The only really important thing there is the bottom line; it says that there
+is one difference from the last commit and the current version of the file, you
+added a line, "Testing 1, 2, 3".</p>
+
+<p>Now let's commit that revision, essentially we'll be taking a new snapshot
+of the files.</p>
+<pre class="source"><tt>bzr commit</tt> -m "Added first line to test1.txt"</pre>
+<p>There's actually a way to view the log; which shows each revision.</p>
+<pre class="source"><tt>bzr log</tt></pre>
+<p>You should get a result like this:</p>
+<pre class="source">------------------------------------------------------------
+revno: 1
+committer: Daniel Folsom &lt;danielfolsom@gmail.com&gt;
+branch nick: bzr.testdirectory
+timestamp: Thu 2008-06-05 10:02:02 -0400
+message:
+  Started repository
+</pre>
+
+
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+</li>
+
+<li>
+</li>
+</ol>
+</div>
+
+<footer>
+<hr>
+<p>Congratulations, you have finished Lesson 1;</p>
+<p><a href="lesson2.html">next lesson</a> |
+<a href="index.html">home page</a></p>
+<div id="foot"></div>
+</footer>
+
+</body>
+</html>

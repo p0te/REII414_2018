@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson 5</title>
+<style type="text/css">
+@import url(gdw.css);
+@import url(lesson.css);
+</style>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body onload="addHeader(); addFooter()">
+<div id="head"></div>
+
+<h1>Lesson 5 - Launchpad</h1>
+
+<p>Launchpad is one of the main reasons why we have been able to make this tutoral and the others in the series. Launchpad is a software hosting and developing website. It uses bzr as its revision control system.</p>
+<p>In order to use Launchpad, you will need to <a href="https://launchpad.net/+login">create an account</a>.</p>
+<p>You'll also need an SSH key. Make sure you have all your updates installed, then in the terminal screen, type:</p>
+<pre class="source"><tt>ssh-keygen -t dsa</tt></pre>
+<p>Do not enter a password or any other location than the default provided for the .pub file. Once that process is complete, find your public ssh key (in the file id_dsa.pub within your .ssh directory) and copy the contents of the file to your Launchpad account. There is a place on your user screen in Launchpad to "Update your SSH keys". Simply paste the content of the .pub file there and save.</p>
+<p>Once you have an account and your SSH key you must learn some very important bzr commands to use with launchpad.</p>
+<p>Let's push up your folder to launchpad.</p>
+<pre class="source"><tt>bzr push</tt> bzr+ssh://yourusername@bazaar.launchpad.net/~yourusername/+junk/myproject</pre>
+<blockquote><p><small>+Note: The +junk denotes that the folder is not associated with any particular project.</small></p></blockquote>
+<p>By pushing up - you have given the world the ability to download your folder. All anyone would need to type is:</p>
+<pre class="source"><tt>bzr branch</tt> http://bazaar.launchpad.net/~yourusername/+junk/myproject</pre>
+<p>And the files would be downloaded to their computer. What this is especially useful for is team collaboration. You can have multiple people working on a folder, and all they would need to do is push &amp; pull changes back and forth. Speaking of pulling and pushing: make any change to a document in your folder and commit it. Now you probably want to push that change up to Launchpad, right? When you put in the horrendously long http://baz... line, your computer actually memorized that location for your folder, so, now, all you need to do is:</p>
+<pre class="source"><tt>bzr push</tt></pre>
+<p>And you will update your launchpad folder. Now, say someone else has made a change to your file; you have to <b>pull</b> those changes from Launchpad.</p>
+<pre class="source"><tt>bzr pull</tt></pre>
+<p>Again, when you first entered the location, your computer memorized it; so you don't need to type <tt>bzr pull</tt> http://bazaar...</p>
+<p>But obviously there can be problems - if two people make changes at the same time you will have to merge in order for both revisions to make it back up to Launchpad. After trying to push if you recieve a message when pushing that the branches have diverged then you need to use bzr merge.</p>
+<pre class="source"><tt>bzr merge</tt></pre>
+<p>After sucessfully merging then you need to re-commit the code.</p>
+<pre class="source"><tt>bzr commit -m "merged"</tt></pre>
+<p>You then can push it up if you still recieve a message do the process over again until it pushes up to Launchpad.</p>
+<p>Sometimes people decide to shutdown there computer before they finishing pushing. This creates a lock on the server so that the entire system does not get screwed up. The only way to get out of this is to break the lock.</p>
+<pre class="source"><tt>bzr break-lock http://bazaar.launchpad.net/~yourusername/+junk/myproject</tt></pre>
+<p>This will allow you to get access to the server again, you now would be able to commit, merge and push back up to launchpad.</p>
+<p>Here's a short little recap of some of the commands:</p>
+<table width="100%" border="1">
+<caption>BZR Commands</caption>
+<tbody><tr><td><tt>bzr commit -m</tt> "[What you did]"</td><td>Commits a revision to the bzr log. You can use <tt>bzr commit [file] -m</tt> "[What you did]" to commit one file only.</td></tr>
+<tr><td><tt>bzr log</tt></td><td>Gives a log of all of the saved revisions</td></tr>
+<tr><td><tt>bzr revert --revision</tt> [revision#]</td><td>Reverts an edit to the previous point in the log. You can use <tt>bzr revert [file] --revision</tt> [revision#] to revert one file only.</td></tr>
+<tr><td><tt>bzr diff</tt></td><td>Shows the difference between the current version and the current logged version.</td></tr>
+<tr><td><tt>bzr push</tt></td><td>Gives the folder's changes to launchpad.</td></tr>
+<tr><td>bzr branch http://bazaar.launchpad.net/~john.doe/+junk/myproject</td><td>Gets the folder from launchpad.</td></tr>
+<tr><td><tt>bzr add *</tt></td><td>Adds new files to the bzr repository. Must be done the first time you have files, and every time you add a new file</td></tr>
+</tbody></table>
+
+
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+</li>
+
+<li>
+</li>
+</ol>
+</div>
+
+<footer>
+<hr>
+<p>Congratulations, you have finished Lesson 5;</p>
+<p><a href="lesson6.html">next lesson</a> |
+<a href="index.html">home page</a></p>
+<div id="foot"></div>
+</footer>
+
+</body>
+</html>

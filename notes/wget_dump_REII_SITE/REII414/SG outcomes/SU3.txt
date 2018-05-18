@@ -1,0 +1,12 @@
+describe basic modelling concepts;
+describe degrees of data abstraction for the different database models;
+define and describe the conceptual, internal, external and physical abstraction of data;
+define, depict and use the E-R model components;
+determine relations and apply these between entities;
+describe and determine connectivity and cardinality between related entities;
+interpret and award E-R symbols;
+apply entity classification as a super type or sub type;
+know and apply external key rules;
+apply appropriate modelling methods such as Chen and Crow’s foot;
+know database modelling conventions;
+apply design compromises based on sound principles and conventions.

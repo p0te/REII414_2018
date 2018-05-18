@@ -1,0 +1,21 @@
+REII414 tutorial 5
+
+Use the tables customer, product, invoice, line, vendor in the database saleco to formulate sql queries that satisfies the following information requirements:
+
+1. List the names and surnames of all the customers who bought something containing the string "saw" in its description.
+select distinct CUS_FNAME, CUS_LNAME from CUSTOMER c, INVOICE i, LINE l, PRODUCT p where c.CUS_CODE = i.CUS_CODE and i.INV_NUMBER = l.INV_NUMBER and l.P_CODE = p.P_CODE and p.P_DESCRIPT like '%saw%'
+
+2. List the total number of individual items purchased per customer.
+select CUS_LNAME, CUS_FNAME, sum(LINE_UNITS) from INVOICE i, LINE l, CUSTOMER c where i.INV_NUMBER = l.INV_NUMBER and i.CUS_CODE = c.CUS_CODE group by c.CUS_CODE
+
+3. List the names of the customers who do not have any invoices on the system.
+select CUS_CODE, CUS_FNAME, CUS_LNAME from CUSTOMER where CUS_CODE not in (select distinct CUS_CODE from INVOICE)
+
+4. List all the registered vendors who do not supply anything.
+select V_NAME from VENDOR where V_CODE not in (select distinct V_CODE from PRODUCT)
+
+5. List all the products not supplied by any registered vendor.
+select P_DESCRIPT from PRODUCT where V_CODE not in (select distinct V_CODE from VENDOR)
+
+
+Save the text of your queries and submit them in the newly provided dropbox.

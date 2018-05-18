@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>The following is a list of the shapes you can create with SVG:</p>
+<ol>
+  <li>circles</li>
+  <li>rectangles</li>
+  <li>polygons</li>
+  <li>ellipses</li>
+  <li>lines</li>
+  <li>polylines</li>
+</ol>
+
+<p>Here is a graphic combining each of these shapes:</p>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+    viewBox="0 0 600 500" width="12cm" height="10cm" id="SVG_Shapes_Example">
+
+    <circle cx="150" cy="360" r="120" fill="yellow" stroke="black"
+        stroke-width="3" />
+
+    <rect x="100" y="50" width="400" height="200" fill="blue" />
+
+    <line x1="500" y1="0" x2="0" y2="500" stroke="black" stroke-width="5" />
+
+    <ellipse cx="280" cy="360" rx="200" ry="80" fill="green" />
+
+    <polygon points="220,120 450,220 370,370" fill="orange" />
+
+    <polyline points="570,30 470,90 570,130, 470,190 570,230 470,290 570,330
+        470,390 570,430 470,490" fill="none" stroke="red" stroke-width="8" />
+</svg>
+
+<p>Here is the markup for the above graphic:</p>
+
+<div class="source" style="width: 780px;">
+<pre>&lt;svg xmlns="http://www.w3.org/2000/svg" version="2.0"
+    viewBox="0 0 600 500" width="12cm" height="10cm" id="SVG_Shapes_Example"&gt;
+
+    &lt;circle cx="150" cy="360" r="120" fill="yellow" stroke="black"
+        stroke-width="3" /&gt;
+
+    &lt;rect x="100" y="50" width="400" height="200" fill="blue" /&gt;
+
+    &lt;line x1="500" y1="0" x2="0" y2="500" stroke="black" stroke-width="5" /&gt;
+
+    &lt;ellipse cx="280" cy="360" rx="200" ry="80" fill="green" /&gt;
+
+    &lt;polygon points="220,120 450,220 370,370" fill="orange" /&gt;
+
+    &lt;polyline points="570,30 470,90 570,130, 470,190 570,230 470,290 570,330
+        470,390 570,430 470,490" fill="none" stroke="red" stroke-width="8" /&gt;
+&lt;/svg&gt;</pre>
+</div>
+
+<p>
+Look carefully at each shape and see if you can make sense of its attributes.
+We will be modifying it in the following exercises.</p>
+</section>
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Create a new SVG page by copying
+  <a href="resources/lesson1/starter.svg"><code>starter.svg</code></a> to
+  <code>shapes1.svg</code>.  Copy the example graphic from this lesson into
+  your new document.
+  
+  <li>Copy <code>shapes1.svg</code> to <code>shapes2.svg</code> and do the
+  following with <code>shapes2.svg</code> taking notes as you make the changes:
+  <ul>
+    <li>Rearrange the order of the shapes within the graphic.  What
+    happens if you move the <code>line</code> from the first to the last shape
+    defined?  Write a general rule relating the order of the shapes and their
+    appearance within the resulting graphic.</li>
+
+    <li>Change the line so that it begins at the coordinate <code>(0, 0)</code>,
+    and ends at <code>(500, 500)</code>. Next, make the polygon triangle into a
+    quadrilateral by adding a coordinate at <code>(280, 400)</code>. Are you
+    comfortable with all the attributes in each of the shape elements?</li>
+
+    <li>Remove the ellipse.  Reload the document and watch it disappear.  Now
+    remove the polygon and reload the document to watch it disappear.</li>
+  </ul></li>
+
+  <li>Make another copy of <code>shapes1.svg</code> named
+  <code>shapes3.svg</code> Add the following Text element to this new image:
+  <pre>
+  &lt;text x="110" y="110" fill="yellow" font-size="60"&gt;SVG Rocks!&lt;/text&gt;</pre>
+  When you finish your image should look like
+  <a href="resources/lesson3/shapes_with_text.png">this</a>.
+  </li>
+  <li>Use what you've learned to create an image of your own design. You can
+  look at <a href="resources/lesson3/lfuentes_building_with_pool.svg">this</a>
+  building with a pool by Luis Fuentes or
+  <a href="resources/lesson3/jsilva_bus.svg">this</a> bus by Jerry Silva for
+  inspiration.</li>
+</ol>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

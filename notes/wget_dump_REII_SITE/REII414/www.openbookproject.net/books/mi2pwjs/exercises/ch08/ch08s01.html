@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 08 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 9 Exercise Set 1" href="../ch09/ch09s01.html" />
+    <link rel="prev" title="Chapter 7 Exercise Set 1" href="../ch07/ch07s01.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../ch09/ch09s01.html" title="Chapter 9 Exercise Set 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch07/ch07s01.html" title="Chapter 7 Exercise Set 1"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-08-exercise-set-1">
+<span id="ch08s01"></span><h1>Chapter 08 Exercise Set 1<a class="headerlink" href="#chapter-08-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic">
+<li><p class="first">Write a function called <tt class="docutils literal"><span class="pre">serializeJSON</span></tt> which, when given a JavaScript
+value, produces a string with the value&#8217;s JSON representation. Simple values
+like numbers and booleans can be simply given to the <tt class="docutils literal"><span class="pre">String</span></tt> function to
+convert them to a string. Objects and arrays can be handled by recursion.</p>
+<p>Recognizing arrays can be tricky, since its type is <tt class="docutils literal"><span class="pre">&quot;object&quot;</span></tt>.  You can
+use <tt class="docutils literal"><span class="pre">instanceof</span> <span class="pre">Array</span></tt>, but that only works for arrays that were created
+in your own window ― others will use the <tt class="docutils literal"><span class="pre">Array</span></tt> prototype from other
+windows, and <tt class="docutils literal"><span class="pre">instanceof</span></tt> will return <tt class="docutils literal"><span class="pre">false</span></tt>. A cheap trick is to
+convert the <tt class="docutils literal"><span class="pre">constructor</span></tt> property to a string, and see whether that
+contains <tt class="docutils literal"><span class="pre">&quot;function</span> <span class="pre">Array&quot;</span></tt>.</p>
+<p>When converting a string, you have to take care to escape special characters
+inside it. If you use double-quotes around the string, the characters to
+escape are <tt class="docutils literal"><span class="pre">\&quot;</span></tt>, <tt class="docutils literal"><span class="pre">\\</span></tt>, <tt class="docutils literal"><span class="pre">\f</span></tt>, <tt class="docutils literal"><span class="pre">\b</span></tt>, <tt class="docutils literal"><span class="pre">\n</span></tt>, <tt class="docutils literal"><span class="pre">\t</span></tt>, <tt class="docutils literal"><span class="pre">\r</span></tt>, and
+<tt class="docutils literal"><span class="pre">\v</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We already saw <tt class="docutils literal"><span class="pre">\n</span></tt>, which is a newline. <tt class="docutils literal"><span class="pre">\t</span></tt> is a tab character,
+<tt class="docutils literal"><span class="pre">\r</span></tt> a &#8216;carriage return&#8217;, which some systems use before or instead of
+a newline to indicate the end of a line.  <tt class="docutils literal"><span class="pre">\b</span></tt> (backspace), <tt class="docutils literal"><span class="pre">\v</span></tt>
+(vertical tab), and <tt class="docutils literal"><span class="pre">\f</span></tt> (form feed) are useful when working with old
+printers, but less so when dealing with Internet browsers.</p>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">serializeJSON</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">isArray</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="sr">/^\s*function Array/</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nb">String</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">constructor</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">serializeArray</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="s2">&quot;[&quot;</span> <span class="o">+</span> <span class="nx">map</span><span class="p">(</span><span class="nx">serializeJSON</span><span class="p">,</span> <span class="nx">value</span><span class="p">).</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;]&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">function</span> <span class="nx">serializeObject</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">properties</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="nx">forEachIn</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">properties</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">serializeString</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span>
+                            <span class="nx">serializeJSON</span><span class="p">(</span><span class="nx">value</span><span class="p">));</span>
+        <span class="p">});</span>
+        <span class="k">return</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="nx">properties</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">function</span> <span class="nx">serializeString</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">special</span> <span class="o">=</span>
+             <span class="p">{</span><span class="s2">&quot;\&quot;&quot;</span><span class="o">:</span> <span class="s2">&quot;\\\&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;\\&quot;</span><span class="o">:</span> <span class="s2">&quot;\\\\&quot;</span><span class="p">,</span> <span class="s2">&quot;\f&quot;</span><span class="o">:</span> <span class="s2">&quot;\\f&quot;</span><span class="p">,</span> <span class="s2">&quot;\b&quot;</span><span class="o">:</span> <span class="s2">&quot;\\b&quot;</span><span class="p">,</span>
+              <span class="s2">&quot;\n&quot;</span><span class="o">:</span> <span class="s2">&quot;\\n&quot;</span><span class="p">,</span> <span class="s2">&quot;\t&quot;</span><span class="o">:</span> <span class="s2">&quot;\\t&quot;</span><span class="p">,</span> <span class="s2">&quot;\r&quot;</span><span class="o">:</span> <span class="s2">&quot;\\r&quot;</span><span class="p">,</span> <span class="s2">&quot;\v&quot;</span><span class="o">:</span> <span class="s2">&quot;\\v&quot;</span><span class="p">};</span>
+        <span class="kd">var</span> <span class="nx">escaped</span> <span class="o">=</span> <span class="nx">value</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[\&quot;\\\f\b\n\t\r\v]/g</span><span class="p">,</span>
+                                  <span class="kd">function</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">special</span><span class="p">[</span><span class="nx">c</span><span class="p">];});</span>
+        <span class="k">return</span> <span class="s2">&quot;\&quot;&quot;</span> <span class="o">+</span> <span class="nx">escaped</span> <span class="o">+</span> <span class="s2">&quot;\&quot;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span> <span class="o">&amp;&amp;</span> <span class="nx">isArray</span><span class="p">(</span><span class="nx">value</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nx">serializeArray</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;object&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">serializeObject</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">type</span> <span class="o">==</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">serializeString</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="nb">String</span><span class="p">(</span><span class="nx">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">serializeJSON</span><span class="p">(</span><span class="nx">fruit</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The trick used in <tt class="docutils literal"><span class="pre">serializeString</span></tt> is similar to what we saw in the
+<tt class="docutils literal"><span class="pre">escapeHTML</span></tt> function in <a class="reference internal" href="../../ch13.html#regular-expressions-chapter"><em>Regular Expressions</em></a>. It uses an
+object to look up the correct replacements for each of the characters. Some
+of them, such as <tt class="docutils literal"><span class="pre">&quot;\\\\&quot;</span></tt>, look quite weird because of the need to put two
+backslashes for every backslash in the resulting string.</p>
+<p>Also note that the names of properties are quoted as strings. For some of
+them, this is not necessary, but for property names with spaces and other
+strange things in them it is, so the code just takes the easy way out and
+quotes everything.</p>
+</li>
+</ol>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../ch09/ch09s01.html" title="Chapter 9 Exercise Set 1"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch07/ch07s01.html" title="Chapter 7 Exercise Set 1"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Appendix A: More (obscure) control structures &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="Appendix B: Binary Heaps" href="app_b.html" />
+    <link rel="prev" title="13. Regular Expressions" href="ch13.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="app_b.html" title="Appendix B: Binary Heaps"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch13.html" title="13. Regular Expressions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="appendix-a-more-obscure-control-structures">
+<span id="more-control-structures-appendix"></span><h1>Appendix A: More (obscure) control structures<a class="headerlink" href="#appendix-a-more-obscure-control-structures" title="Permalink to this headline">¶</a></h1>
+<p>In <a class="reference internal" href="ch02.html#functions-chapter"><em>Functions</em></a>, a number of control statements were introduced,
+such as <tt class="docutils literal"><span class="pre">while</span></tt>, <tt class="docutils literal"><span class="pre">for</span></tt>, and <tt class="docutils literal"><span class="pre">break</span></tt>. To keep things simple, I left out
+some others, which, in my experience, are a lot less useful. This appendix
+briefly describes these missing control statements.</p>
+<hr class="docutils" />
+<p>First, there is <tt class="docutils literal"><span class="pre">do</span></tt>. <tt class="docutils literal"><span class="pre">do</span></tt> works like <tt class="docutils literal"><span class="pre">while</span></tt>, but instead of executing
+the loop body zero or more times, it executes it one or more times. A <tt class="docutils literal"><span class="pre">do</span></tt>
+loop looks like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">do</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">answer</span> <span class="o">=</span> <span class="nx">prompt</span><span class="p">(</span><span class="s2">&quot;Say &#39;moo&#39;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;You said &#39;&quot;</span><span class="p">,</span> <span class="nx">answer</span><span class="p">,</span> <span class="s2">&quot;&#39;.&quot;</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="nx">answer</span> <span class="o">!=</span> <span class="s2">&quot;moo&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To emphasise the fact that the condition is only checked <em>after</em> the loop has
+run once, it is written at the end of the loop&#8217;s body.</p>
+<hr class="docutils" />
+<p>Next, there is <tt class="docutils literal"><span class="pre">continue</span></tt>. This one is closely related to <tt class="docutils literal"><span class="pre">break</span></tt>, and can
+be used in the same places. While <tt class="docutils literal"><span class="pre">break</span></tt> jumps <em>out</em> of a loop and causes
+the program to proceed after the loop, <tt class="docutils literal"><span class="pre">continue</span></tt> jumps to the next iteration
+of the loop.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">continue</span><span class="p">;</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="s2">&quot; is divisible by three.&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A similar effect can usually be produced using just <tt class="docutils literal"><span class="pre">if</span></tt>, but there are cases
+where <tt class="docutils literal"><span class="pre">continue</span></tt> looks nicer.</p>
+<hr class="docutils" />
+<p>When there is a loop sitting inside another loop, a <tt class="docutils literal"><span class="pre">break</span></tt> or <tt class="docutils literal"><span class="pre">continue</span></tt>
+statement will affect only the inner loop. Sometimes you want to jump out of
+the <em>outer</em> loop. To be able to refer to a specific loop, loop statements can
+be labelled. A label is a name (any valid variable name will do), followed by a
+colon (<tt class="docutils literal"><span class="pre">:</span></tt>).</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">outer</span><span class="o">:</span> <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">sideA</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">sideA</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">sideA</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">inner</span><span class="o">:</span> <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">sideB</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">sideB</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">sideB</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">hypotenuse</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nx">sideA</span> <span class="o">*</span> <span class="nx">sideA</span> <span class="o">+</span> <span class="nx">sideB</span> <span class="o">*</span> <span class="nx">sideB</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">hypotenuse</span> <span class="o">%</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;A right triangle with straight sides of length &quot;</span> <span class="o">+</span>
+                  <span class="nx">sideA</span> <span class="o">+</span> <span class="s2">&quot; and &quot;</span> <span class="o">+</span> <span class="nx">sideB</span> <span class="o">+</span> <span class="s2">&quot; has a hypotenuse of &quot;</span> <span class="o">+</span>
+                  <span class="nx">hypotenuse</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span><span class="p">);</span>
+            <span class="k">break</span> <span class="nx">outer</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Next, there is a construct called <tt class="docutils literal"><span class="pre">switch</span></tt> which can be used to choose which
+code to execute based on some value. This is a very useful thing to do, but the
+syntax JavaScript uses for this (which it took from the C programming language)
+is so clumsy and ugly that I usually prefer to use a chain of <tt class="docutils literal"><span class="pre">if</span></tt> statements
+instead.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">weatherAdvice</span><span class="p">(</span><span class="nx">weather</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span><span class="p">(</span><span class="nx">weather</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="s2">&quot;rainy&quot;</span><span class="o">:</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Remember to bring an umbrella.&quot;</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="s2">&quot;sunny&quot;</span><span class="o">:</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Dress lightly.&quot;</span><span class="p">);</span>
+        <span class="k">case</span> <span class="s2">&quot;cloudy&quot;</span><span class="o">:</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Go outside.&quot;</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Unknown weather type: &quot;</span><span class="p">,</span> <span class="nx">weather</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">weatherAdvice</span><span class="p">(</span><span class="s2">&quot;sunny&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Inside the block opened by <tt class="docutils literal"><span class="pre">switch</span></tt>, you can write a number of <tt class="docutils literal"><span class="pre">case</span></tt>
+labels. The program will jump to the label that corresponds to the value that
+<tt class="docutils literal"><span class="pre">switch</span></tt> was given (comparing the values with an equivalent of <tt class="docutils literal"><span class="pre">===</span></tt>, so
+without automatic type conversion), or to <tt class="docutils literal"><span class="pre">default</span></tt> if no matching value is
+found. Then it start executing statements there, and <em>continues</em> past other
+labels, until it reaches a <tt class="docutils literal"><span class="pre">break</span></tt> statement. In some cases, such as the
+<tt class="docutils literal"><span class="pre">&quot;sunny&quot;</span></tt> case in the example, this can be used to share some code between
+cases (it recommends going outside for both sunny and cloudy weather). Most of
+the time, this just adds a lot of ugly <tt class="docutils literal"><span class="pre">break</span></tt> statements, or causes problems
+when you forget to add one.</p>
+<p>Like loops, <tt class="docutils literal"><span class="pre">switch</span></tt> statements can be given a label.</p>
+<hr class="docutils" />
+<p>Finally, there is a keyword named <tt class="docutils literal"><span class="pre">with</span></tt>. I&#8217;ve never actually <em>used</em> this in
+a real program, but I have seen other people use it, so it is useful to know
+what it is. Code using <tt class="docutils literal"><span class="pre">with</span></tt> looks like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">scope</span> <span class="o">=</span> <span class="s2">&quot;outside&quot;</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="p">{</span><span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Ignatius&quot;</span><span class="p">,</span> <span class="nx">scope</span><span class="o">:</span> <span class="s2">&quot;inside&quot;</span><span class="p">};</span>
+<span class="kd">with</span><span class="p">(</span><span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Name == &quot;</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="s2">&quot;, scope == &quot;</span><span class="p">,</span> <span class="nx">scope</span><span class="p">);</span>
+    <span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Raoul&quot;</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">newVariable</span> <span class="o">=</span> <span class="mi">49</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">object</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">newVariable</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Inside the block, the properties of the object given to <tt class="docutils literal"><span class="pre">with</span></tt> act as
+variables. Newly introduced variables are <em>not</em> added as properties to this
+object though. I assume the idea behind this construct was that it could be
+useful in methods that make lots of use of the properties of their object. You
+could start such a method with <tt class="docutils literal"><span class="pre">with(this)</span> <span class="pre">{...}</span></tt>, and not have to write
+<tt class="docutils literal"><span class="pre">this</span></tt> all the time after that.</p>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="app_b.html" title="Appendix B: Binary Heaps"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch13.html" title="13. Regular Expressions"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

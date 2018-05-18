@@ -1,0 +1,736 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>10. Searching &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="11. Object-oriented Programming" href="ch11.html" />
+    <link rel="prev" title="9. Functional Programming" href="ch09.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch11.html" title="11. Object-oriented Programming"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch09.html" title="9. Functional Programming"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="searching">
+<span id="searching-chapter"></span><h1>10. Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h1>
+<p>This chapter does not introduce any new JavaScript-specific concepts. Instead,
+we will go through the solution to two problems, discussing some interesting
+algorithms and techniques along the way. If this does not sound interesting to
+you, it is safe to skip to the next chapter.</p>
+<hr class="docutils" />
+<p>Let me introduce our first problem. Take a look at this map. It shows Hiva Oa,
+a small tropical island in the Pacific Ocean.</p>
+<img alt="Hiva Oa Map" src="_images/HivaOa.png" />
+<p>The gray lines are roads, and the numbers next to them are the lengths of these
+roads. Imagine we need a program that finds the shortest route between two
+points on Hiva Oa. How could we approach that? Think about this for a moment.</p>
+<p>No really. Don&#8217;t just steamroll on to the next paragraph. Try to seriously
+think of some ways you could do this, and consider the issues you would come up
+against. When reading a technical book, it is way too easy to just zoom over
+the text, nod solemnly, and promptly forget what you have read. If you make a
+sincere effort to solve a problem, it becomes <em>your</em> problem, and its solution
+will be more meaningful.</p>
+<hr class="docutils" />
+<p>The first aspect of this problem is, again, representing our data.  The
+information in the picture does not mean much to our computer.  We could try
+writing a program that looks at the map and extracts the information in it...
+but that can get complicated. If we had twenty-thousand maps to interpret, this
+would be a good idea, in this case we will do the interpretation ourself and
+transcribe the map into a more computer-friendly format.</p>
+<p>What does our program need to know? It has to be able to look up which
+locations are connected, and how long the roads between them are. The places
+and roads on the island form a graph, as mathematicians call it. There are many
+ways to store graphs. A simple possibility is to just store an array of road
+objects, each of which contains properties naming its two endpoints and its
+length...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">roads</span> <span class="o">=</span> <span class="p">[{</span><span class="nx">point1</span><span class="o">:</span> <span class="s2">&quot;Point Kiukiu&quot;</span><span class="p">,</span> <span class="nx">point2</span><span class="o">:</span> <span class="s2">&quot;Hanaiapa&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">:</span> <span class="mi">19</span><span class="p">},</span>
+             <span class="p">{</span><span class="nx">point1</span><span class="o">:</span> <span class="s2">&quot;Point Kiukiu&quot;</span><span class="p">,</span> <span class="nx">point2</span><span class="o">:</span> <span class="s2">&quot;Mt Feani&quot;</span><span class="p">,</span> <span class="nx">length</span><span class="o">:</span> <span class="mi">15</span><span class="p">}</span>
+             <span class="cm">/* and so on */</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>However, it turns out that the program, as it is working out a route, will very
+often need to get a list of all the roads that start at a certain location,
+like a person standing on a crossroads will look at a signpost and read
+&#8220;Hanaiapa: 19km, Mount Feani: 15km&#8221;. It would be nice if this was easy (and
+quick) to do.</p>
+<p>With the representation given above, we have to sift through the whole list of
+roads, picking out the relevant ones, every time we want this signpost list. A
+better approach would be to store this list directly. For example, use an
+object that associates place-names with signpost lists:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">roads</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Point Kiukiu&quot;</span><span class="o">:</span> <span class="p">[{</span><span class="nx">to</span><span class="o">:</span> <span class="s2">&quot;Hanaiapa&quot;</span><span class="p">,</span> <span class="nx">distance</span><span class="o">:</span> <span class="mi">19</span><span class="p">},</span>
+                              <span class="p">{</span><span class="nx">to</span><span class="o">:</span> <span class="s2">&quot;Mt Feani&quot;</span><span class="p">,</span> <span class="nx">distance</span><span class="o">:</span> <span class="mi">15</span><span class="p">},</span>
+                              <span class="p">{</span><span class="nx">to</span><span class="o">:</span> <span class="s2">&quot;Taaoa&quot;</span><span class="p">,</span> <span class="nx">distance</span><span class="o">:</span> <span class="mi">15</span><span class="p">}],</span>
+             <span class="s2">&quot;Taaoa&quot;</span><span class="o">:</span> <span class="p">[</span><span class="cm">/* et cetera */</span><span class="p">]};</span>
+</pre></div>
+</div>
+<p>When we have this object, getting the roads that leave from Point Kiukiu is
+just a matter of looking at <tt class="docutils literal"><span class="pre">roads[&quot;Point</span> <span class="pre">Kiukiu&quot;]</span></tt>.</p>
+<hr class="docutils" />
+<p>However, this new representation does contain duplicate information: The road
+between A and B is listed both under A and under B. The first representation
+was already a lot of work to type in, this one is even worse.</p>
+<p>Fortunately, we have at our command the computer&#8217;s talent for repetitive work.
+We can specify the roads once, and have the correct data structure be generated
+by the computer. First, initialise an empty object called <tt class="docutils literal"><span class="pre">roads</span></tt>, and write
+a function <tt class="docutils literal"><span class="pre">makeRoad</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">roads</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="kd">function</span> <span class="nx">makeRoad</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">addRoad</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">from</span> <span class="k">in</span> <span class="nx">roads</span><span class="p">))</span>
+            <span class="nx">roads</span><span class="p">[</span><span class="nx">from</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="nx">roads</span><span class="p">[</span><span class="nx">from</span><span class="p">].</span><span class="nx">push</span><span class="p">({</span><span class="nx">to</span><span class="o">:</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">distance</span><span class="o">:</span> <span class="nx">length</span><span class="p">});</span>
+    <span class="p">}</span>
+    <span class="nx">addRoad</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">);</span>
+    <span class="nx">addRoad</span><span class="p">(</span><span class="nx">to</span><span class="p">,</span> <span class="nx">from</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Nice, huh? Notice how the inner function, <tt class="docutils literal"><span class="pre">addRoad</span></tt>, uses the same names
+(<tt class="docutils literal"><span class="pre">from</span></tt>, <tt class="docutils literal"><span class="pre">to</span></tt>) for its parameters as the outer function. These will not
+interfere: inside <tt class="docutils literal"><span class="pre">addRoad</span></tt> they refer to <tt class="docutils literal"><span class="pre">addRoad</span></tt>&#8216;s parameters, and
+outside it they refer to <tt class="docutils literal"><span class="pre">makeRoad</span></tt>&#8216;s parameters.</p>
+<p>The <tt class="docutils literal"><span class="pre">if</span></tt> statement in <tt class="docutils literal"><span class="pre">addRoad</span></tt> makes sure that there is an array of
+destinations associated with the location named by <tt class="docutils literal"><span class="pre">from</span></tt>, if there isn&#8217;t
+already one it puts in an empty array.  This way, the next line can assume
+there is such an array and safely push the new road onto it.</p>
+<p>Now the map information looks like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">makeRoad</span><span class="p">(</span><span class="s2">&quot;Point Kiukiu&quot;</span><span class="p">,</span> <span class="s2">&quot;Hanaiapa&quot;</span><span class="p">,</span> <span class="mi">19</span><span class="p">);</span>
+<span class="nx">makeRoad</span><span class="p">(</span><span class="s2">&quot;Point Kiukiu&quot;</span><span class="p">,</span> <span class="s2">&quot;Mt Feani&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
+<span class="nx">makeRoad</span><span class="p">(</span><span class="s2">&quot;Point Kiukiu&quot;</span><span class="p">,</span> <span class="s2">&quot;Taaoa&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">);</span>
+<span class="c1">// ...</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>We managed to considerably shorten our description of the road-information by
+defining some convenient operations. You could say we expressed the information
+more succinctly by expanding our vocabulary. Defining a &#8216;little language&#8217; like
+this is often a very powerful technique ― when, at any time, you find yourself
+writing repetitive or redundant code, stop and try to come up with a vocabulary
+that makes it shorter and denser.</p>
+<p>Redundant code is not only a bore to write, it is also error-prone, people pay
+less attention when doing something that doesn&#8217;t require them to think. On top
+of that, repetitive code is hard to change, because structure that is repeated
+a hundred times has to be changed a hundred times when it turns out to be
+incorrect or suboptimal.</p>
+<hr class="docutils" />
+<p>If you ran all the pieces of code above, you should now have a variable named
+<tt class="docutils literal"><span class="pre">roads</span></tt> that contains all the roads on the island.  When we need the roads
+starting from a certain place, we could just do <tt class="docutils literal"><span class="pre">roads[place]</span></tt>. But then,
+when someone makes a typo in a place name, which is not unlikely with these
+names, he will get <tt class="docutils literal"><span class="pre">undefined</span></tt> instead of the array he expects, and strange
+errors will follow. Instead, we will use a function that retrieves the road
+arrays, and yells at us when we give it an unknown place name:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">roadsFrom</span><span class="p">(</span><span class="nx">place</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">found</span> <span class="o">=</span> <span class="nx">roads</span><span class="p">[</span><span class="nx">place</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">found</span> <span class="o">==</span> <span class="kc">undefined</span><span class="p">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;No place named &#39;&quot;</span> <span class="o">+</span> <span class="nx">place</span> <span class="o">+</span> <span class="s2">&quot;&#39; found.&quot;</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="nx">found</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">roadsFrom</span><span class="p">(</span><span class="s2">&quot;Puamua&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Here is a first stab at a path-finding algorithm, the gambler&#8217;s method:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">gamblerPath</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">randomInteger</span><span class="p">(</span><span class="nx">below</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="nx">below</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="kd">function</span> <span class="nx">randomDirection</span><span class="p">(</span><span class="nx">from</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="nx">roadsFrom</span><span class="p">(</span><span class="nx">from</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nx">options</span><span class="p">[</span><span class="nx">randomInteger</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">length</span><span class="p">)].</span><span class="nx">to</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">path</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">from</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">from</span> <span class="o">==</span> <span class="nx">to</span><span class="p">)</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="nx">from</span> <span class="o">=</span> <span class="nx">randomDirection</span><span class="p">(</span><span class="nx">from</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">path</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">gamblerPath</span><span class="p">(</span><span class="s2">&quot;Hanaiapa&quot;</span><span class="p">,</span> <span class="s2">&quot;Mt Feani&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>At every split in the road, the gambler rolls his dice to decide which road he
+shall take. If the dice sends him back the way he came, so be it. Sooner or
+later, he will arrive at his destination, since all places on the island are
+connected by roads.</p>
+<p>The most confusing line is probably the one containing <tt class="docutils literal"><span class="pre">Math.random</span></tt>. This
+function returns a pseudo-random number between 0 and 1. Try calling it a few
+times from the console, it will (most likely) give you a different number every
+time. The function <tt class="docutils literal"><span class="pre">randomInteger</span></tt> multiplies this number by the argument it
+is given, and rounds the result down with <tt class="docutils literal"><span class="pre">Math.floor</span></tt>. Thus, for example,
+<tt class="docutils literal"><span class="pre">randomInteger(3)</span></tt> will produce the number <tt class="docutils literal"><span class="pre">0</span></tt>, <tt class="docutils literal"><span class="pre">1</span></tt>, or <tt class="docutils literal"><span class="pre">2</span></tt>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Computers are deterministic machines: They always react in the same way to
+the input they receive, so they can not produce truly random values.
+Therefore, we have to make do with series of numbers that look random, but
+are in fact the result of some complicated deterministic computation.</p>
+</div>
+<hr class="docutils" />
+<p>The gambler&#8217;s method is the way to go for those who abhor structure and
+planning, who desperately search for adventure. We set out to write a program
+that could find the <em>shortest</em> route between places though, so something else
+will be needed.</p>
+<p>A very straightforward approach to solving such a problem is called &#8220;generate
+and test&#8221;. It goes like this:</p>
+<ol class="arabic simple">
+<li>Generate all possible routes.</li>
+<li>In this set, find the shortest one that actually connects the start point to
+the end point.</li>
+</ol>
+<p>Step two is not hard. Step one is a little problematic. If you allow routes
+with circles in them, there is an infinite amount of routes. Of course, routes
+with circles in them are unlikely to be the shortest route to anywhere, and
+routes that do not start at the start point do not have to be considered
+either. For a small graph like Hiva Oa, it should be possible to generate all
+non-cyclic (circle-free) routes starting from a certain point.</p>
+<hr class="docutils" />
+<p>But first, we will need some new tools. The first is a function named
+<tt class="docutils literal"><span class="pre">member</span></tt>, which is used to determine whether an element is found within an
+array. The route will be kept as an array of names, and when arriving at a new
+place, the algorithm calls <tt class="docutils literal"><span class="pre">member</span></tt> to check whether we have been at that
+place already. It could look like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">member</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">found</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">element</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">element</span> <span class="o">===</span> <span class="nx">value</span><span class="p">)</span>
+            <span class="nx">found</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">found</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">member</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;Bordeaux&quot;</span><span class="p">],</span> <span class="mi">7</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>However, this will go over the whole array, even if the value is found
+immediately at the first position. What wastefulness. When using a <tt class="docutils literal"><span class="pre">for</span></tt>
+loop, you can use the <tt class="docutils literal"><span class="pre">break</span></tt> statement to jump out of it, but in a
+<tt class="docutils literal"><span class="pre">forEach</span></tt> construct this will not work, because the body of the loop is a
+function, and <tt class="docutils literal"><span class="pre">break</span></tt> statements do not jump out of functions. One solution
+could be to adjust <tt class="docutils literal"><span class="pre">forEach</span></tt> to recognise a certain kind of exceptions as
+signalling a break.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">Break</span> <span class="o">=</span> <span class="p">{</span><span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span><span class="k">return</span> <span class="s2">&quot;Break&quot;</span><span class="p">;}};</span>
+
+<span class="kd">function</span> <span class="nx">forEach</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+            <span class="nx">action</span><span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="nx">exception</span><span class="p">)</span> <span class="p">{</span>
+         <span class="k">if</span> <span class="p">(</span><span class="nx">exception</span> <span class="o">!=</span> <span class="nx">Break</span><span class="p">)</span>
+             <span class="k">throw</span> <span class="nx">exception</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now, if the <tt class="docutils literal"><span class="pre">action</span></tt> function throws <tt class="docutils literal"><span class="pre">Break</span></tt>, <tt class="docutils literal"><span class="pre">forEach</span></tt> will absorb the
+exception and stop looping. The object stored in the variable <tt class="docutils literal"><span class="pre">Break</span></tt> is used
+purely as a thing to compare with. The only reason I gave it a <tt class="docutils literal"><span class="pre">toString</span></tt>
+property is that this might be useful to figure out what kind of strange value
+you are dealing with if you somehow end up with a <tt class="docutils literal"><span class="pre">Break</span></tt> exception outside
+of a <tt class="docutils literal"><span class="pre">forEach</span></tt>.</p>
+<hr class="docutils" />
+<p>Having a way to break out of <tt class="docutils literal"><span class="pre">forEach</span></tt> loops can be very useful, but in the
+case of the <tt class="docutils literal"><span class="pre">member</span></tt> function the result is still rather ugly, because you
+need to specifically store the result and later return it. We could add yet
+another kind of exception, <tt class="docutils literal"><span class="pre">Return</span></tt>, which can be given a <tt class="docutils literal"><span class="pre">value</span></tt> property,
+and have <tt class="docutils literal"><span class="pre">forEach</span></tt> return this value when such an exception is thrown, but
+this would be terribly ad-hoc and messy. What we really need is a whole new
+higher-order function, called <tt class="docutils literal"><span class="pre">any</span></tt> (or sometimes <tt class="docutils literal"><span class="pre">some</span></tt>). It looks like
+this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">any</span><span class="p">(</span><span class="nx">test</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">found</span> <span class="o">=</span> <span class="nx">test</span><span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">found</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nx">found</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">member</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">any</span><span class="p">(</span><span class="nx">partial</span><span class="p">(</span><span class="nx">op</span><span class="p">[</span><span class="s2">&quot;===&quot;</span><span class="p">],</span> <span class="nx">value</span><span class="p">),</span> <span class="nx">array</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">member</span><span class="p">([</span><span class="s2">&quot;Fear&quot;</span><span class="p">,</span> <span class="s2">&quot;Loathing&quot;</span><span class="p">],</span> <span class="s2">&quot;Denial&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">any</span></tt> goes over the elements in an array, from left to right, and applies the
+test function to them. The first time this returns a true-ish value, it returns
+that value. If no true-ish value is found, <tt class="docutils literal"><span class="pre">false</span></tt> is returned. Calling
+<tt class="docutils literal"><span class="pre">any(test,</span> <span class="pre">array)</span></tt> is more or less equivalent to doing <tt class="docutils literal"><span class="pre">test(array[0])</span> <span class="pre">||</span>
+<span class="pre">test(array[1])</span> <span class="pre">||</span> <span class="pre">...</span></tt> etcetera.</p>
+<hr class="docutils" />
+<p>Just like <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt> is the companion of <tt class="docutils literal"><span class="pre">||</span></tt>, <tt class="docutils literal"><span class="pre">any</span></tt> has a companion called
+<tt class="docutils literal"><span class="pre">every</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">every</span><span class="p">(</span><span class="nx">test</span><span class="p">,</span> <span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">array</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">found</span> <span class="o">=</span> <span class="nx">test</span><span class="p">(</span><span class="nx">array</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">found</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nx">found</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">every</span><span class="p">(</span><span class="nx">partial</span><span class="p">(</span><span class="nx">op</span><span class="p">[</span><span class="s2">&quot;!=&quot;</span><span class="p">],</span> <span class="mi">0</span><span class="p">),</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Another function we will need is <tt class="docutils literal"><span class="pre">flatten</span></tt>. This function takes an array of
+arrays, and puts the elements of the arrays together in one big array.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">flatten</span><span class="p">(</span><span class="nx">arrays</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">forEach</span><span class="p">(</span><span class="nx">arrays</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">forEach</span><span class="p">(</span><span class="nx">array</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">element</span><span class="p">){</span><span class="nx">result</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">element</span><span class="p">);});</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The same could have been done using the <tt class="docutils literal"><span class="pre">concat</span></tt> method and some kind of
+<tt class="docutils literal"><span class="pre">reduce</span></tt>, but this would be less efficient. Just like repeatedly
+concatenating strings together is slower than putting them into an array and
+then calling <tt class="docutils literal"><span class="pre">join</span></tt>, repeatedly concatenating arrays produces a lot of
+unnecessary intermediary array values.</p>
+<hr class="docutils" />
+<p>Imagine what an algorithm to generate routes would look like ― it starts at the
+starting location, and starts to generate a route for every road leaving there.
+At the end of each of these roads it continues to generate more routes. It
+doesn&#8217;t run along one road, it branches out. Because of this, recursion is a
+natural way to model it.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">possibleRoutes</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">function</span> <span class="nx">findRoutes</span><span class="p">(</span><span class="nx">route</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">function</span> <span class="nx">notVisited</span><span class="p">(</span><span class="nx">road</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">!</span><span class="nx">member</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">places</span><span class="p">,</span> <span class="nx">road</span><span class="p">.</span><span class="nx">to</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="kd">function</span> <span class="nx">continueRoute</span><span class="p">(</span><span class="nx">road</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">findRoutes</span><span class="p">({</span><span class="nx">places</span><span class="o">:</span> <span class="nx">route</span><span class="p">.</span><span class="nx">places</span><span class="p">.</span><span class="nx">concat</span><span class="p">([</span><span class="nx">road</span><span class="p">.</span><span class="nx">to</span><span class="p">]),</span>
+                               <span class="nx">length</span><span class="o">:</span> <span class="nx">route</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span> <span class="nx">road</span><span class="p">.</span><span class="nx">distance</span><span class="p">});</span>
+        <span class="p">}</span>
+
+        <span class="kd">var</span> <span class="nx">end</span> <span class="o">=</span> <span class="nx">route</span><span class="p">.</span><span class="nx">places</span><span class="p">[</span><span class="nx">route</span><span class="p">.</span><span class="nx">places</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">end</span> <span class="o">==</span> <span class="nx">to</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">[</span><span class="nx">route</span><span class="p">];</span>
+        <span class="k">else</span>
+            <span class="k">return</span> <span class="nx">flatten</span><span class="p">(</span><span class="nx">map</span><span class="p">(</span><span class="nx">continueRoute</span><span class="p">,</span> <span class="nx">filter</span><span class="p">(</span><span class="nx">notVisited</span><span class="p">,</span>
+                                                     <span class="nx">roadsFrom</span><span class="p">(</span><span class="nx">end</span><span class="p">))));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">findRoutes</span><span class="p">({</span><span class="nx">places</span><span class="o">:</span> <span class="p">[</span><span class="nx">from</span><span class="p">],</span> <span class="nx">length</span><span class="o">:</span> <span class="mi">0</span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">possibleRoutes</span><span class="p">(</span><span class="s2">&quot;Point Teohotepapapa&quot;</span><span class="p">,</span> <span class="s2">&quot;Point Kiukiu&quot;</span><span class="p">).</span><span class="nx">length</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">possibleRoutes</span><span class="p">(</span><span class="s2">&quot;Hanapaoa&quot;</span><span class="p">,</span> <span class="s2">&quot;Mt Ootua&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The function returns an array of route objects, each of which contains an array
+of places that the route passes, and a length.  <tt class="docutils literal"><span class="pre">findRoutes</span></tt> recursively
+continues a route, returning an array with every possible extension of that
+route. When the end of a route is the place where we want to go, it just
+returns that route, since continuing past that place would be pointless. If it
+is another place, we must go on. The <tt class="docutils literal"><span class="pre">flatten</span></tt>/<tt class="docutils literal"><span class="pre">map</span></tt>/<tt class="docutils literal"><span class="pre">filter</span></tt> line is
+probably the hardest to read. This is what it says: &#8220;Take all the roads going
+from the current location, discard the ones that go to places that this route
+has already visited. Continue each of these roads, which will give an array of
+finished routes for each of them, then put all these routes into a single big
+array that we return.&#8221;</p>
+<p>That line does a lot. This is why good abstractions help: They allow you to say
+complicated things without typing screenfulls of code.</p>
+<p>Doesn&#8217;t this recurse forever, seeing how it keeps calling itself (via
+<tt class="docutils literal"><span class="pre">continueRoute</span></tt>)? No, at some point, all outgoing roads will go to places
+that a route has already passed, and the result of <tt class="docutils literal"><span class="pre">filter</span></tt> will be an empty
+array. Mapping over an empty array produces an empty array, and flattening that
+still gives an empty array. So calling <tt class="docutils literal"><span class="pre">findRoutes</span></tt> on a dead end produces an
+empty array, meaning &#8216;there are no ways to continue this route&#8217;.</p>
+<p>Notice that places are appended to routes by using <tt class="docutils literal"><span class="pre">concat</span></tt>, not <tt class="docutils literal"><span class="pre">push</span></tt>.
+The <tt class="docutils literal"><span class="pre">concat</span></tt> method creates a new array, while <tt class="docutils literal"><span class="pre">push</span></tt> modifies the existing
+array. Because the function might branch off several routes from a single
+partial route, we must not modify the array that represents the original route,
+because it must be used several times.</p>
+<hr class="docutils" />
+<p>Let us see what route our algorithm comes up with between Point Kiukiu and
+Point Teohotepapapa...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">shortestRoute</span><span class="p">(</span><span class="s2">&quot;Point Kiukiu&quot;</span><span class="p">,</span> <span class="s2">&quot;Point Teohotepapapa&quot;</span><span class="p">).</span><span class="nx">places</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>On a small island like Hiva Oa, it is not too much work to generate all
+possible routes. If you try to do that on a reasonably detailed map of, say,
+Belgium, it is going to take an absurdly long time, not to mention an absurd
+amount of memory. Still, you have probably seen those online route-planners.
+These give you a more or less optimal route through a gigantic maze of roads in
+just a few seconds. How do they do it?</p>
+<p>If you are paying attention, you may have noticed that it is not necessary to
+generate all routes all the way to the end. If we start comparing routes
+<em>while</em> we are building them, we can avoid building this big set of routes,
+and, as soon as we have found a single route to our destination, we can stop
+extending routes that are already longer than that route.</p>
+<hr class="docutils" />
+<p>To try this out, we will use a 20 by 20 grid as our map:</p>
+<img alt="20 by 20 grid" src="_images/height.png" />
+<p>What you see here is an elevation map of a mountain landscape. The yellow spots
+are the peaks, and the blue spots the valleys. The area is divided into squares
+with a size of a hundred meters. We have at our disposal a function
+<tt class="docutils literal"><span class="pre">heightAt</span></tt>, which can give us the height, in meters, of any square on that
+map, where squares are represented by objects with <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt> properties.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">heightAt</span><span class="p">({</span><span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">0</span><span class="p">}));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">heightAt</span><span class="p">({</span><span class="nx">x</span><span class="o">:</span> <span class="mi">11</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">18</span><span class="p">}));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>We want to cross this landscape, on foot, from the top left to the bottom
+right. A grid can be approached like a graph. Every square is a node, which is
+connected to the squares around it.</p>
+<p>We do not like wasting energy, so we would prefer to take the easiest route
+possible. Going uphill is heavier than going downhill, and going downhill is
+heavier than going (No really, it is). This function calculates the amount of
+&#8220;weighted meters&#8221;, between two adjacent squares, which represents how tired you
+get from walking (or climbing) between them. Going uphill is counted as twice
+as heavy as going downhill.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">weightedDistance</span><span class="p">(</span><span class="nx">pointA</span><span class="p">,</span> <span class="nx">pointB</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">heightDifference</span> <span class="o">=</span> <span class="nx">heightAt</span><span class="p">(</span><span class="nx">pointB</span><span class="p">)</span> <span class="o">-</span> <span class="nx">heightAt</span><span class="p">(</span><span class="nx">pointA</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">climbFactor</span> <span class="o">=</span> <span class="p">(</span><span class="nx">heightDifference</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">flatDistance</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pointA</span><span class="p">.</span><span class="nx">x</span> <span class="o">==</span> <span class="nx">pointB</span><span class="p">.</span><span class="nx">x</span> <span class="o">||</span> <span class="nx">pointA</span><span class="p">.</span><span class="nx">y</span> <span class="o">==</span> <span class="nx">pointB</span><span class="p">.</span><span class="nx">y</span> <span class="o">?</span> <span class="mi">100</span> <span class="o">:</span> <span class="mi">141</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">flatDistance</span> <span class="o">+</span> <span class="nx">climbFactor</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">heightDifference</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Note the <tt class="docutils literal"><span class="pre">flatDistance</span></tt> calculation. If the two points are on the same row or
+column, they are right next to each other, and the distance between them is a
+hundred meters. Otherwise, they are assumed to be diagonally adjacent, and the
+diagonal distance between two squares of this size is a hundred times the
+square root of two, which is approximately <tt class="docutils literal"><span class="pre">141</span></tt>. One is not allowed to call
+this function for squares that are further than one step apart. (It could
+double-check this... but it is too lazy.)</p>
+<hr class="docutils" />
+<p>Points on the map are represented by objects containing <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt>
+properties. These three functions are useful when working with such objects:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">point</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="nx">y</span><span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">addPoints</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">point</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">b</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">a</span><span class="p">.</span><span class="nx">y</span> <span class="o">+</span> <span class="nx">b</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">samePoint</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span><span class="p">.</span><span class="nx">x</span> <span class="o">==</span> <span class="nx">b</span><span class="p">.</span><span class="nx">x</span> <span class="o">&amp;&amp;</span> <span class="nx">a</span><span class="p">.</span><span class="nx">y</span> <span class="o">==</span> <span class="nx">b</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">alert</span><span class="p">(</span><span class="nx">samePoint</span><span class="p">(</span><span class="nx">addPoints</span><span class="p">(</span><span class="nx">point</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="nx">point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)),</span>
+                <span class="nx">point</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">)));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>To find a route on this map without having our browser cut off the program
+because it takes too long to finish, we have to stop our amateurish attempts
+and implement a serious algorithm. A lot of work has gone into problems like
+this in the past, and many solutions have been designed (some brilliant, others
+useless). A very popular and efficient one is called A* (pronounced A-star).
+We will spend the rest of the chapter implementing an A* route-finding
+function for our map.</p>
+<p>Before I get to the algorithm itself, let me tell you a bit more about the
+problem it solves. The trouble with searching routes through graphs is that, in
+big graphs, there are an awful lot of them. Our Hiva Oa path-finder showed
+that, when the graph is small, all we needed to do was to make sure our paths
+didn&#8217;t revisit points they had already passed. On our new map, this is not
+enough anymore.</p>
+<p>The fundamental problem is that there is too much room for going in the wrong
+direction. Unless we somehow manage to steer our exploration of paths towards
+the goal, a choice we make for continuing a given path is more likely to go in
+the wrong direction than in the right direction. If you keep generating paths
+like that, you end up with an enormous amount of paths, and even if one of them
+accidentally reaches the end point, you do not know whether that is the
+shortest path.</p>
+<p>So what you want to do is explore directions that are likely to get you to the
+end point first. On a grid like our map, you can get a rough estimate of how
+good a path is by checking how long it is and how close its end is to the end
+point. By adding path length and an estimate of the distance it still has to
+go, you can get a rough idea of which paths are promising. If you extend
+promising paths first, you are less likely to waste time on useless ones.</p>
+<hr class="docutils" />
+<p>But that still is not enough. If our map was of a perfectly flat plane, the
+path that looked promising would almost always be the best one, and we could
+use the above method to walk right to our goal. But we have valleys and
+hillsides blocking our paths, so it is hard to tell in advance which direction
+will be the most efficient path. Because of this, we still end up having to
+explore way too many paths.</p>
+<p>To correct this, we can make clever use of the fact that we are constantly
+exploring the most promising path first. Once we have determined that path A is
+the best way to get to point X, we can remember that. When, later on, path B
+also gets to point X, we know that it is not the best route, so we do not have
+to explore it further. This can prevent our program from building a lot of
+pointless paths.</p>
+<hr class="docutils" />
+<p>The algorithm, then, goes something like this...</p>
+<p>There are two pieces of data to keep track of. The first one is called the open
+list, it contains the partial routes that must still be explored. Each route
+has a score, which is calculated by adding its length to its estimated distance
+from the goal. This estimate must always be optimistic, it should never
+overestimate the distance. The second is a set of nodes that we have seen,
+together with the shortest partial route that got us there. This one we will
+call the reached list. We start by adding a route that contains only the
+starting node to the open list, and recording it in the reached list.</p>
+<p>Then, as long as there are any nodes in the open list, we take out the one that
+has the lowest (best) score, and find the ways in which it can be continued (by
+calling <tt class="docutils literal"><span class="pre">possibleDirections</span></tt>). For each of the nodes this returns, we create
+a new route by appending it to our original route, and adjusting the length of
+the route using <tt class="docutils literal"><span class="pre">weightedDistance</span></tt>. The endpoint of each of these new routes
+is then looked up in the reached list.</p>
+<p>If the node is not in the reached list yet, it means we have not seen it
+before, and we add the new route to the open list and record it in the reached
+list. If we <em>had</em> seen it before, we compare the score of the new route to the
+score of the route in the reached list. If the new route is shorter, we replace
+the existing route with the new one. Otherwise, we discard the new route, since
+we have already seen a better way to get to that point.</p>
+<p>We continue doing this until the route we fetch from the open list ends at the
+goal node, in which case we have found our route, or until the open list is
+empty, in which case we have found out that there is no route. In our case the
+map contains no unsurmountable obstacles, so there is always a route.</p>
+<p>How do we know that the first full route that we get from the open list is also
+the shortest one? This is a result of the fact that we only look at a route
+when it has the lowest score. The score of a route is its actual length plus an
+<em>optimistic</em> estimate of the remaining length. This means that if a route has
+the lowest score in the open list, it is always the best route to its current
+endpoint ― it is impossible for another route to later find a better way to
+that point, because if it were better, its score would have been lower.</p>
+<hr class="docutils" />
+<p>Try not to get frustrated when the fine points of why this works are still
+eluding you. When thinking about algorithms like this, having seen &#8216;something
+like it&#8217; before helps a lot, it gives you a point of reference to compare the
+approach to. Beginning programmers have to do without such a point of
+reference, which makes it rather easy to get lost. Just realise that this is
+advanced stuff, globally read over the rest of the chapter, and come back to it
+later when you feel like a challenge.</p>
+<hr class="docutils" />
+<p>I am afraid that, for one aspect of the algorithm, I&#8217;m going to have to invoke
+magic again. The open list needs to be able to hold a large amount of routes,
+and to quickly find the route with the lowest score among them. Storing them in
+a normal array, and searching through this array every time, is way too slow,
+so I give you a data structure called a binary heap. You create them with
+<tt class="docutils literal"><span class="pre">new</span></tt>, just like <tt class="docutils literal"><span class="pre">Date</span></tt> objects, giving them a function that is used to
+&#8216;score&#8217; its elements as argument. The resulting object has the methods <tt class="docutils literal"><span class="pre">push</span></tt>
+and <tt class="docutils literal"><span class="pre">pop</span></tt>, just like an array, but <tt class="docutils literal"><span class="pre">pop</span></tt> always gives you the element with
+the lowest score, instead of the one that was <tt class="docutils literal"><span class="pre">push</span></tt>ed last.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">identity</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">x</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">heap</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BinaryHeap</span><span class="p">(</span><span class="nx">identity</span><span class="p">);</span>
+<span class="nx">forEach</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">heap</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">number</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">heap</span><span class="p">.</span><span class="nx">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">heap</span><span class="p">.</span><span class="nx">pop</span><span class="p">());</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="app_b.html#binary-heaps-appendix"><em>Appendix B: Binary Heaps</em></a> discusses the implementation of this data
+structure, which is quite interesting. After you have read <a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a>,
+you might want to take a look at it.</p>
+<hr class="docutils" />
+<p>The need to squeeze out as much efficiency as we can has another effect. The
+Hiva Oa algorithm used arrays of locations to store routes, and copied them
+with the <tt class="docutils literal"><span class="pre">concat</span></tt> method when it extended them. This time, we can not afford
+to copy arrays, since we will be exploring lots and lots of routes. Instead, we
+use a &#8220;chain&#8221; of objects to store a route. Every object in the chain has some
+properties, such as a point on the map, and the length of the route so far, and
+it also has a property that points at the previous object in the chain.
+Something like this:</p>
+<img alt="Object Chain" src="_images/objectchain.png" />
+<p>Where the cyan circles are the relevant objects, and the lines represent
+properties ― the end with the dot points at the value of the property. Object
+<tt class="docutils literal"><span class="pre">A</span></tt> is the start of a route here. Object <tt class="docutils literal"><span class="pre">B</span></tt> is used to build a new route,
+which continues from <tt class="docutils literal"><span class="pre">A</span></tt>. It has a property, which we will call <tt class="docutils literal"><span class="pre">from</span></tt>,
+pointing at the route it is based on. When we need to reconstruct a route
+later, we can follow these properties to find all the points that the route
+passed. Note that object <tt class="docutils literal"><span class="pre">B</span></tt> is part of two routes, one that ends in <tt class="docutils literal"><span class="pre">D</span></tt>
+and one that ends in <tt class="docutils literal"><span class="pre">E</span></tt>. When there are a lot of routes, this can save us
+much storage space ― every new route only needs one new object for itself, the
+rest is shared with other routes that started the same way.</p>
+<hr class="docutils" />
+<p>Defining a type of data structure by providing a set of functions to create and
+manipulate such structures is a useful technique. It makes it possible to
+&#8216;isolate&#8217; the code that makes use of the structure from the details of the
+structure itself. Note that, no matter which of the above two implementations
+is used, code that needs a reached list works in exactly the same way. It
+doesn&#8217;t care what kind of objects are used, as long as it gets the results it
+expected.</p>
+<p>This will be discussed in much more detail in <a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a>, where we will
+learn to make object types like <tt class="docutils literal"><span class="pre">BinaryHeap</span></tt>, which are created using <tt class="docutils literal"><span class="pre">new</span></tt>
+and have methods to manipulate them.</p>
+<hr class="docutils" />
+<p>Here we finally have the actual path-finding function:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">findRoute</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">open</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BinaryHeap</span><span class="p">(</span><span class="nx">routeScore</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">reached</span> <span class="o">=</span> <span class="nx">makeReachedList</span><span class="p">();</span>
+
+    <span class="kd">function</span> <span class="nx">routeScore</span><span class="p">(</span><span class="nx">route</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">score</span> <span class="o">==</span> <span class="kc">undefined</span><span class="p">)</span>
+            <span class="nx">route</span><span class="p">.</span><span class="nx">score</span> <span class="o">=</span> <span class="nx">estimatedDistance</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">point</span><span class="p">,</span> <span class="nx">to</span><span class="p">)</span> <span class="o">+</span>
+                          <span class="nx">route</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nx">route</span><span class="p">.</span><span class="nx">score</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">function</span> <span class="nx">addOpenRoute</span><span class="p">(</span><span class="nx">route</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">open</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">route</span><span class="p">);</span>
+        <span class="nx">storeReached</span><span class="p">(</span><span class="nx">reached</span><span class="p">,</span> <span class="nx">route</span><span class="p">.</span><span class="nx">point</span><span class="p">,</span> <span class="nx">route</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">addOpenRoute</span><span class="p">({</span><span class="nx">point</span><span class="o">:</span> <span class="nx">from</span><span class="p">,</span> <span class="nx">length</span><span class="o">:</span> <span class="mi">0</span><span class="p">});</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="nx">open</span><span class="p">.</span><span class="nx">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">route</span> <span class="o">=</span> <span class="nx">open</span><span class="p">.</span><span class="nx">pop</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">samePoint</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">point</span><span class="p">,</span> <span class="nx">to</span><span class="p">))</span>
+            <span class="k">return</span> <span class="nx">route</span><span class="p">;</span>
+
+        <span class="nx">forEach</span><span class="p">(</span><span class="nx">possibleDirections</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">point</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">direction</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">known</span> <span class="o">=</span> <span class="nx">findReached</span><span class="p">(</span><span class="nx">reached</span><span class="p">,</span> <span class="nx">direction</span><span class="p">);</span>
+            <span class="kd">var</span> <span class="nx">newLength</span> <span class="o">=</span> <span class="nx">route</span><span class="p">.</span><span class="nx">length</span> <span class="o">+</span>
+                            <span class="nx">weightedDistance</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">point</span><span class="p">,</span> <span class="nx">direction</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">known</span> <span class="o">||</span> <span class="nx">known</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="nx">newLength</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">known</span><span class="p">)</span>
+                    <span class="nx">open</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="nx">known</span><span class="p">);</span>
+                <span class="nx">addOpenRoute</span><span class="p">({</span><span class="nx">point</span><span class="o">:</span> <span class="nx">direction</span><span class="p">,</span>
+                              <span class="nx">from</span><span class="o">:</span> <span class="nx">route</span><span class="p">,</span>
+                              <span class="nx">length</span><span class="o">:</span> <span class="nx">newLength</span><span class="p">});</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>First, it creates the data structures it needs, one open list and one reached
+list. <tt class="docutils literal"><span class="pre">routeScore</span></tt> is the scoring function given to the binary heap. Note how
+it stores its result in the route object, to prevent having to re-calculate it
+multiple times.</p>
+<p><tt class="docutils literal"><span class="pre">addOpenRoute</span></tt> is a convenience function that adds a new route to both the
+open list and the reached list. It is immediately used to add the start of the
+route. Note that route objects always have the properties <tt class="docutils literal"><span class="pre">point</span></tt>, which
+holds the point at the end of the route, and <tt class="docutils literal"><span class="pre">length</span></tt>, which holds the
+current length of the route.  Routes which are more than one square long also
+have a <tt class="docutils literal"><span class="pre">from</span></tt> property, which points at their predecessors.</p>
+<p>The <tt class="docutils literal"><span class="pre">while</span></tt> loop, as was described in the algorithm, keeps taking the
+lowest-scoring route from the open list and checks whether this gets us to the
+goal point. If it does not, we must continue by expanding it. This is what the
+<tt class="docutils literal"><span class="pre">forEach</span></tt> takes care of. It looks up this new point in the reached list. If
+it is not found there, or the node found has a longer length that the new
+route, a new route object is created and added to the open list and reached
+list, and the existing route (if any) is removed from the open list.</p>
+<p>What if the route in <tt class="docutils literal"><span class="pre">known</span></tt> is not on the open list? It has to be, because
+routes are only removed from the open list when they have been found to be the
+most optimal route to their endpoint. If we try to remove a value from a binary
+heap that is not on it, it will throw an exception, so if my reasoning is
+wrong, we will probably see an exception when running the function.</p>
+<p>When code gets complex enough to make you doubt certain things about it, it is
+a good idea to add some checks that raise exceptions when something goes wrong.
+That way, you know that there are no weird things happening &#8216;silently&#8217;, and
+when you break something, you immediately see what you broke.</p>
+<hr class="docutils" />
+<p>Note that this algorithm does not use recursion, but still manages to explore
+all those branches. The open list more or less takes over the role that the
+function call stack played in the recursive solution to the Hiva Oa problem ―
+it keeps track of the paths that still have to be explored. Every recursive
+algorithm can be rewritten in a non-recursive way by using a data structure to
+store the &#8220;things that must still be done&#8221;.</p>
+<hr class="docutils" />
+<p>Well, let us try our path-finder:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">route</span> <span class="o">=</span> <span class="nx">findRoute</span><span class="p">(</span><span class="nx">point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="nx">point</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>If you ran all the code above, and did not introduce any errors, that call,
+though it might take a few seconds to run, should give us a route object. This
+object is rather hard to read. That can be helped by using the <tt class="docutils literal"><span class="pre">showRoute</span></tt>
+function which, if your console is big enough, will show a route on a map.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">showRoute</span><span class="p">(</span><span class="nx">route</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You can also pass multiple routes to <tt class="docutils literal"><span class="pre">showRoute</span></tt>, which can be useful when
+you are, for example, trying to plan a scenic route, which must include the
+beautiful viewpoint at <tt class="docutils literal"><span class="pre">11</span></tt>, <tt class="docutils literal"><span class="pre">17</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">showRoute</span><span class="p">(</span><span class="nx">findRoute</span><span class="p">(</span><span class="nx">point</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="nx">point</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">)),</span>
+          <span class="nx">findRoute</span><span class="p">(</span><span class="nx">point</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="nx">point</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">19</span><span class="p">)));</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Variations on the theme of searching an optimal route through a graph can be
+applied to many problems, many of which are not at all related to finding a
+physical path. For example, a program that needs to solve a puzzle of fitting a
+number of blocks into a limited space could do this by exploring the various
+&#8220;paths&#8221; it gets by trying to put a certain block in a certain place. The paths
+that ends up with insufficient room for the last blocks are dead ends, and the
+path that manages to fit in all blocks is the solution.</p>
+<div class="section" id="exercises">
+<h2>10.1. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="exercises/ch10/ch10s01.html#ch10s01"><em>Chapter 10 Exercise Set 1</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch11.html" title="11. Object-oriented Programming"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch09.html" title="9. Functional Programming"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

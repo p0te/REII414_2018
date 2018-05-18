@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+.headings {
+    color: #FFF;
+    background-color: #36C;
+    text-align: left;
+}
+h1.headings {
+    font-size: xx-large;
+}
+h2.headings {
+    font-size: x-large;
+}
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<div class="source" style="width: 360px;">
+<h1 class="headings">&lt;h1&gt;Title&lt;/h1&gt;</h1>
+<h2 class="headings">&lt;h2&gt;Section&lt;/h2&gt;</h2>
+<h3 class="headings">&lt;h3&gt;Sub-section&lt;/h3&gt;</h3>
+<h4 class="headings">&lt;h4&gt;Sub-sub-section&lt;/h4&gt;</h4>
+<h5 class="headings">&lt;h5&gt;Sub-sub-sub-section&lt;/h5&gt;</h5>
+<h6 class="headings">&lt;h6&gt;Sub-sub-sub-sub-section&lt;/h6&gt;</h6>
+</div>
+
+<p><b>Heading elements</b> are used to divide your document into sections and
+subsections. The top-level heading, <code>h1</code>, will usually occur only
+once in a document and will contain the title of the document.  It will often
+contain the same content as the <code>&lt;title&gt;&lt;/title&gt;</code>
+element.</p>
+
+<p>By default, each successive heading element is styled to indicate decreasing
+importance.  <code>h2</code> is most often used as a section title, so it is
+rendered in a smaller font, giving it less emphasis than <code>h1</code>.  The
+<code>h3</code> element is used for sub-sections, and receives less emphasis
+still, and so on. The chain of emphasis decreases as all the way to
+<code>h6</code>. Since information is not usually subdivided into
+sub-sub-sections and beyond, <code>h4</code> elements and below are less
+commonly used than the higher-lever heading elements.</p>
+
+
+<h2>Syntax Validation</h2> 
+
+<p>HTML is a
+<a href="http://en.wikipedia.org/wiki/Formal_language">formal language</a>,
+and like all formal languages is has a well defined set of rules for its 
+<a href="http://en.wikipedia.org/wiki/Syntax">syntax</a>.</p>
+
+<p>The <a href="http://en.wikipedia.org/wiki/W3c">World Wide Web Consortium</a>
+(W3C) provides a web site to check the syntax, or
+<a href="http://validator.w3.org/docs/help.html#validation_basics">markup validation</a> 
+of your web pages.  The <a href="http://en.wikipedia.org/wiki/URL">URL</a>
+for the validator is
+<a href="http://validator.w3.org">http://validator.w3.org</a>. You can check
+your pages to see if they have correct syntax by copy and pasting, uploading,
+or entering a web address for them (if they are on a public website).</p>
+
+<p>A green bar means your page has passed validation, and a red bar means it
+contains errors.  You should check all your pages as you go through this
+tutorial and be sure you get a green bar.</p>
+
+
+<h2>Validation Link</h2> 
+
+<p>If your web page is publicly accessible, you can add this to the bottom
+of your page (above the <code>&lt;/body&gt;</code> tag) to create a link
+that sends your page to the W3C for validation:</p>
+
+<pre class="source" style="width: 600px;">
+&lt;footer style="text-align: center;"&gt;
+&lt;a href="http://validator.w3.org/check/referer"&gt;
+&lt;strong&gt; HTML &lt;/strong&gt; Valid! &lt;/a&gt;
+&lt;/footer&gt;
+</pre>
+
+<p><a href="resources/minimal_page.html">Here</a> is version of the
+<code>minimal_page.html</code> with the validation link included. After
+clicking on the link, right mouse click on the page that loads (which will
+look completely empty except for the <code>HTML Valid!</code> link) and select
+<code>Save Page As...</code> to download a local copy of the page.</p> 
+</section>
+
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Copy <code>minimal_page.html</code> to <code>gdw.html</code> .</li>
+
+  <li>Put <q>Getting Down with HTML Lessons</q> in the title and a top level
+  heading (h1) in the body.</li>
+
+  <li>Use <code>&lt;h2&gt;&lt;/h2&gt;</code> elements to create sections
+  with the following labels:
+    <ul>
+      <li>Elements</li>
+      <li>Lists</li>
+      <li>Tables</li>
+      <li>Links</li>
+      <li>Images</li>
+    </ul>
+  </li>
+
+  <li>Use <code>&lt;h3&gt;&lt;/h3&gt;</code> elements to create sub-sections
+  of the <q>Elements</q> section with these labels:
+    <ul>
+      <li>Block-level Elements</li>
+      <li>Inline Elements</li>
+      <li>Object Elements</li>
+      <li>Special Characters</li>
+    </ul>
+  </li>
+
+  <li>Use <code>&lt;h3&gt;&lt;/h3&gt;</code> elements to create sub-sections
+  of the <q>Lists</q> section with the following labels:
+    <ul>
+      <li>Ordered</li>
+      <li>Unordered</li>
+      <li>Definition</li>
+    </ul>
+  </li>
+
+  <li>Lastly, use <code>&lt;h3&gt;&lt;/h3&gt;</code> elements to create
+  sub-sections for the <q>Links</q> section, create sub-sections with
+  these labels:
+    <ul>
+      <li>Absolute</li>
+      <li>Relative</li>
+    </ul>
+  </li>
+
+  <li><p>Use the w3c validator to validate this web page.  Be sure you get a
+  green bar when you submit the page to the validator.</p>
+
+  <p>After completing this exercise, your web page should look
+  something like <a href="screenshots/lesson2/gdw_html.png">this</a>.</p></li>
+
+  <li>Now add the validator link to the <code>index.html</code> page you made
+  in Lesson 1.  Again, be sure you get a green bar when you check to see if
+  your page syntax is valid.</li>
+</ol>
+
+</section>
+
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

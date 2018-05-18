@@ -1,0 +1,41 @@
+Chapter 4 Coronel & Morris problems
+
+1. Use the following business rules to create a Crow's Foot ERD. Write all appropriate connectivities and cardinalities in the ERD.
+  - A department employs many employees, but each employee is employed by only one department.
+  - Some employees, known as "rovers," are not assigned to any department.
+  - A division operates many departments, but each department is operated by only one division.
+  - An employee may be assigned to many projects, and a project may have many employees assigned to it.
+  - One of the employees manages each department, and each department is managed by only one employee.
+  - One of the employees runs each division, and each division is run by only one employee.
+
+DEPARTMENT : EMPLOYEE - 1 : M  (DPT_CODE)
+DEPARTMENT : EMPLOYEE - 1 : 1  (EMP_CODE)
+DIVISION : EMPLOYEE - 1 : 1  (EMP_CODE)
+DIVISION : DEPARTMENT - 1 : M
+EMPLOYEE : ASSIGNPROJ - 1 : M
+PROJECT : ASSIGNPROJ - 1 : M
+Rovers could just hang around in the EMPLOYEE table, otherwise a separate entity ROVERS : EMPLOYEE - 1 : 1 may be created to contain a list of them.
+
+
+
+Chapter 5 Coronel & Morris problems
+
+1. Given the following business scenario, create a Crow's Foot ERD using specialization hierarchy if appropriate. Two-Bit Drilling Company keeps information on employees and their insurance dependents. Each employee has an employee number, name, date of hire, and title. If an employee is an inspector, then the date of certification and certification renewal date should also be recorded in the system. For all employees, their ID number and dependent names should be kept. All dependents must be associated with one and only one employee. Some employees will not have dependents, while others will have many dependents.
+
+EMPLOYEE : DEPENDENT - 1..1 : 0..M
+EMPLOYEE : INSPECTOR - 1..1 : 0..1
+
+
+7. The FlyRight Aircraft Maintenance (FRAM) division of FlyRight Company (FRC) performs all maintenance for FRC's aircraft. Produce a data model segment that reflects the following business rules:
+  - All mechanics are FRC employees. Not all employees are mechanics.
+  - Some mechanics are specialized in engine (EN) maintenance. Others are specialized in airframe (AF) or avionics (AV) maintenance. (Avionics are the electronic components on an aircraft that are used in communication and navigation.) All mechanics take periodic refresher courses to stay current in their areas of expertise. FRC tracks all courses taken by each mechanic - date, course type, certification (Y/N) and performance.
+  - FRC keeps an employment history of all mechanics. The history includes date hired, date promoted and date terminated.
+Given those requirements, create the Crow's Foot ERD segment.
+
+EMPLOYEE : MECHANIC - 1..1 : 0..1
+MECHANIC : HISTORY  - 1..1 : 0..M (interpretation: first time working there, current employment means no history, versus long record of starting and stopping work. could also 1..M if first time means first historic entry. totally pedantic.)
+MECHANIC : COURSE   - 1..1 : 0..M
+Mechanic specialisation(s) could be recorded in MECHANIC entity, no need for separate entities.
+Date, score, certification, etc can be recorded in COURSE entity.
+
+

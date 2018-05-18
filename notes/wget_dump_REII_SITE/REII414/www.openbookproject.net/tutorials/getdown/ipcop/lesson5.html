@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson 5</title>
+<style type="text/css">
+@import url(gdw.css);
+@import url(lesson.css);
+</style>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body onload="addHeader(); addFooter()">
+<div id="head"></div>
+
+
+<h1>Configure IPCop Without Wireless</h1>
+
+<ol>
+<li>First you will be asked to enter your type of keyboard. Select US and hit 
+Enter</li>
+<li>Next it will ask you for your time zone, select America/New_York and hit 
+Enter</li>
+<li>Next it will ask you to enter the machine's hostname. By default it has 
+the word ipcop as the hostname. We will leave it as ipcop so just hit OK.
+<br />
+<img src="images/hostname.jpg" alt="hostname" /></li>
+<li>Next it will ask you to enter the domain name. By default the domain name 
+is "localdomain". Leave the default as it is and hit OK.</li>
+<li>The ISDN configuration menu will pop up. We do not use ISDN so select 
+Disable ISDN.
+<br />
+<img src="images/isdn_configuration.jpg" alt="ISDN Configuration" /></li>
+<li>Now the network configuration menu shows up and there is a lot of important 
+options in this menu. First select Network configuration type.
+<br />
+<img src="images/network_configuration_menu.jpg" alt="Network Configuration 
+Menu" /></li>
+<li>We want to use a GREEN(the internal network we talked about in the last 
+lesson), BLUE(internal wireless network), and RED(which is the outside 
+network). Select GREEN + BLUE + RED and hit OK.
+<br />
+<img src="images/wireless_network_configuration_type.jpg" alt="Wireless Network 
+Configuration Type" /></li>
+<li>Now select Drivers and card assignments from the Network configuration 
+menu.</li>
+<li>Earlier, IPCop automatically detected the NIC for the GREEN interface but 
+the NIC for the RED and BLUE interfaces are still undetermined. It will ask 
+you if you wish to change the current settings. Hit OK.</li>
+<li>IPCop will find an available driver and give you the option to assign it 
+to the RED or BLUE interface. Select the correct interface that goes with that 
+driver and hit OK.
+<br />
+<img src="images/wireless_card_assignment.jpg" alt="Wireless Card Assignment" />
+<br />
+Then it will find the other available driver and give you 
+the option to assign it to the remaining interface. Hit OK.
+<br />
+<img src="images/card_assignment.jpg" alt="Second Card Assignment" /></li>
+<li>You will then get a success screen saying all the cards have been assigned
+</li>
+<li>At the Network configuration menu select Address settings and then select 
+the RED interface.</li>
+<li>Because the RED interface is the outside network, the IP address is set by 
+DHCP so select DHCP from the list of options and hit OK.
+<br />
+<img src="images/red_interface.jpg" alt="RED Interface" /></li>
+<li>Back at the address settings screen select the BLUE interface.</li>
+<li>Because the BLUE interface is the wireless internal network, we are going 
+to give it a non-routable IP address. Enter 192.0.0.1 for the IP address and 
+the network mask should be already entered but if it's not enter 
+255.255.255.0 and hit OK.
+<br />
+<img src="images/wireless_blue_interface.jpg" alt="BLUE Interface" /></li>
+<li>Back at the address settings screen select Done.</li>
+<li>At the Network configuration menu select DNS and Gateway settings</li>
+<li>For Primary DNS enter 158.59.255.10. For the Secondary DNS enter 
+158.59.255.11. For Default Gateway enter 192.168.217.1 and hit OK.
+<br />
+<img src="images/dns_and_gateway_settings.jpg" alt="DNS and Gateway Settings" 
+/></li>
+<li>Back at the Network configuration screen select Done.</li>
+<li>At DHCP Server Configuration page don't change anything just hit OK.
+<br />
+<img src="images/dhcp_server_configuration.jpg" alt="DHCP Server 
+Configuration" /></li>
+<li>Enter the password for root (NOTE it does not display the text you are 
+typing; just type the first line then move down and type the second line and 
+hit OK)
+<br />
+<img src="images/root_password.jpg" alt="Root Password" /></li>
+<li>Enter the password for admin</li>
+<li>Enter the password for backup</li>
+<li>Setup is Complete</li>
+<li>Now you have to use an Ethernet cable to connect your wireless access 
+point to the network card you assigned to the BLUE interface. Also plug the 
+wireless access point into a power source and turn it on. You are now ready to 
+use your wireless network.</li>
+</ol>
+
+
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+</li>
+
+<li>
+</li>
+</ol>
+</div>
+
+<footer>
+<hr>
+<p>Congratulations, you have finished Lesson 5;</p>
+<p><a href="lesson6.html">next lesson</a> |
+<a href="index.html">home page</a></p>
+<div id="foot"></div>
+</footer>
+
+</body>
+</html>

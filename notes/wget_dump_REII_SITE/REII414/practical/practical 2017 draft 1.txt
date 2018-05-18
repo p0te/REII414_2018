@@ -1,0 +1,21 @@
+REII414 practical specification 2017
+
+Very short description: Create an online shopping platform.
+
+A bit more detail: Create a nice online shopping platform, with different shops and shopkeepers, the ability to keep track of stock and sales, as well as shopping baskets and sessions for users.
+
+Discussion:
+- Register as a shopkeeper
+- Create a store
+- Add / remove / maintain stock items in the store
+- Upload a nice picture or seven for a stock item
+- Create an exquisite exhibition of stock to encourage mindless consumerism.
+- Register as a user
+- Browse shops
+- Add items to a shopping basket
+- Perform transactions - internal / external / choose?
+- Keep a proper ledger of all transactions - when was what purchased by whom and at what price?
+- Shipping list / control for shopkeeper
+- Customer / troll feedback and ratings
+- Graaaaphs!!!
+

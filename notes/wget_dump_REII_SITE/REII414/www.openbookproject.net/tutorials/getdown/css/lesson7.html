@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+@import url(css/table.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<h2>Common Display Property Values</h2>
+<p>
+In <a href="http://www.openbookproject.net/tutorials/getdown/html/lesson3.html">
+Lesson 2 of Getting Down with HTML</a> we learned that HTML elements are
+divided into <i>block-level elements</i> and <i>inline elements</i>. Elements
+in each group have their <b>display property</b> set to <code>block</code> or
+<code>inline</code> respectively. These default display properties can be
+overridden with CSS, as we will see in the exercises.
+</p>
+<p>
+The following table describes the two display properties we just discussed and
+two more we will explore in the exercises.
+</p>
+<table>
+<tr>
+  <th>Value</th><th>Description</th>
+</tr>
+<tr>
+  <td>inline</td>
+  <td>Only uses enough width for content.  Does not generate line breaks.</td>
+</tr>
+<tr>
+  <td>block</td>
+  <td>Occupies full available width.  Breaks the line before and after the
+  element.</td>
+</tr>
+<tr>
+  <td>none</td>
+  <td>No box will be generated.  Nothing will be rendered in the browser.</td>
+</tr>
+<tr>
+  <td>hidden</td>
+  <td>The box will be generated, but nothing will be rendered in the box.</td>
+</tr>
+</table>
+
+<h2>Position Property Values</h2>
+<table style="width: 800px;">
+<tr>
+  <th>Value</th><th>Description</th>
+</tr>
+<tr>
+  <td>static</td>
+  <td>Default position value. Not positioned in any special way.</td>
+</tr>
+<tr>
+  <td>relative</td>
+  <td>Combined with <code>top</code>, <code>bottom</code>, <code>left</code>,
+  and <code>right</code> properties. Element is moved from where it was but
+  other content does move into the emptied space.
+  </td>
+</tr>
+<tr>
+  <td>fixed</td>
+  <td>Like <code>relative</code>, <code>fixed</code> is combined with
+  <code>top</code>, <code>bottom</code>, <code>left</code>,
+  and <code>right</code> properties.  Element is positioned relative to the
+  viewport (the browser window). Won't move when a page is scrolled.</td>
+</tr>
+<tr>
+  <td>absolute</td>
+  <td>Behaves like <code>fixed</code> except it is positioned relative to its
+  nearest positioned ancestor instead of the viewport. If element has no
+  positioned ancestors, it uses the document body, and will scroll along with
+  the page.</td>
+</tr>
+</table>
+
+<h2>Float Properties</h2>
+<table style="width: 960px;">
+<tr>
+  <th>Property</th><th>Description</th><th>Values</th>
+</tr>
+<tr>
+  <th>float</th>
+  <td>Changes the normal flow of block disply elements causing other positioned
+  elements to flow around the floated element to its left or right.</td>
+  <td>left, right, none, inherit</td>
+</tr>
+<tr>
+  <th>clear</th>
+  <td>Removes floating behavior from previously floated elements.</td>
+  <td>left, right, both, none, inherit</td>
+</tr>
+</table>
+</section>
+
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Download
+  <a href="resources/lesson7/display1.html">display1.html</a>, then do each of
+  the following to it:
+  <ul>
+    <li></li>
+  </ul></li>
+
+  <li>Download
+  <a href="resources/lesson7/display2.html">display2.html</a>, then do each of
+  the following to it:
+  <ul>
+    <li>Add the following declaration to the <code>div#box2</code> style
+    already in the style sheet:
+    <pre>
+    display: none;
+    </pre>
+    Reload the page and note how it looks. Write your observations down as
+    <q>display experiment n</q>.
+    </li>
+    <li>Now change the display property you set in the previous step from
+    <code>none</code> to <code>hidden</code>. Again, reload the page and note
+    how it looks. Write your observations down as <q>display experiment n+1</q>.
+    </li>
+  </ul></li>
+
+  <li>Download
+  <a href="resources/lesson7/position_float1.html">position_float1.html</a>,
+  then do each of the following to it:
+  <ul>
+    <li>
+    </li>
+  </ul></li>
+</ol>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

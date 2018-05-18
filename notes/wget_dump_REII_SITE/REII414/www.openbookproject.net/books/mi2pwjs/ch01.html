@@ -1,0 +1,931 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1. Basic JavaScript: values, variables, and control flow &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="2. Functions" href="ch02.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch02.html" title="2. Functions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="basic-javascript-values-variables-and-control-flow">
+<span id="values-chapter"></span><span id="index-0"></span><h1>1. Basic JavaScript: values, variables, and control flow<a class="headerlink" href="#basic-javascript-values-variables-and-control-flow" title="Permalink to this headline">¶</a></h1>
+<p>Inside the computer&#8217;s world, there is only data. That which is not data, does
+not exist. Although all data is in essence just a sequence of <strong>bits</strong>, and is
+thus fundamentally alike, every piece of data plays its own role. In
+JavaScript&#8217;s system, most of this data is neatly separated into things called
+<strong>values</strong>.  Every value has a type, which determines the kind of role it can
+play.  There are six basic types of values: Numbers, strings, booleans,
+objects, functions, and undefined values.</p>
+<p>To create a value, one must merely invoke its name. This is very convenient.
+You don&#8217;t have to gather building material for your values, or pay for them,
+you just call for one and <em>woosh</em>, you have it. They are not created from thin
+air, of course. Every value has to be stored somewhere, and if you want to use
+a gigantic number of them at the same time you might run out of computer
+memory. Fortunately, this is only a problem if you need them all
+simultaneously. As soon as you no longer use a value, it will dissipate,
+leaving behind only a few bits. These bits are recycled to make the next
+generation of values.</p>
+<div class="section" id="numbers">
+<h2>1.1. Numbers<a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h2>
+<p id="index-1">Values of the type number are, as you might have deduced, <strong>numeric values</strong>.
+They are written the way numbers are usually written:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="mi">144</span>
+</pre></div>
+</div>
+<p>Enter that value in the console, and the same thing is printed in the output
+window.  The text you typed in gave rise to a number value, and the console
+took this number and wrote it out to the screen again. In a case like this,
+that was a rather pointless exercise, but soon we will be producing values in
+less straightforward ways, and it can be useful to &#8220;try them out&#8221; on the
+console to see what they produce.</p>
+<p>This is what <tt class="docutils literal"><span class="pre">144</span></tt> looks like in bits:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mo">0100000001100010000000000000000000000000000000000000000000000000</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you were expecting something like <tt class="docutils literal"><span class="pre">10010000</span></tt> here ― good call, but
+read on. JavaScript&#8217;s numbers are not stored as integers.</p>
+</div>
+<p>The number above has 64 bits. Numbers in JavaScript always do. This has one
+important repercussion: There is a limited amount of different numbers that can
+be expressed. With three decimal digits, only the numbers 0 to 999 can be
+written, which is 10<sup>3</sup> = 1000 different numbers. With 64 binary digits,
+2<sup>64</sup> different numbers can be written. This is a lot, more than 10<sup>19</sup> (a one with nineteen zeroes).</p>
+<p>Not all whole numbers below 10<sup>19</sup> fit in a JavaScript number though.
+For one, there are also negative numbers, so one of the bits has to be used to
+store the sign of the number. A bigger issue is that non-whole numbers must
+also be represented. To do this, 11 bits are used to store the position of the
+fractional dot within the number.</p>
+<p>That leaves 52 bits (actually, 53, because of a trick that can be used to get
+one bit for free. Read about the
+<a class="reference external" href="http://en.wikipedia.org/wiki/IEEE_754">IEEE 754</a> format if you are curious
+about the details).  Any whole number less than 2<sup>52</sup>, which is over
+10<sup>15</sup>, will safely fit in a JavaScript number. In most cases, the
+numbers we are using stay well below that, so we do not have to concern
+ourselves with bits at all. Which is good. I have nothing in particular against
+bits, but you <em>do</em> need a terrible lot of them to get anything done. When at
+all possible, it is more pleasant to deal with bigger things.</p>
+<p>Fractional numbers are written by using a dot.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="mf">9.81</span>
+</pre></div>
+</div>
+<p id="index-2">For very big or very small numbers, one can also use <em>scientific notation</em> by
+adding an <tt class="docutils literal"><span class="pre">e</span></tt>, followed by the exponent of the number:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="mf">2.998e8</span>
+</pre></div>
+</div>
+<p>Which is 2.998 * 10<sup>8</sup> = 299800000.</p>
+<p>Calculations with whole numbers (also called integers) that fit in 52 bits are
+guaranteed to always be precise. Unfortunately, calculations with fractional
+numbers are generally not. Like π (pi) can not be precisely expressed by a
+finite amount of decimal digits, many numbers lose some precision when only 64
+bits are available to store them. This is a shame, but it only causes practical
+problems in very specific situations. The important thing is to be aware of it,
+and treat fractional digital numbers as approximations, not as precise values.</p>
+<hr class="docutils" />
+<p>The main thing to do with numbers is arithmetic. Arithmetic operations such as
+addition or multiplication take two number values and produce a new number from
+them. Here is what they look like in JavaScript:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="mi">100</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">11</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">+</span></tt> and <tt class="docutils literal"><span class="pre">*</span></tt> symbols are called operators. The first stands for
+addition, and the second for multiplication. Putting an operator between two
+values will apply it to those values, and produce a new value.</p>
+<p>Does the example mean &#8220;add 4 and 100, and multiply the result by 11&#8221;, or is the
+multiplication done before the adding? As you might have guessed, the
+multiplication happens first. But, as in mathematics, this can be changed by
+wrapping the addition in parentheses:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">(</span><span class="mi">100</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span> <span class="mi">11</span>
+</pre></div>
+</div>
+<p>For subtraction, there is the <tt class="docutils literal"><span class="pre">-</span></tt> operator, and division can be done with
+<tt class="docutils literal"><span class="pre">/</span></tt>. When operators appear together without parentheses, the order in which
+they are applied is determined by the precedence of the operators. The first
+example shows that multiplication has a higher precedence than addition.
+Division and multiplication always come before subtraction and addition. When
+multiple operators with the same precedence appear next to each other (<tt class="docutils literal"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">1</span>
+<span class="pre">+</span> <span class="pre">1</span></tt>) they are applied left-to-right.</p>
+<p>Try to figure out what value this produces, and then run it to see if you were
+correct...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="mi">115</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">88</span> <span class="o">/</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>These rules of precedence are not something you should worry about.  When in
+doubt, just add parentheses.</p>
+<p>There is one more arithmetic operator which is probably less familiar to you.
+The <tt class="docutils literal"><span class="pre">%</span></tt> symbol is used to represent the remainder operation. <tt class="docutils literal"><span class="pre">X</span> <span class="pre">%</span> <span class="pre">Y</span></tt> is the
+remainder of dividing <tt class="docutils literal"><span class="pre">X</span></tt> by <tt class="docutils literal"><span class="pre">Y</span></tt>. For example <tt class="docutils literal"><span class="pre">314</span> <span class="pre">%</span> <span class="pre">100</span></tt> is <tt class="docutils literal"><span class="pre">14</span></tt>, <tt class="docutils literal"><span class="pre">10</span>
+<span class="pre">%</span> <span class="pre">3</span></tt> is <tt class="docutils literal"><span class="pre">1</span></tt>, and <tt class="docutils literal"><span class="pre">144</span> <span class="pre">%</span> <span class="pre">12</span></tt> is <tt class="docutils literal"><span class="pre">0</span></tt>. Remainder has the same precedence as
+multiplication and division.</p>
+</div>
+<div class="section" id="strings">
+<span id="index-3"></span><h2>1.2. Strings<a class="headerlink" href="#strings" title="Permalink to this headline">¶</a></h2>
+<p>The next data type is the
+<a class="reference external" href="http://en.wikipedia.org/wiki/String_%28computer_science%29">string</a>. Its
+use is not as evident from its name as with numbers, but it also fulfills a
+very basic role.  Strings are used to represent text, the name supposedly
+derives from the fact that it strings together a bunch of characters.  Strings
+are written by enclosing their content in quotes:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;Patch my boat with chewing gum.&quot;</span>
+</pre></div>
+</div>
+<p>Almost anything can be put between double quotes, and JavaScript will make a
+string value out of it. But a few characters are tricky. You can imagine how
+putting quotes between quotes might be hard. Newlines, the things you get when
+you press enter, can also not be put between quotes, the string has to stay on
+a single line.</p>
+<p>To be able to have such characters in a string, the following trick is used:
+Whenever a backslash (&#8216;<tt class="docutils literal"><span class="pre">\</span></tt>&#8216;) is found inside quoted text, it indicates that
+the character after it has a special meaning. A quote that is preceded by a
+backslash will not end the string, but be part of it. When an &#8216;<tt class="docutils literal"><span class="pre">n</span></tt>&#8216; character
+occurs after a backslash, it is interpreted as a newline. Similarly, a &#8216;<tt class="docutils literal"><span class="pre">t</span></tt>&#8216;
+after a backslash means a tab character.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;This is the first line\nAnd this is the second&quot;</span>
+</pre></div>
+</div>
+<p>There are of course situations where you want a backslash in a string to be
+just a backslash, not a special code. If two backslashes follow each other,
+they will collapse right into each other, and only one will be left in the
+resulting string value:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;A newline character is written like \&quot;\\n\&quot;.&quot;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Strings can not be divided, multiplied, or subtracted. The <tt class="docutils literal"><span class="pre">+</span></tt> operator <em>can</em>
+be used on them. It does not add, but it concatenates, it glues two strings
+together.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;con&quot;</span> <span class="o">+</span> <span class="s2">&quot;cat&quot;</span> <span class="o">+</span> <span class="s2">&quot;e&quot;</span> <span class="o">+</span> <span class="s2">&quot;nate&quot;</span>
+</pre></div>
+</div>
+<p>There are more ways of manipulating strings, but these are discussed later.</p>
+<hr class="docutils" />
+<p>Not all operators are symbols, some are written as words. For example, the
+<tt class="docutils literal"><span class="pre">typeof</span></tt> operator, which produces a string value naming the type of the value
+you give it.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">typeof</span> <span class="mf">4.5</span>
+</pre></div>
+</div>
+<p>The other operators we saw all operated on two values, <tt class="docutils literal"><span class="pre">typeof</span></tt> takes only
+one. Operators that use two values are called binary operators, while those
+that take one are called unary operators.  The minus operator can be used both
+as a binary and a unary operator:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="boolean-values">
+<span id="index-4"></span><h2>1.3. Boolean values<a class="headerlink" href="#boolean-values" title="Permalink to this headline">¶</a></h2>
+<p>Then there are values of the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Boolean_data_type">boolean type</a>. There are
+only two of these: <tt class="docutils literal"><span class="pre">true</span></tt> and <tt class="docutils literal"><span class="pre">false</span></tt>. Here is one way to produce a
+<tt class="docutils literal"><span class="pre">true</span></tt> value:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="mi">3</span> <span class="o">&gt;</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>And <tt class="docutils literal"><span class="pre">false</span></tt> can be produced like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="mi">3</span> <span class="o">&lt;</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>I hope you have seen the <tt class="docutils literal"><span class="pre">&gt;</span></tt> and <tt class="docutils literal"><span class="pre">&lt;</span></tt> signs before. They mean, respectively,
+&#8216;is greater than&#8217; and &#8216;is less than&#8217;. They are binary operators, and the result
+of applying them is a boolean value that indicates whether they hold in this
+case.</p>
+<p>Strings can be compared in the same way:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;Aardvark&quot;</span> <span class="o">&lt;</span> <span class="s2">&quot;Zoroaster&quot;</span>
+</pre></div>
+</div>
+<p>The way strings are ordered is more or less alphabetic. More or less...
+Uppercase letters are always &#8216;less&#8217; than lowercase ones, so <tt class="docutils literal"><span class="pre">&quot;Z&quot;</span> <span class="pre">&lt;</span> <span class="pre">&quot;a&quot;</span></tt>
+(upper-case Z, lower-case a) is <tt class="docutils literal"><span class="pre">true</span></tt>, and non-alphabetic characters
+(<tt class="docutils literal"><span class="pre">&quot;!&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;&#64;&quot;</span></tt>, etc) are also included in the ordering. The actual way in
+which the comparison is done is based on the Unicode standard. This standard
+assigns a number to virtually every character one would ever need, including
+characters from Greek, Arabic, Japanese, Tamil, and so on. Having such numbers
+is practical for storing strings inside a computer ― you can represent them as
+a list of numbers. When comparing strings, JavaScript just compares the numbers
+of the characters inside the string, from left to right.</p>
+<p>Other similar operators are <tt class="docutils literal"><span class="pre">&gt;=</span></tt> (is greater than or equal to), <tt class="docutils literal"><span class="pre">&lt;=</span></tt> (is
+less than or equal to), <tt class="docutils literal"><span class="pre">==</span></tt> (is equal to), and <tt class="docutils literal"><span class="pre">!=</span></tt> (is not equal to).</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;Itchy&quot;</span> <span class="o">!=</span> <span class="s2">&quot;Scratchy&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="mi">5</span><span class="nx">e2</span> <span class="o">==</span> <span class="mi">500</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>There are also some useful operations that can be applied to boolean values
+themselves. JavaScript supports three logical operators: <em>and</em>, <em>or</em>, and
+<em>not</em>. These can be used to &#8220;reason&#8221; about booleans.</p>
+<p>The <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt> operator represents logical <em>and</em>. It is a binary operator, and its
+result is only <tt class="docutils literal"><span class="pre">true</span></tt> if both of the values given to it are <tt class="docutils literal"><span class="pre">true</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="kc">false</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">||</span></tt> is the logical <em>or</em>, it is <tt class="docutils literal"><span class="pre">true</span></tt> if either of the values given to it
+is <tt class="docutils literal"><span class="pre">true</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kc">true</span> <span class="o">||</span> <span class="kc">false</span>
+</pre></div>
+</div>
+<p><em>Not</em> is written as an exclamation mark, <tt class="docutils literal"><span class="pre">!</span></tt>, it is a unary operator that
+flips the value given to it, <tt class="docutils literal"><span class="pre">!true</span></tt> is <tt class="docutils literal"><span class="pre">false</span></tt>, and <tt class="docutils literal"><span class="pre">!false</span></tt> is
+<tt class="docutils literal"><span class="pre">true</span></tt>.</p>
+<hr class="docutils" />
+<p>It is not always obvious when parentheses are needed. In practice, one can
+usually get by with knowing that of the operators we have seen so far, <tt class="docutils literal"><span class="pre">||</span></tt>
+has the lowest precedence, then comes <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt>, then the comparison operators
+(<tt class="docutils literal"><span class="pre">&gt;</span></tt>, <tt class="docutils literal"><span class="pre">==</span></tt>, etcetera), and then the rest. This has been chosen in such a
+way that, in simple cases, as few parentheses as possible are necessary.</p>
+</div>
+<div class="section" id="statements">
+<span id="index-5"></span><h2>1.4. Statements<a class="headerlink" href="#statements" title="Permalink to this headline">¶</a></h2>
+<p>All the examples so far have used the language like you would use a pocket
+calculator. Make some values and apply operators to them to get new values.
+Creating values like this is an essential part of every JavaScript program, but
+it is only a part. A piece of code that produces a value is called an
+expression. Every value that is written directly (such as <tt class="docutils literal"><span class="pre">22</span></tt> or
+<tt class="docutils literal"><span class="pre">&quot;psychoanalysis&quot;</span></tt>) is an expression. An expression between parentheses is
+also an expression. And a binary operator applied to two expressions, or a
+unary operator applied to one, is also an expression.</p>
+<p>There are a few more ways of building expressions, which will be revealed when
+the time is ripe.</p>
+<p>There exists a unit that is bigger than an expression. It is called a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Statement_%28programming%29">statement</a>. A
+program is built as a list of statements. Most statements end with a semicolon
+(<tt class="docutils literal"><span class="pre">;</span></tt>). The simplest kind of statement is an expression with a semicolon after
+it. This is a program:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="mi">1</span><span class="p">;</span>
+<span class="o">!</span><span class="kc">false</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>It is a useless program. An expression can be content to just produce a value,
+but a statement only amounts to something if it somehow changes the world. It
+could print something to the screen ― that counts as changing the world ― or it
+could change the internal state of the program in a way that will affect the
+statements that come after it. These changes are called <a class="reference external" href="http://en.wikipedia.org/wiki/Side_effect_%28computer_science%29">side effects</a>. The
+statements in the example above just produce the values <tt class="docutils literal"><span class="pre">1</span></tt> and <tt class="docutils literal"><span class="pre">true</span></tt>, and
+then immediately throw them into the <a class="reference external" href="http://en.wikipedia.org/wiki/Bit_bucket">bit bucket</a>. This leaves no impression on the
+world at all, and is not a side effect.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The bit bucket is supposedly the place where old bits are kept.  On some
+systems, the programmer has to manually empty it now and then. Fortunately,
+JavaScript comes with a fully-automatic bit-recycling system.</p>
+</div>
+</div>
+<div class="section" id="variables-and-assignment-statements">
+<span id="index-6"></span><h2>1.5. Variables and assignment statements<a class="headerlink" href="#variables-and-assignment-statements" title="Permalink to this headline">¶</a></h2>
+<p>How does a program keep an internal state? How does it remember things? We have
+seen how to produce new values from old values, but this does not change the
+old values, and the new value has to be immediately used or it will dissipate
+again. To catch and hold values, JavaScript provides a thing called a
+<strong>variable</strong>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">caught</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>A variable always has a name, and it can point at a value, holding on to it.
+The statement above creates a variable called <tt class="docutils literal"><span class="pre">caught</span></tt> and uses it to grab
+hold of the number that is produced by multiplying <tt class="docutils literal"><span class="pre">5</span></tt> by <tt class="docutils literal"><span class="pre">5</span></tt>.</p>
+<p>After running the above program, you can type the word <tt class="docutils literal"><span class="pre">caught</span></tt> into the
+console, and it will retrieve the value <tt class="docutils literal"><span class="pre">25</span></tt> for you.  The name of a variable
+is used to fetch its value. <tt class="docutils literal"><span class="pre">caught</span> <span class="pre">+</span> <span class="pre">1</span></tt> also works. A variable name can be
+used as an expression, and thus can be part of bigger expressions.</p>
+<p>The word <tt class="docutils literal"><span class="pre">var</span></tt> is used to create a new variable. After <tt class="docutils literal"><span class="pre">var</span></tt>, the name of
+the variable follows. Variable names can be almost every word, but they may not
+include spaces. Digits can be part of variable names, <tt class="docutils literal"><span class="pre">catch22</span></tt> is a valid
+name, but the name must not start with one. The characters <tt class="docutils literal"><span class="pre">$</span></tt> and <tt class="docutils literal"><span class="pre">_</span></tt> can
+be used in names as if they were letters, so <tt class="docutils literal"><span class="pre">$_$</span></tt> is a correct variable
+name.</p>
+<p>If you want the new variable to immediately capture a value, which is often the
+case, the <strong>assignment operator</strong>, <tt class="docutils literal"><span class="pre">=</span></tt>, can be used to give it the value of
+some expression. This is accomplished in JavaScript with an <strong>assignment
+statement</strong>, which uses an assignment operator to link a value to a variable
+name.</p>
+<p>When a variable points at a value, that does not mean it is tied to that value
+forever. At any time, the <tt class="docutils literal"><span class="pre">=</span></tt> operator can be used on existing variables to
+yank them away from their current value and make them point to a new one.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">caught</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>You should imagine variables as tentacles, rather than boxes. They do not
+<em>contain</em> values, they <em>grasp</em> them ― two variables can refer to the same
+value. Only the values that the program still has a hold on can be accessed by
+it. When you need to remember something, you grow a tentacle to hold on to it,
+or re-attach one of your existing tentacles to a new value: To remember the
+amount of dollars that Luigi still owes you, you could do...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">luigiDebt</span> <span class="o">=</span> <span class="mi">140</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Then, every time Luigi pays something back, this amount can be decremented by
+giving the variable a new number:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">luigiDebt</span> <span class="o">=</span> <span class="nx">luigiDebt</span> <span class="o">-</span> <span class="mi">35</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>The collection of variables and their values that exist at a given time is
+called the environment. When a program starts up, this environment is not
+empty. It always contains a number of standard variables. When your browser
+loads a page, it creates a new environment and attaches these standard values
+to it. The variables created and modified by programs on that page survive
+until the browser goes to a new page.</p>
+</div>
+<div class="section" id="functions">
+<span id="index-7"></span><h2>1.6. Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>A lot of the values provided by the standard environment have the type
+<strong>function</strong>. A function is a piece of program wrapped in a value. Generally,
+this piece of program does something useful, which can be evoked using the
+function value that contains it. In a browser environment, the variable
+<tt class="docutils literal"><span class="pre">alert</span></tt> holds a function that shows a little dialog window with a message. It
+is used like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Also, your hair is on fire.&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Executing the code in a function is called invoking or applying it.  The
+notation for doing this uses parentheses. Every expression that produces a
+function value can be invoked by putting parentheses after it. The string value
+between the parentheses is given to the function, which uses it as the text to
+show in the dialog window.  Values given to functions are called parameters or
+arguments.  <tt class="docutils literal"><span class="pre">alert</span></tt> needs only one of them, but other functions might need a
+different number.</p>
+<hr class="docutils" />
+<p>Showing a dialog window is a side effect. A lot of functions are useful because
+of the side effects they produce. It is also possible for a function to produce
+a value, in which case it does not need to have a side effect to be useful. For
+example, there is a function <tt class="docutils literal"><span class="pre">Math.max</span></tt>, which takes two arguments and gives
+back the biggest of the two:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>When a function produces a value, it is said to return it. Because things that
+produce values are always expressions in JavaScript, function calls can be used
+as a part of bigger expressions:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">+</span> <span class="mi">100</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="ch02.html#functions-chapter"><em>Functions</em></a> discusses writing your own functions.</p>
+<hr class="docutils" />
+<p>As the previous examples show, <tt class="docutils literal"><span class="pre">alert</span></tt> can be useful for showing the result
+of some expression. Clicking away all those little windows can get on one&#8217;s
+nerves though, so you may find it quicker and easier to use the JavaScript
+consoles provided in either Firebug or Chrome.</p>
+<p id="index-8">The standard environment provided by browsers contains a few more functions for
+popping up windows. You can ask the user an OK/Cancel question using
+<tt class="docutils literal"><span class="pre">confirm</span></tt>. This returns a boolean, <tt class="docutils literal"><span class="pre">true</span></tt> if the user presses &#8216;OK&#8217;, and
+<tt class="docutils literal"><span class="pre">false</span></tt> if he presses &#8216;Cancel&#8217;.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">confirm</span><span class="p">(</span><span class="s2">&quot;Shall we, then?&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p id="index-9"><tt class="docutils literal"><span class="pre">prompt</span></tt> can be used to ask an &#8220;open&#8221; question. The first argument is the
+question, the second one is the text that the user starts with. A line of text
+can be typed into the window, and the function will return this as a string.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">prompt</span><span class="p">(</span><span class="s2">&quot;Tell us everything you know.&quot;</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>It is possible to give almost every variable in the environment a new value.
+This can be useful, but also dangerous. If you give <tt class="docutils literal"><span class="pre">alert</span></tt> the value <tt class="docutils literal"><span class="pre">8</span></tt>,
+you won&#8217;t be able to print things anymore. Fortunately, reloading the page will
+reset the environment to its original state.</p>
+<hr class="docutils" />
+<p>One-line programs are not very interesting. When you put more than one
+statement into a program, the statements are, predictably, executed one at a
+time, from top to bottom.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">theNumber</span> <span class="o">=</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">prompt</span><span class="p">(</span><span class="s2">&quot;Pick a number&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">));</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Your number is the square root of &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">theNumber</span> <span class="o">*</span> <span class="nx">theNumber</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>The function <tt class="docutils literal"><span class="pre">Number</span></tt> converts a value to a number, which is needed in this
+case because the result of <tt class="docutils literal"><span class="pre">prompt</span></tt> is a string value. There are similar
+functions called <tt class="docutils literal"><span class="pre">String</span></tt> and <tt class="docutils literal"><span class="pre">Boolean</span></tt> which convert values to those
+types.</p>
+</div>
+<div class="section" id="while-loops">
+<span id="index-10"></span><h2>1.7. <tt class="docutils literal"><span class="pre">while</span></tt> loops<a class="headerlink" href="#while-loops" title="Permalink to this headline">¶</a></h2>
+<p>Consider a program that prints out all even numbers from 0 to 12.  One way to
+write this is:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="mi">8</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>That works, but the idea of writing a program is to make something <em>less</em> work,
+not more. If we needed all even numbers below 1000, the above would be
+unworkable. What we need is a way to automatically repeat some code.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">currentNumber</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">currentNumber</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">currentNumber</span><span class="p">);</span>
+    <span class="nx">currentNumber</span> <span class="o">=</span> <span class="nx">currentNumber</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You may have seen <tt class="docutils literal"><span class="pre">while</span></tt> in the introduction. A statement starting with the
+word <tt class="docutils literal"><span class="pre">while</span></tt> creates a <a class="reference external" href="http://en.wikipedia.org/wiki/Loop_%28computing%29#Loops">loop</a>. A loop is a
+disturbance in the sequence of statements, it may cause the program to repeat
+some statements multiple times.  In this case, the word <tt class="docutils literal"><span class="pre">while</span></tt> is followed
+by an expression in parentheses (the parentheses are compulsory here), which is
+used to determine whether the loop will loop or finish. As long as the boolean
+value produced by this expression is <tt class="docutils literal"><span class="pre">true</span></tt>, the code in the loop is
+repeated. As soon as it is false, the program goes to the bottom of the loop
+and continues as normal.</p>
+<p>The variable <tt class="docutils literal"><span class="pre">currentNumber</span></tt> demonstrates the way a variable can track the
+progress of a program. Every time the loop repeats, it is incremented by <tt class="docutils literal"><span class="pre">2</span></tt>,
+and at the beginning of every repetition, it is compared with the number <tt class="docutils literal"><span class="pre">12</span></tt>
+to decide whether to keep on looping.</p>
+<p>The third part of a <tt class="docutils literal"><span class="pre">while</span></tt> statement is another statement. This is the body
+of the loop, the action or actions that must take place multiple times. If we
+did not have to print the numbers, the program could have been:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">currentNumber</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">currentNumber</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="nx">currentNumber</span> <span class="o">=</span> <span class="nx">currentNumber</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Here, <tt class="docutils literal"><span class="pre">currentNumber</span> <span class="pre">=</span> <span class="pre">currentNumber</span> <span class="pre">+</span> <span class="pre">2;</span></tt> is the statement that forms the
+body of the loop. We must also print the number, though, so the loop statement
+must consist of more than one statement.  Braces (<tt class="docutils literal"><span class="pre">{</span></tt> and <tt class="docutils literal"><span class="pre">}</span></tt>) are used to
+group statements into blocks.  To the world outside the block, a block counts
+as a single statement. In the earlier example, this is used to include in the
+loop both the call to <tt class="docutils literal"><span class="pre">print</span></tt> and the statement that updates
+<tt class="docutils literal"><span class="pre">currentNumber</span></tt>.</p>
+<hr class="docutils" />
+<p>You will have noticed the spaces I put in front of some statements.  These are
+not required: The computer will accept the program just fine without them. In
+fact, even the line breaks in programs are optional. You could write them as a
+single long line if you felt like it. The role of the indentation inside blocks
+is to make the structure of the code clearer to a reader. Because new blocks
+can be opened inside other blocks, it can become hard to see where one block
+ends and another begins in a complex piece of code. When lines are indented,
+the visual shape of a program corresponds to the shape of the blocks inside it.
+Four spaces are used for every open block here, but tastes differ.</p>
+<p>In some cases, JavaScript allows you to omit the semicolon at the end of a
+statement. In other cases, it has to be there or strange things will happen.
+The rules for when it can be safely omitted are complex and weird. In this
+book, I won&#8217;t leave out any semicolons, and I strongly urge you to do the same
+in your own programs.</p>
+</div>
+<div class="section" id="for-loops">
+<span id="index-11"></span><h2>1.8. <tt class="docutils literal"><span class="pre">for</span></tt> loops<a class="headerlink" href="#for-loops" title="Permalink to this headline">¶</a></h2>
+<p>The uses of <tt class="docutils literal"><span class="pre">while</span></tt> we have seen so far all show the same pattern. First, a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Counter_variable">counter variable</a> is
+created. This variable tracks the progress of the loop.  The <tt class="docutils literal"><span class="pre">while</span></tt> itself
+contains a check, usually to see whether the counter has reached some boundary
+yet. Then, at the end of the loop body, the counter is updated.</p>
+<p>A lot of loops fall into this pattern. For this reason, JavaScript, and similar
+languages, also provide a slightly shorter and more comprehensive form:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">number</span> <span class="o">&lt;=</span> <span class="mi">12</span><span class="p">;</span> <span class="nx">number</span> <span class="o">=</span> <span class="nx">number</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">number</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>This program is exactly equivalent to the earlier even-number-printing example.
+The only change is that all the statements that are related to the &#8216;state&#8217; of
+the loop are now on one line. The parentheses after the <tt class="docutils literal"><span class="pre">for</span></tt> should contain
+two semicolons. The part before the first semicolon <em>initialises</em> the loop,
+usually by defining a variable. The second part is the expression that <em>checks</em>
+whether the loop must still continue. The final part <em>updates</em> the state of the
+loop. In most cases this is shorter and clearer than a <tt class="docutils literal"><span class="pre">while</span></tt> construction.</p>
+<hr class="docutils" />
+<p>I have been using some rather odd capitalisation in some variable names.
+Because you can not have spaces in these names ― the computer would read them
+as two separate variables ― your choices for a name that is made of several
+words are more or less limited to the following: <tt class="docutils literal"><span class="pre">fuzzylittleturtle</span></tt>,
+<tt class="docutils literal"><span class="pre">fuzzy_little_turtle</span></tt>, <tt class="docutils literal"><span class="pre">FuzzyLittleTurtle</span></tt>, or <tt class="docutils literal"><span class="pre">fuzzyLittleTurtle</span></tt>. The
+first one is hard to read. Personally, I like the one with the underscores,
+though it is a little painful to type. However, the standard JavaScript
+functions, and most JavaScript programmers, follow the last one. It is not hard
+to get used to little things like that, so I will just follow the crowd and
+capitalise the first letter of every word after the first.</p>
+<p>In a few cases, such as the <tt class="docutils literal"><span class="pre">Number</span></tt> function, the first letter of a variable
+is also capitalised. This was done to mark this function as a constructor. What
+a constructor is will become clear in <a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a>. For now, the
+important thing is not to be bothered by this apparent lack of consistency.</p>
+<p>Note that names that have a special meaning, such as <tt class="docutils literal"><span class="pre">var</span></tt>, <tt class="docutils literal"><span class="pre">while</span></tt>, and
+<tt class="docutils literal"><span class="pre">for</span></tt> may not be used as variable names. These are called keywords. There are
+also a number of words which are &#8216;reserved for use&#8217; in future versions of
+JavaScript. These are also officially not allowed to be used as variable names,
+though some browsers do allow them. The full list is rather long:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kr">abstract</span> <span class="kr">boolean</span> <span class="k">break</span> <span class="kr">byte</span> <span class="k">case</span> <span class="k">catch</span> <span class="kr">char</span> <span class="kr">class</span> <span class="kr">const</span> <span class="k">continue</span> <span class="kr">debugger</span>
+<span class="k">default</span> <span class="k">delete</span> <span class="k">do</span> <span class="kr">double</span> <span class="k">else</span> <span class="kr">enum</span> <span class="kr">export</span> <span class="kr">extends</span> <span class="kc">false</span> <span class="kr">final</span> <span class="k">finally</span> <span class="kr">float</span>
+<span class="k">for</span> <span class="kd">function</span> <span class="kr">goto</span> <span class="k">if</span> <span class="kr">implements</span> <span class="kr">import</span> <span class="k">in</span> <span class="k">instanceof</span> <span class="kr">int</span> <span class="kr">interface</span> <span class="kr">long</span>
+<span class="kr">native</span> <span class="k">new</span> <span class="kc">null</span> <span class="kr">package</span> <span class="kr">private</span> <span class="kr">protected</span> <span class="kr">public</span> <span class="k">return</span> <span class="kr">short</span> <span class="kr">static</span> <span class="kr">super</span>
+<span class="k">switch</span> <span class="kr">synchronized</span> <span class="k">this</span> <span class="k">throw</span> <span class="kr">throws</span> <span class="kr">transient</span> <span class="kc">true</span> <span class="k">try</span> <span class="k">typeof</span> <span class="kd">var</span> <span class="k">void</span>
+<span class="kr">volatile</span> <span class="k">while</span> <span class="kd">with</span>
+</pre></div>
+</div>
+<p>Don&#8217;t worry about memorising these for now, but remember that this might be the
+problem when something does not work as expected. In my experience, <tt class="docutils literal"><span class="pre">char</span></tt>
+(to store a one-character string) and <tt class="docutils literal"><span class="pre">class</span></tt> are the most common names to
+accidentally use.</p>
+<hr class="docutils" />
+<p>A program often needs to <em>update</em> a variable with a value that is based on its
+previous value. For example <tt class="docutils literal"><span class="pre">counter</span> <span class="pre">=</span> <span class="pre">counter</span> <span class="pre">+</span> <span class="pre">1</span></tt>.  JavaScript provides a
+shortcut for this: <tt class="docutils literal"><span class="pre">counter</span> <span class="pre">+=</span> <span class="pre">1</span></tt>. This also works for many other operators,
+for example <tt class="docutils literal"><span class="pre">result</span> <span class="pre">*=</span> <span class="pre">2</span></tt> to double the value of <tt class="docutils literal"><span class="pre">result</span></tt>, or <tt class="docutils literal"><span class="pre">counter</span> <span class="pre">-=</span>
+<span class="pre">1</span></tt> to count downwards.</p>
+<p>For <tt class="docutils literal"><span class="pre">counter</span> <span class="pre">+=</span> <span class="pre">1</span></tt> and <tt class="docutils literal"><span class="pre">counter</span> <span class="pre">-=</span> <span class="pre">1</span></tt> there are even shorter versions:
+<tt class="docutils literal"><span class="pre">counter++</span></tt> and <tt class="docutils literal"><span class="pre">counter--</span></tt>.</p>
+</div>
+<div class="section" id="branching">
+<span id="index-12"></span><h2>1.9. Branching<a class="headerlink" href="#branching" title="Permalink to this headline">¶</a></h2>
+<p>Loops are said to affect the control flow of a program. They change the order
+in which statements are executed. In many cases, another kind of flow is
+useful: skipping statements.</p>
+<p>We want to show all numbers below 20 which are divisible both by 3 and by 4.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">counter</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="nx">counter</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">counter</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">counter</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">counter</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The keyword <tt class="docutils literal"><span class="pre">if</span></tt> is not too different from the keyword <tt class="docutils literal"><span class="pre">while</span></tt>: It checks
+the condition it is given (between parentheses), and executes the statement
+after it based on this condition. But it does this only once, so that the
+statement is executed zero or one time.  This kind of statement is called
+a <a class="reference external" href="http://en.wikipedia.org/wiki/Branch_%28computer_science%29">conditional branching statement</a>.</p>
+<p>The trick with the remainder (<tt class="docutils literal"><span class="pre">%</span></tt>) operator is an easy way to test whether a
+number is divisible by another number. If it is, the remainder of their
+division, which is what remainder gives you, is zero.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Another name for the <tt class="docutils literal"><span class="pre">%</span></tt> operator is the <em>modulus operator</em> since the
+mathematical operation it performs is called the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Modulo_operation">modulo operation</a>.</p>
+</div>
+<p>If we wanted to print all numbers below 20, but put parentheses around the ones
+that are not divisible by 4, we can do it like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">counter</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="nx">counter</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">counter</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">counter</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">counter</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="nx">counter</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>But now the program has to determine whether <tt class="docutils literal"><span class="pre">counter</span></tt> is divisible by <tt class="docutils literal"><span class="pre">4</span></tt>
+two times. The same effect can be gotten by appending an <tt class="docutils literal"><span class="pre">else</span></tt> part after an
+<tt class="docutils literal"><span class="pre">if</span></tt> statement. The <tt class="docutils literal"><span class="pre">else</span></tt> statement is executed only when the <tt class="docutils literal"><span class="pre">if</span></tt>&#8216;s
+condition is false.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">counter</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="nx">counter</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">counter</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">counter</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="nx">counter</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>To stretch this trivial example a bit further, we now want to print these same
+numbers, but add two stars after them when they are greater than 15, one star
+when they are greater than 10 (but not greater than 15), and no stars
+otherwise.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">counter</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="nx">counter</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">counter</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">counter</span> <span class="o">+</span> <span class="s2">&quot;**&quot;</span><span class="p">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">counter</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">counter</span> <span class="o">+</span> <span class="s2">&quot;*&quot;</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="nx">counter</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This demonstrates that you can chain <tt class="docutils literal"><span class="pre">if</span></tt> statements together. In this case,
+the program first looks if <tt class="docutils literal"><span class="pre">counter</span></tt> is greater than <tt class="docutils literal"><span class="pre">15</span></tt>. If it is, the
+two stars are printed and the other tests are skipped. If it is not, we
+continue to check if <tt class="docutils literal"><span class="pre">counter</span></tt> is greater than <tt class="docutils literal"><span class="pre">10</span></tt>. Only if <tt class="docutils literal"><span class="pre">counter</span></tt> is
+also not greater than <tt class="docutils literal"><span class="pre">10</span></tt> does it arrive at the last <tt class="docutils literal"><span class="pre">print</span></tt> statement.</p>
+</div>
+<div class="section" id="break-statement">
+<span id="break-statement-section"></span><span id="index-13"></span><h2>1.10. <tt class="docutils literal"><span class="pre">break</span></tt> statement<a class="headerlink" href="#break-statement" title="Permalink to this headline">¶</a></h2>
+<p>When a loop does not always have to go all the way through to its end, the
+<tt class="docutils literal"><span class="pre">break</span></tt> statement can be useful. It immediately jumps out of the current
+loop, continuing after it. This program finds the first number that is greater
+than 20 and divisible by 7:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="p">;</span> <span class="nx">current</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">current</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">current</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">for</span></tt> construct does not have a part that checks for the end of the loop.
+This means that it is dependant on the <tt class="docutils literal"><span class="pre">break</span></tt> statement inside it to ever
+stop. The same program could also have been written as simply...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">current</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span> <span class="nx">current</span> <span class="o">%</span> <span class="mi">7</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">current</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">current</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In this case, the body of the loop is empty. A lone semicolon can be used to
+produce an empty statement. Here, the only effect of the loop is to increment
+the variable <tt class="docutils literal"><span class="pre">current</span></tt> to its desired value.  But I needed an example that
+uses <tt class="docutils literal"><span class="pre">break</span></tt>, so pay attention to the first version too.</p>
+<p>Note that <tt class="docutils literal"><span class="pre">while</span> <span class="pre">(true)</span> <span class="pre">...</span></tt> can be used to create a loop that does not end
+on its own account. This is a bit silly, you ask the program to loop as long as
+<tt class="docutils literal"><span class="pre">true</span></tt> is <tt class="docutils literal"><span class="pre">true</span></tt>, but it is a useful trick.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">answer</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">answer</span> <span class="o">=</span> <span class="nx">prompt</span><span class="p">(</span><span class="s2">&quot;You! What is the value of 2 + 2?&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">answer</span> <span class="o">==</span> <span class="s2">&quot;4&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;You must be a genius or something.&quot;</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">answer</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span> <span class="o">||</span> <span class="nx">answer</span> <span class="o">==</span> <span class="s2">&quot;5&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Almost!&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;You&#39;re an embarrassment.&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Because the first <tt class="docutils literal"><span class="pre">if</span></tt>&#8216;s body now has two statements, I added braces around
+all the bodies. This is a matter of taste. Having an <tt class="docutils literal"><span class="pre">if</span></tt>/<tt class="docutils literal"><span class="pre">else</span></tt> chain
+where some of the bodies are blocks and others are single statements looks a
+bit lopsided to me, but you can make up your own mind about that.</p>
+<p>Another solution, arguably nicer, but without <tt class="docutils literal"><span class="pre">break</span></tt>:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">value</span> <span class="o">!=</span> <span class="s2">&quot;4&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">value</span> <span class="o">=</span> <span class="nx">prompt</span><span class="p">(</span><span class="s2">&quot;You! What is the value of 2 + 2?&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">==</span> <span class="s2">&quot;4&quot;</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;You must be a genius or something.&quot;</span><span class="p">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span> <span class="o">||</span> <span class="nx">value</span> <span class="o">==</span> <span class="s2">&quot;5&quot;</span><span class="p">)</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Almost!&quot;</span><span class="p">);</span>
+    <span class="k">else</span>
+        <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;You&#39;re an embarrassment.&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>In the the first version of the &#8220;What it the value of 2 + 2?&#8221; example above,
+there is a statement <tt class="docutils literal"><span class="pre">var</span> <span class="pre">answer;</span></tt>.  This creates a variable named
+<tt class="docutils literal"><span class="pre">answer</span></tt>, but does not give it a value. What happens when you take the value
+of this variable?</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">mysteryVariable</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">mysteryVariable</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In terms of tentacles, this variable ends in thin air, it has nothing to grasp.
+When you ask for the value of an empty place, you get a special value named
+<tt class="docutils literal"><span class="pre">undefined</span></tt>. Functions which do not return an interesting value, such as
+<tt class="docutils literal"><span class="pre">alert</span></tt>, also return an <tt class="docutils literal"><span class="pre">undefined</span></tt> value.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;I am a side effect.&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>There is also a similar value, <tt class="docutils literal"><span class="pre">null</span></tt>, whose meaning is &#8220;this variable is
+defined, but it does not have a value&#8221;. The difference in meaning between
+<tt class="docutils literal"><span class="pre">undefined</span></tt> and <tt class="docutils literal"><span class="pre">null</span></tt> is mostly academic, and usually not very
+interesting. In practical programs, it is often necessary to check whether
+something &#8220;has a value&#8221;. In these cases, the expression <tt class="docutils literal"><span class="pre">something</span> <span class="pre">==</span>
+<span class="pre">undefined</span></tt> may be used, because, even though they are not exactly the same
+value, <tt class="docutils literal"><span class="pre">null</span> <span class="pre">==</span> <span class="pre">undefined</span></tt> will produce <tt class="docutils literal"><span class="pre">true</span></tt>.</p>
+</div>
+<div class="section" id="strict-equality">
+<span id="index-14"></span><h2>1.11. Strict equality<a class="headerlink" href="#strict-equality" title="Permalink to this headline">¶</a></h2>
+<p>Which brings us to another tricky subject...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="kc">false</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;5&quot;</span> <span class="o">==</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>All these give the value <tt class="docutils literal"><span class="pre">true</span></tt>. When comparing values that have different
+types, JavaScript uses a complicated and confusing set of rules. I am not going
+to try to explain them precisely, but in most cases it just tries to convert
+one of the values to the type of the other value. However, when <tt class="docutils literal"><span class="pre">null</span></tt> or
+<tt class="docutils literal"><span class="pre">undefined</span></tt> occur, it only produces <tt class="docutils literal"><span class="pre">true</span></tt> if both sides are <tt class="docutils literal"><span class="pre">null</span></tt> or
+<tt class="docutils literal"><span class="pre">undefined</span></tt>.</p>
+<p>What if you want to test whether a variable refers to the value <tt class="docutils literal"><span class="pre">false</span></tt>? The
+rules for converting strings and numbers to boolean values state that <tt class="docutils literal"><span class="pre">0</span></tt> and
+the empty string count as <tt class="docutils literal"><span class="pre">false</span></tt>, while all the other values count as
+<tt class="docutils literal"><span class="pre">true</span></tt>. Because of this, the expression <tt class="docutils literal"><span class="pre">variable</span> <span class="pre">==</span> <span class="pre">false</span></tt> is also
+<tt class="docutils literal"><span class="pre">true</span></tt> when <tt class="docutils literal"><span class="pre">variable</span></tt> refers to <tt class="docutils literal"><span class="pre">0</span></tt> or <tt class="docutils literal"><span class="pre">&quot;&quot;</span></tt>. For cases like this,
+where you do <em>not</em> want any automatic type conversions to happen, there are two
+extra operators: <tt class="docutils literal"><span class="pre">===</span></tt> and <tt class="docutils literal"><span class="pre">!==</span></tt>. The first tests whether a value is
+precisely equal to the other, and the second tests whether it is
+not precisely equal.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="kc">null</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="kc">false</span> <span class="o">===</span> <span class="mi">0</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;&quot;</span> <span class="o">===</span> <span class="mi">0</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;5&quot;</span> <span class="o">===</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>All these are <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
+<hr class="docutils" />
+<p>Values given as the condition in an <tt class="docutils literal"><span class="pre">if</span></tt>, <tt class="docutils literal"><span class="pre">while</span></tt>, or <tt class="docutils literal"><span class="pre">for</span></tt> statement do
+not have to be booleans. They will be automatically converted to booleans
+before they are checked. This means that the number <tt class="docutils literal"><span class="pre">0</span></tt>, the empty string
+<tt class="docutils literal"><span class="pre">&quot;&quot;</span></tt>, <tt class="docutils literal"><span class="pre">null</span></tt>, <tt class="docutils literal"><span class="pre">undefined</span></tt>, and of course <tt class="docutils literal"><span class="pre">false</span></tt>, will all count as
+false.</p>
+<p>The fact that all other values are converted to <tt class="docutils literal"><span class="pre">true</span></tt> in this case makes it
+possible to leave out explicit comparisons in many situations. If a variable is
+known to contain either a string or <tt class="docutils literal"><span class="pre">null</span></tt>, one could check for this very
+simply...</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">maybeNull</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="c1">// ... mystery code that might put a string into maybeNull ...</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">maybeNull</span><span class="p">)</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;maybeNull has a value&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Except in the case where the mystery code gives <tt class="docutils literal"><span class="pre">maybeNull</span></tt> the value <tt class="docutils literal"><span class="pre">&quot;&quot;</span></tt>.
+An empty string is false, so nothing is printed.  Depending on what you are
+trying to do, this might be <em>wrong</em>. It is often a good idea to add an explicit
+<tt class="docutils literal"><span class="pre">===</span> <span class="pre">null</span></tt> or <tt class="docutils literal"><span class="pre">===</span> <span class="pre">false</span></tt> in cases like this to prevent subtle mistakes.
+The same occurs with number values that might be <tt class="docutils literal"><span class="pre">0</span></tt>.</p>
+<hr class="docutils" />
+<p>The line that talks about &#8220;mystery code&#8221; in the previous example might have
+looked a bit suspicious to you. It is often useful to include extra text in a
+program. The most common use for this is adding some explanations in human
+language to a program.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="c1">// The variable counter, which is about to be defined, is going</span>
+<span class="c1">// to start with a value of 0, which is zero.</span>
+<span class="kd">var</span> <span class="nx">counter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="c1">// Now, we are going to loop, hold on to your hat.</span>
+<span class="k">while</span> <span class="p">(</span><span class="nx">counter</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="cm">/* counter is less than one hundred */</span><span class="p">)</span>
+    <span class="cm">/* Every time we loop, we INCREMENT the value of counter,</span>
+<span class="cm">    Seriously, we just add one to it. */</span>
+    <span class="nx">counter</span><span class="o">++</span><span class="p">;</span>
+<span class="c1">// And then, we are done.</span>
+</pre></div>
+</div>
+<p>This kind of text is called a comment. The rules are like this: <tt class="docutils literal"><span class="pre">/*</span></tt> starts a
+comment that goes on until a <tt class="docutils literal"><span class="pre">*/</span></tt> is found.  <tt class="docutils literal"><span class="pre">//</span></tt> starts another kind of
+comment, which goes on until the end of the line.</p>
+<p>As you can see, even the simplest programs can be made to look big, ugly, and
+complicated by simply adding a lot of comments to them.</p>
+<hr class="docutils" />
+<p>There are some other situations that cause automatic type conversions to
+happen. If you add a non-string value to a string, the value is automatically
+converted to a string before it is concatenated. If you multiply a number and a
+string, JavaScript tries to make a number out of the string.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Apollo&quot;</span> <span class="o">+</span> <span class="mi">5</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="kc">null</span> <span class="o">+</span> <span class="s2">&quot;ify&quot;</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;5&quot;</span> <span class="o">*</span> <span class="mi">5</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;strawberry&quot;</span> <span class="o">*</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The last statement prints <tt class="docutils literal"><span class="pre">NaN</span></tt>, which is a special value. It stands for &#8216;not
+a number&#8217;, and is of type number (which might sound a little contradictory). In
+this case, it refers to the fact that a strawberry is not a number. All
+arithmetic operations on the value <tt class="docutils literal"><span class="pre">NaN</span></tt> result in <tt class="docutils literal"><span class="pre">NaN</span></tt>, which is why
+multiplying it by <tt class="docutils literal"><span class="pre">5</span></tt>, as in the example, still gives a <tt class="docutils literal"><span class="pre">NaN</span></tt> value. Also,
+and this can be disorienting at times, <tt class="docutils literal"><span class="pre">NaN</span> <span class="pre">==</span> <span class="pre">NaN</span></tt> equals <tt class="docutils literal"><span class="pre">false</span></tt>,
+checking whether a value is <tt class="docutils literal"><span class="pre">NaN</span></tt> can be done with the <tt class="docutils literal"><span class="pre">isNaN</span></tt> function.
+<tt class="docutils literal"><span class="pre">NaN</span></tt> is another (the last) value that counts as <tt class="docutils literal"><span class="pre">false</span></tt> when
+converted to a boolean.</p>
+<p>These automatic conversions can be very convenient, but they are also rather
+weird and error prone. Even though <tt class="docutils literal"><span class="pre">+</span></tt> and <tt class="docutils literal"><span class="pre">*</span></tt> are both arithmetic
+operators, they behave completely different in the example. In my own code, I
+use <tt class="docutils literal"><span class="pre">+</span></tt> to combine strings and non-strings a lot, but make it a point not to
+use <tt class="docutils literal"><span class="pre">*</span></tt> and the other numeric operators on string values. Converting a number
+to a string is always possible and straightforward, but converting a string to
+a number may not even work (as in the last line of the example). We can use
+<tt class="docutils literal"><span class="pre">Number</span></tt> to explicitly convert the string to a number, making it clear that
+we might run the risk of getting a <tt class="docutils literal"><span class="pre">NaN</span></tt> value.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">Number</span><span class="p">(</span><span class="s2">&quot;5&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span><span class="p">);</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>When we discussed the boolean operators <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt> and <tt class="docutils literal"><span class="pre">||</span></tt> earlier, I claimed
+they produced boolean values. This turns out to be a bit of an
+oversimplification. If you apply them to boolean values, they will indeed
+return booleans. But they can also be applied to other kinds of values, in
+which case they will return one of their arguments.</p>
+<p>What <tt class="docutils literal"><span class="pre">||</span></tt> really does is this: It looks at the value to the left of it first.
+If converting this value to a boolean would produce <tt class="docutils literal"><span class="pre">true</span></tt>, it returns this
+left value, otherwise it returns the one on its right. Check for yourself that
+this does the correct thing when the arguments are booleans. Why does it work
+like that? It turns out this is very practical. Consider this example:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">prompt</span><span class="p">(</span><span class="s2">&quot;What is your name?&quot;</span><span class="p">,</span> <span class="s2">&quot;Kilgore Trout&quot;</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Well hello &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="nx">input</span> <span class="o">||</span> <span class="s2">&quot;dear&quot;</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>If the user presses &#8216;Cancel&#8217; or closes the <tt class="docutils literal"><span class="pre">prompt</span></tt> dialog in some other way
+without giving a name, the variable <tt class="docutils literal"><span class="pre">input</span></tt> will hold the value <tt class="docutils literal"><span class="pre">null</span></tt> or
+<tt class="docutils literal"><span class="pre">&quot;&quot;</span></tt>. Both of these would give <tt class="docutils literal"><span class="pre">false</span></tt> when converted to a boolean. The
+expression <tt class="docutils literal"><span class="pre">input</span> <span class="pre">||</span> <span class="pre">&quot;dear&quot;</span></tt> can in this case be read as &#8216;the value of the
+variable <tt class="docutils literal"><span class="pre">input</span></tt>, or else the string <tt class="docutils literal"><span class="pre">&quot;dear&quot;</span></tt>&#8216;. It is an easy way to
+provide a &#8216;fallback&#8217; value.</p>
+<p>The <tt class="docutils literal"><span class="pre">&amp;&amp;</span></tt> operator works similarly, but the other way around. When the value
+to its left is something that would give <tt class="docutils literal"><span class="pre">false</span></tt> when converted to a boolean,
+it returns that value, otherwise it returns the value on its right.</p>
+<p>Another property of these two operators is that the expression to their right
+is only evaluated when necessary. In the case of <tt class="docutils literal"><span class="pre">true</span> <span class="pre">||</span> <span class="pre">X</span></tt>, no matter what
+<tt class="docutils literal"><span class="pre">X</span></tt> is, the result will be <tt class="docutils literal"><span class="pre">true</span></tt>, so <tt class="docutils literal"><span class="pre">X</span></tt> is never evaluated, and if it
+has side effects they never happen. The same goes for <tt class="docutils literal"><span class="pre">false</span> <span class="pre">&amp;&amp;</span> <span class="pre">X</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kc">false</span> <span class="o">||</span> <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;I&#39;m happening!&quot;</span><span class="p">);</span>
+<span class="kc">true</span> <span class="o">||</span> <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Not me.&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="glossary">
+<span id="index-15"></span><h2>1.12. Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-bit">bit</dt>
+<dd>Bits are any kinds of two-valued things, usually described as <tt class="docutils literal"><span class="pre">0</span></tt>s
+and <tt class="docutils literal"><span class="pre">1</span></tt>s. Inside the computer, they take forms like a high or low
+electrical charge, a strong or weak signal, a shiny or dull spot on the
+surface of a CD. Bit is short for <em>binary digit</em>.</dd>
+<dt id="term-boolean-value">boolean value</dt>
+<dd>Something which is either <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>.</dd>
+<dt id="term-data-type">data type</dt>
+<dd>An interpretation of bit sequences.</dd>
+<dt id="term-loop">loop</dt>
+<dd>A sequence of statements which is specified once but may be executed
+several times in succession.</dd>
+<dt id="term-numeric-values">numeric values</dt>
+<dd>Values that hold numbers.  In JavaScript there is only one numeric
+type, which holds numbers both whole and fractional numbers.</dd>
+<dt id="term-side-effect">side effect</dt>
+<dd>A change in the state of a running program or a noticeable effect on
+the outside world caused by the execution of a function or expression
+in addition its return values.</dd>
+<dt id="term-statement">statement</dt>
+<dd>The smallest <em>stand alone</em> element of a computer program.</dd>
+<dt id="term-string">string</dt>
+<dd>A sequence of characters.  In JavaScript strings are enclosed with
+either single or double quotation marks (&#8216;&#8217; or &#8220;&#8221;).</dd>
+<dt id="term-value">value</dt>
+<dd>One of the fundamental things on which computers operate.  At the
+lowest level of abstraction a value is a sequence of bits with an
+associated data type.</dd>
+<dt id="term-variable">variable</dt>
+<dd>A name which refers to a value stored in the memory of the computer.</dd>
+</dl>
+</div>
+<div class="section" id="exercises">
+<h2>1.13. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="exercises/ch01/ch01s01.html#ch01s01"><em>Chapter 1 Exercise Set 1</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch02.html" title="2. Functions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Introduction"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

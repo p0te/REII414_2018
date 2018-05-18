@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>
+The elements styled by the <q>basic</q> selectors from lesson 3 can be
+identified independently of their position within the element tree.  The
+elements styled by what we will call the <q>advanced</q> selectors, by
+contrast, can only be identified by their <i>specific relationships to other
+elements</i> in the element tree.
+</p>
+
+<h2>Decendant Selectors</h2>
+<p>
+Decendant selectors are written as a sequence of space separated elements along
+the path from the root (<code>html</code>) to the styled element.  It is not
+necessary or usual to list all elements in the path.  Matching happens whenever
+each element specified occurs in the correct order within the path.
+</p>
+<pre class="source" style="width: 400px;">ol a {
+    font-size: x-large;
+}
+</pre>
+<p>
+The style above makes hyperlink (<code>a</code>) elements that are decendents
+of ordered lists (<code>&lt;ol&gt;&lt;/ol&gt;</code>) have an extra large font
+size.
+</p>
+<pre class="source" style="width: 400px;">li li li {
+    list-style-type: lower-roman;
+}
+</pre>
+<p>
+This style sets doubly nested list elements to lower-roman style.
+</p>
+
+
+<h2>Child Selectors</h2>
+<p>
+Child selectors are written as parent-child combination of elements seperated
+by a <code>&gt;</code> symbol.
+</p>
+<pre class="source" style="width: 400px;">section &gt; h2 {
+    color: #F70;
+}
+</pre>
+<p>
+This style makes <code>h2</code> elements that are <i>children</i> of
+<code>section</code> elements orange.
+</p>
+<p>
+They can be chained together to select very specific sections of the element
+tree.
+</p>
+<pre class="source" style="width: 400px;">section &gt; p  &gt; sup {
+    color: #F00;
+}
+</pre>
+<p>
+This style makes <code>sup</code> elements that are children of <code>p</code>
+elements that are children of <code>section</code> elements red.
+</p>
+
+
+<h2>Adjacent Sibling Selectors</h2>
+<p>
+Adjacent sibling selector selects an element that immediately follows another
+element (its <i>adjacent sibling</i>).  The two elements are separated by
+a <code>+</code> symbol when writing the style.
+</p>
+<p>
+The easiest way to demonstrate how sibling selectors work is to show you an
+example.  Download <a href="resources/lesson5/adjacent_siblings.html">this</a>
+file to your computer.  Open the file with a text editor, and notice that the
+<code>body</code> contains one top level heading (<code>h1</code>) followed
+by three second level headings (<code>h2</code>).
+</p>
+<p>
+Add the following style to this document:
+</p>
+<pre class="source" style="width: 400px;">h1 + h2 {
+    color: red;
+}
+</pre>
+<p>
+And the document will look like this:
+</p>
+<p style="text-align: center;">
+<img src="screenshots/lesson5/h1_plus_h2.png" alt="h1 + h2 style"></p>
+<p>
+Change the style to:
+</p>
+<pre class="source" style="width: 400px;">h2 + h2 {
+    color: red;
+}
+</pre>
+<p>
+And the document changes to this:
+</p>
+<p style="text-align: center;">
+<img src="screenshots/lesson5/h2_plus_h2.png" alt="h2 + h2 style"></p>
+<p>
+Study this example until you understand why it works the way that it does.
+</p>
+
+
+<h2>Pseudo-classes and Pseudo-elements</h2>
+
+
+<h3>Pseudo-classes</h3>
+<p>
+Pseudo-classes behave like classes in html, but instead of being written 
+explicitly using element attributes, they select elements implicitly by their
+relationship to other elements.
+</p>
+<p>
+We have already seen the pseudo-classes for the hyperlink element in
+<a href="lesson3.html#link_pseudo_classes">lesson 3</a>.  CSS 1 provides an
+additional pseudo-class that is very useful, the <code>:first-child</code>
+pseudo-class. The following style:
+</p>
+<pre class="source" style="width: 400px;">p:first-child {
+    color: red;
+}
+</pre>
+<p>
+will color the text in a paragraph that is the <i>first child</i> of its
+parent element red.  You will explore how this works in more depth in the
+exercises.
+</p>
+<p>
+CSS 3 introduces several new pseudo-classes, including:
+</p>
+<table>
+<tr>
+  <th>Psuedo-class</th><th>Example(s) or Description</th>
+</tr>
+<tr>
+  <td>:last-child</td>
+  <td>li:last-child</td>
+</tr>
+<tr>
+  <td>:nth-child( { number expression | odd | even )</td>
+  <td>tr:nth-child(2n+1) or tr:nth-child(even)</td>
+</tr>
+<tr>
+  <td>:nth-last-child( { number expression | odd | even )</td>
+  <td>Works like :nth-child, only it counts from last child instead of first.
+  </td>
+</tr>
+<tr>
+  <td>:nth-of-type( { number expression | odd | even )</td>
+  <td>p:nth-of-type(3n-1) or section &gt; img:nth-of-type(odd)</td>
+</tr>
+<tr>
+  <td>:nth-last-of-type( { number expression | odd | even )</td>
+  <td>Works like :nth-of-type, only it counts from last child instead of first.
+  </td>
+</table>
+
+
+<h3>Pseudo-elements</h3>
+<p>
+Pseudo-elements are used to style elements which don't actually exist in the
+HTML markup.
+</p>
+<table>
+<tr>
+  <th>Pseudo-element</th><th>Example / Description</th>
+</tr>
+<tr>
+  <td>:first-letter</td>
+  <td>p:first-letter &nbsp; Styles the first character of text within the
+  element.</td>
+</tr>
+<tr>
+  <td>:first-line</td>
+  <td>p:first-line &nbsp; Styles the first line of formatted text within 
+  the element.</td>
+</tr>
+<tr>
+  <td>:before</td>
+  <td>p:before &nbsp; Specificies content to be inserted immediately before the
+  selected element.</td>
+</tr>
+<tr>
+  <td>:after</td>
+  <td>p:after &nbsp; Specificies content to be inserted immediately after the
+  selected element.</td>
+</tr>
+</table>
+</section>
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>
+  <a href="resources/lesson5/learning_html.html">Here</a> is a version of the
+  <code>learning_html.html</code> document made as the extra credit exercise
+  in <a href="../html/lesson4.html">lesson 4</a> of
+  <a href="../html">Getting Down with HTML</a> that has all the in-line style
+  sheets removed (You didn't know back when you made it that you were using
+  in-line style sheets).  Make the following changes to this document to style
+  it:
+  <ul>
+    <li>As usual, add a style element in the document <code>head</code>.</li>
+
+    <li>Add a <code>div</code> element around the entire outline (the outer
+    most <code>&lt;ol&gt;&lt;/ol&gt;</code> tags) with a class attribute set to
+    <q>outline</q> (<code>class="outline"</code>).</li>
+
+    <li>Add the following decendant selector to your style sheet:
+    <pre>
+    div.outline li {
+        list-style-type: upper-roman;
+    }
+    </pre>
+    Reload your page and notice what happened.  <i>All</i> of the list items
+    items are now upper case Roman.  Why?  Think about how this works and
+    watch how it changes after the next step.
+    </li>
+
+    <li>Now add this decendant selector to your style sheet:
+    <pre>
+    div.outline li li {
+        list-style-type: upper-alpha;
+    }
+    </pre>
+    Again, reload your page and notice what happened.  Take a few minutes to
+    convince yourself you understand why the top level list items are still
+    upper case Roman, but all other levels are now upper case Alpha.
+    </li>
+
+    <li>Finally add this decendant selector to your style sheet:
+    <pre>
+    div.outline li li li {
+        list-style-type: lower-roman;
+    }
+    </pre>
+    Reload your page again.  It should now be clear to you how these decendant
+    selectors work.  Note that list item decendant selectors would work the
+    same way without the <code>div</code> element enclosing them, but that
+    may cause your style to effect other lists in your site that you didn't
+    want to effect.  By having these styles start with <code>div.outline</code>,
+    only those lists you are explicitly intending to be <q>outlines</q> will
+    be effected. 
+    </li>
+
+    <li>Use what you learned in previous lessons to make your document look
+    nicer.  Set margins, padding, and a border on the <code>div.outline</code>
+    element, for example, and center the top level heading and footer. Change
+    the color, size, and text-decoration of the hyperlink elements inside
+    footer.</li>
+  </ul>
+  When you finish, your document might look something like
+  <a href="screenshots/lesson5/learning_html_html.png">this</a>.
+  </li>
+  <li>
+  Open the <code>webskills.html</code> you created in the
+  <a href="lesson4.html#exercises">Lesson 4 Exercises</a>.  If you were not
+  able to complete those exercises, you can use
+  <a href="resources/lesson5/webskills.html">this</a> one.  Again make the
+  following changes to this document to style it, reloading the document after
+  each change to see how it effects the document:
+  <ul>
+    <li>Style the body, hyperlinks, and the top level heading inside the
+    header element:
+    <pre>
+    body {
+        margin: 50px;
+        background-color: #E6E6FA;
+    }
+    header h1 {
+        text-align: center;
+        color: #8B008B;
+    }
+    a, a:visited {
+        text-decoration: none;
+    }
+    </pre></li>
+    <li>Now style the navigation element inside the header:
+    <pre>
+    nav {
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+        margin-bottom: 40px;
+    }
+    nav a, nav a:visited {
+        padding: 10px;
+        border: 1px dotted #777;
+        color: #4B0082;
+        background-color: #FFF;
+        font-weight: bold;
+    }
+    </pre></li>
+    <li>Change the background color and put a curved border on the section
+    elements to set them off and style the h1 and h2 elements inside them:
+    <pre>
+    section {
+        background-color: #F6F6FA;
+        margin-top: 30px;
+        padding-left: 30px;
+        border: 1px solid #444;
+        border-radius: 25px;
+    }
+    section h1 {
+        margin-left: -15px;
+        font-size: 2.2em;
+        color: #6A5ACD;
+    }
+    section h2 {
+        color: #540093;
+    }
+    </pre></li>
+    <li>Finally, create <q>CSS buttons</q> for the validation links in the
+    footer:
+    <pre>
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        font-size: .9em;
+    }
+    footer a {
+        border: 1px solid #777;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-right: 2px;
+        margin-right: 10px;
+        background-color: #FFF;
+    }
+    a &gt; strong {
+        background-color: #9932CC;
+        color: #FFF;
+        padding: 2px;
+        padding-left: 4px;
+        margin-right: 2px;
+    }
+    </pre></li>
+  </ul>
+  When you finish, your document should look something like
+  <a href="screenshots/lesson5/webskills_html.png">this</a>.
+  </li>
+</ol>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

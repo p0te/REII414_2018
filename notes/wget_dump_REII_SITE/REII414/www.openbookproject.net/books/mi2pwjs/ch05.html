@@ -1,0 +1,684 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. Web programming: A crash course &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="index.html" />
+    <link rel="next" title="6. The Document-Object Model" href="ch06.html" />
+    <link rel="prev" title="4. Error Handling" href="ch04.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch06.html" title="6. The Document-Object Model"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ch04.html" title="4. Error Handling"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="web-programming-a-crash-course">
+<span id="web-programming-chapter"></span><h1>5. Web programming: A crash course<a class="headerlink" href="#web-programming-a-crash-course" title="Permalink to this headline">¶</a></h1>
+<p>You are probably reading this in a web browser, so you are likely to be at
+least a little familiar with the World Wide Web. This chapter contains a quick,
+superficial introduction to the various elements that make the web work, and
+the way they relate to JavaScript through
+<a class="reference external" href="http://en.wikipedia.org/wiki/JQuery">jQuery</a>. The three after this one
+show some of the ways jQuery can be used to inspect and change a web-page.</p>
+<div class="section" id="clients-and-servers">
+<span id="index-0"></span><h2>5.1. Clients and Servers<a class="headerlink" href="#clients-and-servers" title="Permalink to this headline">¶</a></h2>
+<p>The Internet is, basically, just a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Computer_network">computer network</a> spanning
+most of the world.  Computer networks make it possible for computers to send
+each other messages.  The techniques that underlie networking are an
+interesting subject, but not the subject of this book. All you have to know is
+that, typically, one computer, which we will call the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Server_%28computing%29">server</a>, is waiting
+for other computers to start talking to it. Once another computer, the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Client_%28computing%29">client</a>, opens
+communications with this server, they will exchange whatever it is that needs
+to be exchanged using some specific language, a protocol.</p>
+<p>The Internet is used to carry messages for <em>many</em> different
+<a class="reference external" href="http://en.wikipedia.org/wiki/Communications_protocol">protocols</a>. There are
+protocols for chatting, protocols for file sharing, protocols used by malicious
+software to control the computer of the poor schmuck who installed it, and so
+on. The protocol that is of interest to us is that used by the
+<a class="reference external" href="http://en.wikipedia.org/wiki/World_Wide_Web">World Wide Web</a>.
+It is called <a class="reference external" href="http://en.wikipedia.org/wiki/HTTP">HTTP</a>, which stands for
+<strong>Hyper Text Transfer Protocol</strong>, and is used to retrieve web-pages and the
+files associated with them.</p>
+<p>In HTTP communication, the server is the computer on which the web-page is
+stored. The client is the computer, such as yours, which asks the server for a
+page, so that it can display it. Asking for a page like this is called an
+<strong>HTTP request</strong> and the exchange of messages between the client (usually a web
+browser) and the server is called the <a class="reference external" href="http://en.wikipedia.org/wiki/Request-response">request-response-cycle</a>.</p>
+</div>
+<div class="section" id="urls">
+<span id="index-1"></span><h2>5.2. URLs<a class="headerlink" href="#urls" title="Permalink to this headline">¶</a></h2>
+<p>Web-pages and other files that are accessible though the Internet are
+identified by <a class="reference external" href="http://en.wikipedia.org/wiki/URL">URL</a>s, which is an
+abbreviation of <strong>Universal Resource Locators</strong>. A URL looks like this:</p>
+<blockquote>
+<div><a class="reference external" href="http://acc6.its.brooklyn.cuny.edu/~phalsall/texts/taote-v3.html">http://acc6.its.brooklyn.cuny.edu/~phalsall/texts/taote-v3.html</a></div></blockquote>
+<p>It is composed of three parts. The start, <tt class="docutils literal"><span class="pre">http://</span></tt>, indicates that this URL
+uses the HTTP protocol. There are some other protocols, such as
+<a class="reference external" href="http://en.wikipedia.org/wiki/FTP">FTP</a> (File Transfer Protocol) and
+<a class="reference external" href="http://en.wikipedia.org/wiki/Secure_Shell">SSH</a>, which also
+make use of URLs. The next part, <tt class="docutils literal"><span class="pre">acc6.its.brooklyn.cuny.edu</span></tt>, names the
+server on which this page can be found. The end of the URL,
+<tt class="docutils literal"><span class="pre">/~phalsal/texts/taote-v3.html</span></tt>, names a specific file on this server.</p>
+<p>Most of the time, the World Wide Web is accessed using a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Web_browser">browser</a>.  After typing a URL or
+clicking a link, the browser makes the appropriate HTTP request to the
+appropriate server. If all goes well, the server responds by sending a file
+back to the browser, which shows it to the user in one way or another.</p>
+</div>
+<div class="section" id="html">
+<span id="index-2"></span><h2>5.3. HTML<a class="headerlink" href="#html" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Html">HTML</a> stands for <strong>HyperText Mark-up
+Language</strong>. An HTML document is all text.  Because it must be able to express
+the structure of this text, information about which text is a heading, which
+text is purple, and so on, a few characters have a special meaning, somewhat
+like backslashes in JavaScript strings. The &#8220;less than&#8221; and &#8220;greater than&#8221;
+characters are used to create <strong>HTML tags</strong>. Most tags occure in pairs, with a
+<em>start tag</em> and an <em>end tag</em>, with text data between them.  The start and end
+tag together with the enclosed text form an
+<a class="reference external" href="http://en.wikipedia.org/wiki/Html_element">HTML element</a>.</p>
+<p>Elements provide extra information about the data in the document. They can
+stand on their own, for example to mark the place where a picture should
+appear in the page, or they can contain text and other elements, for example
+when they mark the start and end of a paragraph.</p>
+<p>Some elements are compulsory, a whole HTML document must always be contained
+in an <tt class="docutils literal"><span class="pre">html</span></tt> element. Here is an example of an HTML document:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>A quote<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>A quote<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;blockquote&gt;</span>
+<span class="nt">&lt;p&gt;</span>The connection between the language in which we think/program and the
+problems and solutions we can imagine is very close.  For this reason
+restricting language features with the intent of eliminating programmer
+errors is at best dangerous.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>-- Bjarne Stroustrup<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/blockquote&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Mr. Stroustrup is the inventor of the C++ programming language, but
+quite an insightful person nevertheless.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Also, here is a picture of an ostrich:<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;&lt;img</span> <span class="na">src=</span><span class="s">&quot;img/ostrich.png&quot;</span> <span class="na">alt=</span><span class="s">&quot;ostrich picture&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p>A rendered version of this web page can be see <a class="reference external" href="_static/quote.html">here</a>.</p>
+<p>Elements that contain text or other tags are first opened with <tt class="docutils literal"><span class="pre">&lt;tagname&gt;</span></tt>,
+and afterwards finished with <tt class="docutils literal"><span class="pre">&lt;/tagname&gt;</span></tt>. The <tt class="docutils literal"><span class="pre">html</span></tt> element always
+contains two children: <tt class="docutils literal"><span class="pre">head</span></tt> and <tt class="docutils literal"><span class="pre">body</span></tt>. The first contains information
+<em>about</em> the document, the second contains the actual document.</p>
+<p>Most tag names are cryptic abbreviations. <tt class="docutils literal"><span class="pre">h1</span></tt> stands for &#8220;heading 1&#8221;, the
+biggest kind of heading. There are also <tt class="docutils literal"><span class="pre">h2</span></tt> to <tt class="docutils literal"><span class="pre">h6</span></tt> for successively
+smaller headings. <tt class="docutils literal"><span class="pre">p</span></tt> means &#8220;paragraph&#8221;, and <tt class="docutils literal"><span class="pre">img</span></tt> stands for &#8220;image&#8221;. The
+<tt class="docutils literal"><span class="pre">img</span></tt> element does not contain any text or other tags, but it does have some
+extra information, <tt class="docutils literal"><span class="pre">src=&quot;img/ostrich.png&quot;</span></tt> and <tt class="docutils literal"><span class="pre">alt=&quot;ostrich</span> <span class="pre">picture&quot;</span></tt>,
+which are called <a class="reference external" href="http://en.wikipedia.org/wiki/HTML_attribute">attributes</a>.
+In this case, they contain information about the image file that should be
+shown here.</p>
+<p>Because <tt class="docutils literal"><span class="pre">&lt;</span></tt> and <tt class="docutils literal"><span class="pre">&gt;</span></tt> have a special meaning in HTML documents, they can not
+be written directly in the text of the document. If you want to say &#8220;<tt class="docutils literal"><span class="pre">5</span> <span class="pre">&lt;</span>
+<span class="pre">10</span></tt>&#8221; in an HTML document, you have to write &#8220;<tt class="docutils literal"><span class="pre">5</span> <span class="pre">&amp;lt;</span> <span class="pre">10</span></tt>&#8221;, where &#8220;<tt class="docutils literal"><span class="pre">lt</span></tt>&#8221;
+stands for &#8220;less than&#8221;&#8217;. &#8220;<tt class="docutils literal"><span class="pre">&amp;gt;</span></tt>&#8221; is used for &#8220;<tt class="docutils literal"><span class="pre">&gt;</span></tt>&#8221;, and because these
+codes also give the ampersand character a special meaning, a plain &#8220;<tt class="docutils literal"><span class="pre">&amp;</span></tt>&#8221; is
+written as &#8220;<tt class="docutils literal"><span class="pre">&amp;amp;</span></tt>&#8221;.</p>
+<p>Now, those are only the bare basics of HTML, but they should be enough to make
+it through this chapter, and later chapters that deal with HTML documents,
+without getting entirely confused.</p>
+</div>
+<div class="section" id="css">
+<span id="index-3"></span><h2>5.4. CSS<a class="headerlink" href="#css" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/CSS">CSS</a> stands for <strong>Cascading Style
+Sheets</strong>.  CSS is a styling language designed to describe the look and
+formatting (the <a class="reference external" href="http://en.wikipedia.org/wiki/Presentation_semantics">presentation semantics</a>) of web pages.
+Together with HTML and JavaScript, it makes up the third of the three
+languages that can be natively consumed by web browsers.</p>
+<p>CSS syntax consists of a collection of <em>styles</em> or <em>rules</em>.  Each rule is
+composed of a <em>selector</em> and a <em>declaration block</em>.  The selector determines
+(selects) which HTML elements the style will apply to.  The declaration block
+is in turm composed of a sequence of <em>property-value pairs</em>.  The property
+is separated from the value by a colon (<tt class="docutils literal"><span class="pre">:</span></tt>), and property-value pairs
+are separated from each other by a semi-colon (<tt class="docutils literal"><span class="pre">;</span></tt>).</p>
+<p>Here is an example of a style sheet:</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="nt">body</span> <span class="p">{</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">60px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">40px</span><span class="p">;</span>
+    <span class="k">background-color</span><span class="o">:</span> <span class="n">Cornsilk</span><span class="p">;</span>
+    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">gray</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">h1</span> <span class="p">{</span>
+    <span class="k">margin-left</span><span class="o">:</span> <span class="m">-20px</span><span class="p">;</span>
+    <span class="k">color</span><span class="o">:</span> <span class="nb">orange</span><span class="p">;</span>
+    <span class="k">font-family</span><span class="o">:</span> <span class="n">Helvetica</span><span class="o">,</span> <span class="k">sans-serif</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">img</span> <span class="p">{</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">black</span><span class="p">;</span>
+    <span class="k">background-color</span><span class="o">:</span> <span class="n">WhiteSmoke</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">blockquote</span> <span class="p">{</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">dashed</span> <span class="n">SaddleBrown</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">blockquote</span> <span class="nt">p</span> <span class="p">{</span>
+    <span class="k">font-style</span><span class="o">:</span> <span class="k">italic</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">blockquote</span> <span class="nt">p</span><span class="nc">.author</span> <span class="p">{</span>
+    <span class="k">font-style</span><span class="o">:</span> <span class="k">normal</span><span class="p">;</span>
+    <span class="k">margin-left</span><span class="o">:</span> <span class="m">30px</span><span class="p">;</span>
+    <span class="k">color</span><span class="o">:</span> <span class="n">DarkGoldenrod</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.picture</span> <span class="p">{</span>
+    <span class="k">text-align</span><span class="o">:</span> <span class="k">center</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Styles can be applied internally to an html document using <strong>style elements</strong>
+(between <tt class="docutils literal"><span class="pre">&lt;style</span> <span class="pre">type=&quot;text/css&quot;&gt;&lt;/style&gt;</span></tt> tags) in the document header.
+Here is the preceding quote web page with the style included:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+<span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;title&gt;</span>A quote<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;style </span><span class="na">type=</span><span class="s">&quot;text/css&quot;</span><span class="nt">&gt;</span>
+<span class="nt">body</span> <span class="p">{</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">60px</span><span class="p">;</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">40px</span><span class="p">;</span>
+    <span class="k">background-color</span><span class="o">:</span> <span class="n">Cornsilk</span><span class="p">;</span>
+    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">gray</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">h1</span> <span class="p">{</span>
+    <span class="k">margin-left</span><span class="o">:</span> <span class="m">-20px</span><span class="p">;</span>
+    <span class="k">color</span><span class="o">:</span> <span class="nb">orange</span><span class="p">;</span>
+    <span class="k">font-family</span><span class="o">:</span> <span class="n">Helvetica</span><span class="o">,</span> <span class="k">sans-serif</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">img</span> <span class="p">{</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">black</span><span class="p">;</span>
+    <span class="k">background-color</span><span class="o">:</span> <span class="n">WhiteSmoke</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">blockquote</span> <span class="p">{</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+    <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">dashed</span> <span class="n">SaddleBrown</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">blockquote</span> <span class="nt">p</span> <span class="p">{</span>
+    <span class="k">font-style</span><span class="o">:</span> <span class="k">italic</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">blockquote</span> <span class="nt">p</span><span class="nc">.author</span> <span class="p">{</span>
+    <span class="k">font-style</span><span class="o">:</span> <span class="k">normal</span><span class="p">;</span>
+    <span class="k">margin-left</span><span class="o">:</span> <span class="m">30px</span><span class="p">;</span>
+    <span class="k">color</span><span class="o">:</span> <span class="n">DarkGoldenrod</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.picture</span> <span class="p">{</span>
+    <span class="k">text-align</span><span class="o">:</span> <span class="k">center</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;h1&gt;</span>A quote<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;blockquote&gt;</span>
+<span class="nt">&lt;p&gt;</span>The connection between the language in which we think/program and the
+problems and solutions we can imagine is very close.  For this reason
+restricting language features with the intent of eliminating programmer
+errors is at best dangerous.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;author&quot;</span><span class="nt">&gt;</span>-- Bjarne Stroustrup<span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/blockquote&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Mr. Stroustrup is the inventor of the C++ programming language, but
+quite an insightful person nevertheless.<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p&gt;</span>Also, here is a picture of an ostrich:<span class="nt">&lt;/p&gt;</span>
+
+<span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;picture&quot;</span><span class="nt">&gt;&lt;img</span> <span class="na">src=</span><span class="s">&quot;img/ostrich.png&quot;</span> <span class="na">alt=</span><span class="s">&quot;ostrich picture&quot;</span><span class="nt">&gt;&lt;/p&gt;</span>
+
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="_static/styled_quote.html">Here</a> is this web page rendered by your browser.</p>
+<p><tt class="docutils literal"><span class="pre">class</span></tt> and <tt class="docutils literal"><span class="pre">id</span></tt> attributes can be added to HTML elements for the purpose
+of styling them with CSS.  In this example, the second parapraph element in
+the blockquote has been given a classed named &#8220;author&#8221; and the paragraph
+containing the ostrich picture has been given the class name &#8220;picture&#8221;.
+This example makes use of a number of
+<a class="reference external" href="http://en.wikipedia.org/wiki/Web_colors">Web colors</a>.</p>
+<div class="admonition-learning-more-about-html-and-css admonition">
+<p class="first admonition-title">Learning more about HTML and CSS</p>
+<p class="last">A working knowledge of HTML and CSS is a prerequisit for using JavaScript
+and jQuery for client-side web scripting.  Presentation of the details is
+outside the scope of this book.  A quick but sufficient introduction to
+both of these topics can be found in
+<a class="reference external" href="http://www.openbookproject.net/tutorials/getdown/html">Getting Down with HTML</a> and
+<a class="reference external" href="http://www.openbookproject.net/tutorials/getdown/css">Getting Down with CSS</a>.</p>
+</div>
+</div>
+<div class="section" id="server-side-scripting">
+<span id="index-4"></span><h2>5.5. Server-side scripting<a class="headerlink" href="#server-side-scripting" title="Permalink to this headline">¶</a></h2>
+<p>Although a URL usually points at a file, it is possible for a web-server to do
+something more complicated than just looking up a file and sending it to the
+client. It can process the file in some way first, or maybe there is no file
+at all, but only a program that, given a URL, has some way of generating
+the relevant document for it.</p>
+<p>Programs that transform or generate documents on a server are a popular way to
+make web-pages less static. When a file is just a file, it is always the same,
+but when there is a program that builds it every time it is requested, it could
+be made to look different for each person, based on things like whether this
+person has logged in or specified certain preferences. This can also make
+managing the content of web-pages much easier ― instead of adding a new HTML
+file whenever something new is put on a website, a new document is added to
+some central storage, and the program knows where to find it and how to show it
+to clients.  This kind of web programming is called
+<a class="reference external" href="http://en.wikipedia.org/wiki/Server_side_scripting">server-side scripting</a>.
+It affects the document before it is sent to the user.</p>
+</div>
+<div class="section" id="client-side-programming">
+<span id="index-5"></span><h2>5.6. Client-side programming<a class="headerlink" href="#client-side-programming" title="Permalink to this headline">¶</a></h2>
+<p>In some cases, it is also practical to have a program that runs <em>after</em> the
+page has been sent, when the user is looking at it. This is called
+<a class="reference external" href="http://en.wikipedia.org/wiki/Client-side_scripting">client-side scripting</a>,
+because the program runs on the client computer.  Client-side web scripting
+is what JavaScript was invented for.</p>
+<p>The scripts are enclosed in <strong>script elements</strong> (between
+<tt class="docutils literal"><span class="pre">&lt;script&gt;&lt;/script&gt;</span></tt> tags). In addition to knowing how to
+<a class="reference external" href="http://en.wiktionary.org/wiki/render">render</a> HTML, almost all current web
+browsers have built-in
+<a class="reference external" href="http://en.wikipedia.org/wiki/JavaScript_engine">JavaScript engines</a> that
+enable them to interpret JavaScript source included in script elements.</p>
+<p>It is also possible to include JavaScript source in a separate file.  Browsers
+load JavaScript files when they find a start <tt class="docutils literal"><span class="pre">&lt;script&gt;</span></tt> tag in a web page
+with a <tt class="docutils literal"><span class="pre">src</span></tt> attribute whose value is the URL of file containing the
+JavaScript code.  The extension <tt class="docutils literal"><span class="pre">.js</span></tt> is usually used for files containing
+JavaScript code.</p>
+<p>These files can be located on the same machine with the web page or anywhere on
+the web.  The browser will fetch all these extra files from their servers, so
+it can add them to the document.</p>
+</div>
+<div class="section" id="sand-boxing">
+<span id="index-6"></span><h2>5.7. Sand-boxing<a class="headerlink" href="#sand-boxing" title="Permalink to this headline">¶</a></h2>
+<p>Running programs client-side has an inherent problem. You can never really know
+in advance what kinds of programs the page you are visiting is going to run. If
+it can send information from your computer to others, damage something, or
+infiltrate your system, surfing the web would be a rather hazardous activity.</p>
+<p>To solve this dilemma, browsers severely limit the things a JavaScript program
+may do. It is not allowed to look at your files, or to modify anything not
+related to the web-page it came with.  Isolating a programming environment like
+this is called <em>sand-boxing</em>, because a special environment, called a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Sandbox_%28computer_security%29">sandbox</a> is
+created for the program to run in.</p>
+<p>Allowing the programs enough room to be useful, and at the same time
+restricting them enough to prevent them from doing harm is not an easy thing to
+do. Every few months, some JavaScript programmer comes up with a new way to
+circumvent the limitations and do something harmful or privacy-invading. The
+people responsible for the browsers respond by modifying their programs to make
+this trick impossible, and all is well again ― until the next problem is
+discovered.</p>
+</div>
+<div class="section" id="dealing-with-browsers">
+<h2>5.8. Dealing with browsers<a class="headerlink" href="#dealing-with-browsers" title="Permalink to this headline">¶</a></h2>
+<p>In the early days of the web, client-side web programming was no walk in the
+park. It was, at times, a very painful ordeal. Why? Because programs that
+are supposed to run on the client computer generally have to work for all
+popular browsers. Different web browsers usually use different
+<a class="reference external" href="http://en.wikipedia.org/wiki/JavaScript_engine">JavaScript engines</a>, which
+can work slightly differently in the way they run JavaScript.</p>
+<p>To make things worse, each JavaScript enginge contains its own unique set of
+problems. Do not assume that a program is bug-free just because it was made by
+a multi-billion dollar company. So it is up to us, the web-programmer, to
+rigorously test our programs, figure out what goes wrong, and find ways to work
+around it.</p>
+<p>But do not let that discourage you. With the right kind of obsessive-compulsive
+mindset, such problems provide wonderful challenges. And for those of us who do
+not like wasting our time, being careful and avoiding the obscure corners of
+the browser&#8217;s functionality will generally prevent you from running into too
+much trouble.</p>
+<p>Fortunately, things have gotten <em>much</em> better for web developers in recent
+years.  At the time of this writing (2014), all the major browswers
+(<a class="reference external" href="http://en.wikipedia.org/wiki/Internet_Explorer">Internet Explorer</a>,
+<a class="reference external" href="http://en.wikipedia.org/wiki/Firefox">Firefox</a>,
+<a class="reference external" href="http://en.wikipedia.org/wiki/Google_Chrome">Google Chrome</a>, and
+<a class="reference external" href="http://en.wikipedia.org/wiki/Safari_%28web_browser%29">Safari</a>) all support
+current standards pretty well. Also, JavaScript libraries like jQuery help
+make the task of working with multiple browsers much easier.</p>
+<p>It is truly a good time to be a web developer!</p>
+</div>
+<div class="section" id="libraries">
+<span id="index-7"></span><h2>5.9. Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h2>
+<p>A module or group of modules that can be useful in more than one program is
+usually called a
+<a class="reference external" href="http://en.wikipedia.org/wiki/Library_%28computing%29">library</a>. For many
+programming languages, there is a huge set of quality libraries available. This
+means programmers do not have to start from scratch all the time, which can
+make them a lot more productive.</p>
+<p>In the early days of the web JavaScript libraries were comparatively scarce,
+but in recent years a number of good <a class="reference external" href="http://en.wikipedia.org/wiki/List_of_JavaScript_libraries">JavaScript libraries</a> have emerged.
+Using a library is recommended: It is less work, and the code in a library has
+usually been tested more thoroughly than the things you wrote yourself.</p>
+<p>Covering these basics, there are (among others) the &#8220;lightweight&#8221; libraries
+<a class="reference external" href="http://jquery.com">jQuery</a>, <a class="reference external" href="http://mochi.github.io/mochikit/">MochiKit</a>,
+<a class="reference external" href="http://www.prototypejs.org/">prototype</a>, and <a class="reference external" href="http://mootools.net">mootools</a>.  There are also some larger &#8216;frameworks&#8217; available,
+which do a lot more than just provide a set of basic tools. <a class="reference external" href="https://angularjs.org/">AngularJS</a> (by Google), <a class="reference external" href="http://developer.yahoo.com/yui/">YUI</a> (by Yahoo), <a class="reference external" href="http://dojotoolkit.org/">Dojo</a>, and <a class="reference external" href="http://backbonejs.org/">Backbone</a> are among
+the more popular ones in that genre. All of these can be downloaded and used
+freely.  Among these jQuery has emerged as something of a defacto standard.
+jQuery is the library we will be using in this book.</p>
+<p>The fact that a basic toolkit is almost indispensable for any non-trivial
+JavaScript programs, combined with the fact that there are so many different
+toolkits, causes a bit of a dilemma for library writers. You either have to
+make your library depend on one of the toolkits, or write the basic tools
+yourself and include them with the library. The first option makes the library
+hard to use for people who are using a different toolkit, and the second option
+adds a lot of non-essential code to the library. This dilemma might be one of
+the reasons why there are relatively few good, widely used JavaScript
+libraries. It is possible that, in the future, new versions of ECMAScript and
+changes in browsers will make toolkits less necessary, and thus (partially)
+solve this problem.</p>
+</div>
+<div class="section" id="forms">
+<h2>5.10. Forms<a class="headerlink" href="#forms" title="Permalink to this headline">¶</a></h2>
+<p>Another popular application of JavaScript in web pages centers around forms. In
+case you are not quite sure what the role of &#8220;forms&#8221; is, let me give a quick
+summary.</p>
+<p>A basic HTTP request is a simple request for a file. When this file is not
+really a passive file, but a server-side program, it can become useful to
+include information other than a filename in the request. For this purpose,
+HTTP requests are allowed to contain additional &#8216;parameters&#8217;. Here is an
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre>http://www.google.com/search?q=aztec%20empire
+</pre></div>
+</div>
+<p>After the filename (<tt class="docutils literal"><span class="pre">/search</span></tt>), the URL continues with a question mark, after
+which the parameters follow. This request has one parameter, called <tt class="docutils literal"><span class="pre">q</span></tt> (for
+&#8220;query&#8221;, presumably), whose value is <tt class="docutils literal"><span class="pre">aztec</span> <span class="pre">empire</span></tt>. The <tt class="docutils literal"><span class="pre">%20</span></tt> part
+corresponds to a space. There are a number of characters that can not occur in
+these values, such as spaces, ampersands, or question marks. These are
+&#8220;escaped&#8221; by replacing them with a <tt class="docutils literal"><span class="pre">%</span></tt> followed by their numerical value,
+which serves the same purpose as the backslashes used in strings and regular
+expressions, but is even more unreadable.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The value a character gets is decided by the ASCII standard, which assigns
+the numbers 0 to 127 to a set of letters and symbols used by the Latin
+alphabet. This standard is a precursor of the Unicode standard mentioned in
+<a class="reference internal" href="ch01.html#values-chapter"><em>Basic JavaScript: values, variables, and control flow</em></a>.</p>
+</div>
+<p>JavaScript provides functions <tt class="docutils literal"><span class="pre">encodeURIComponent</span></tt> and <tt class="docutils literal"><span class="pre">decodeURIComponent</span></tt>
+to add these codes to strings and remove them again.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">encoded</span> <span class="o">=</span> <span class="nb">encodeURIComponent</span><span class="p">(</span><span class="s2">&quot;aztec empire&quot;</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">encoded</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">decodeURIComponent</span><span class="p">(</span><span class="nx">encoded</span><span class="p">));</span>
+</pre></div>
+</div>
+<p>When a request contains more than one parameter, they are separated by
+ampersands, as in...:</p>
+<div class="highlight-python"><div class="highlight"><pre>http://www.google.com/search?q=aztec%20empire&amp;lang=nl
+</pre></div>
+</div>
+<p>A <a class="reference external" href="http://en.wikipedia.org/wiki/Html_form">form</a>, basically, is a way to
+make it easy for browser-users to create such parameterised URLs. It contains a
+number of fields, such as input boxes for text, checkboxes that can be
+&#8220;checked&#8221; and &#8220;unchecked&#8221;, or thingies that allow you to choose from a given
+set of values. It also usually contains a &#8220;submit&#8221; button and, invisible to the
+user, an &#8220;action&#8221; URL to which it should be sent.  When the submit button is
+clicked, or enter is pressed, the information that was entered in the fields is
+added to this action URL as parameters, and the browser will request this URL.</p>
+<p>Here is the HTML for a simple form</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;form</span> <span class="na">name=</span><span class="s">&quot;userinfo&quot;</span> <span class="na">method=</span><span class="s">&quot;get&quot;</span> <span class="na">action=</span><span class="s">&quot;info.html&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;p&gt;</span>Please give us your information, so that we can send
+  you spam.<span class="nt">&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;</span>Name: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">/&gt;&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;</span>E-Mail: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;email&quot;</span><span class="nt">/&gt;&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;</span>Sex: <span class="nt">&lt;select</span> <span class="na">name=</span><span class="s">&quot;sex&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;option&gt;</span>Male<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;option&gt;</span>Female<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;option&gt;</span>Other<span class="nt">&lt;/option&gt;</span>
+          <span class="nt">&lt;/select&gt;&lt;/p&gt;</span>
+  <span class="nt">&lt;p&gt;&lt;input</span> <span class="na">name=</span><span class="s">&quot;send&quot;</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Send!&quot;</span><span class="nt">/&gt;&lt;/p&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</pre></div>
+</div>
+<p>The name of the form can be used to access it with JavaScript, as we shall see
+in a moment. The names of the fields determine the names of the HTTP parameters
+that are used to store their values.  Sending this form might produce a URL
+like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>http://planetspam.com/info.html?name=Ted&amp;email=ted@zork.com&amp;sex=Male
+</pre></div>
+</div>
+<p>There are quite a few other tags and properties that can be used in forms, but
+in this book we will stick with simple ones, so that we can concentrate on
+JavaScript.</p>
+</div>
+<div class="section" id="get-and-post">
+<span id="index-8"></span><h2>5.11. <tt class="docutils literal"><span class="pre">get</span></tt> and <tt class="docutils literal"><span class="pre">post</span></tt><a class="headerlink" href="#get-and-post" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">method=&quot;get&quot;</span></tt> property of the example form shown above indicates that
+this form should encode the values it is given as URL parameters, as shown
+before. There is an alternative method for sending parameters, which is called
+<tt class="docutils literal"><span class="pre">post</span></tt>. An HTTP request using the <tt class="docutils literal"><span class="pre">post</span></tt> method contains, in addition to a
+URL, a block of data. A form using the <tt class="docutils literal"><span class="pre">post</span></tt> method puts the values of its
+parameters in this data block instead of in the URL.</p>
+<p>When sending big chunks of data, the <tt class="docutils literal"><span class="pre">get</span></tt> method will result in URLs that
+are a mile wide, so <tt class="docutils literal"><span class="pre">post</span></tt> is usually more convenient.  But the difference
+between the two methods is not just a question of convenience. Traditionally,
+<tt class="docutils literal"><span class="pre">get</span></tt> requests are used for requests that just ask the server for some
+document, while <tt class="docutils literal"><span class="pre">post</span></tt> requests are used to take an action that changes
+something on the server. For example, getting a list of recent messages on an
+Internet forum would be a <tt class="docutils literal"><span class="pre">get</span></tt> request, while adding a new message would be
+a <tt class="docutils literal"><span class="pre">post</span></tt> request. There is a good reason why most pages follow this
+distinction ― programs that automatically explore the web, such as those used
+by search engines, will generally only make <tt class="docutils literal"><span class="pre">get</span></tt> requests. If changes to a
+site can be made by <tt class="docutils literal"><span class="pre">get</span></tt> requests, these well-meaning &#8216;crawlers&#8217; could do
+all kinds of damage.</p>
+</div>
+<div class="section" id="form-validation">
+<span id="index-9"></span><h2>5.12. Form validation<a class="headerlink" href="#form-validation" title="Permalink to this headline">¶</a></h2>
+<p>When the browser is displaying a page containing a form, JavaScript programs
+can inspect and modify the values that are entered in the form&#8217;s fields. This
+opens up possibilities for all kinds of tricks, such as checking values before
+they are sent to the server, or automatically filling in certain fields.</p>
+<p>The form shown above can be found in the file <a class="reference external" href="_static/ch05/example_getinfo.html">example_getinfo.html</a>. Open it.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">form</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;example_getinfo.html&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>When a URL does not contain a server name, is called a relative URL. Relative
+URLs are interpreted by the browser to refer to files on the same server as the
+current document. Unless they start with a slash, the path (or directory) of
+the current document is also retained, and the given path is appended to it.</p>
+<p>We will be adding a validity check to the form, so that it only submits if the
+name field is not left empty and the e-mail field contains something that looks
+like a valid e-mail address. Because we no longer want the form to submit
+immediately when the &#8220;Send!&#8221; button is pressed, its <tt class="docutils literal"><span class="pre">type</span></tt> property has been
+changed from <tt class="docutils literal"><span class="pre">&quot;submit&quot;</span></tt> to <tt class="docutils literal"><span class="pre">&quot;button&quot;</span></tt>, which turns it into a regular button
+with no effect. ― <a class="reference internal" href="ch07.html#browser-events-chapter"><em>Browser Events</em></a> will show a <em>much</em> better way
+of doing this, but for now, we use the naive method.</p>
+<hr class="docutils" />
+<p>To be able to work with the newly opened window (if you closed it, re-open it
+first), we &#8216;attach&#8217; the console to it, like this:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">attach</span><span class="p">(</span><span class="nx">form</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>After doing this, the code run from the console will be run in the given
+window. To verify that we are indeed working with the correct window, we can
+look at the document&#8217;s <tt class="docutils literal"><span class="pre">location</span></tt> and <tt class="docutils literal"><span class="pre">title</span></tt> properties.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">href</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">title</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Because we have entered a new environment, previously defined variables, such
+as <tt class="docutils literal"><span class="pre">form</span></tt>, are no longer present.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">alert</span><span class="p">(</span><span class="nx">form</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To get back to our starting environment, we can use the <tt class="docutils literal"><span class="pre">detach</span></tt> function
+(without arguments). But first, we have to add that validation system to the
+form.</p>
+<hr class="docutils" />
+<p>Every HTML tag shown in a document has a JavaScript object associated with it.
+These objects can be used to inspect and manipulate almost every aspect of the
+document. In this chapter, we will work with the objects for forms and form
+fields, <a class="reference internal" href="ch06.html#dom-chapter"><em>The Document-Object Model</em></a> talks about these objects in more detail.</p>
+<p>The <tt class="docutils literal"><span class="pre">document</span></tt> object has a property named <tt class="docutils literal"><span class="pre">forms</span></tt>, which contains links to
+all the forms in the document, by name. Our form has a property
+<tt class="docutils literal"><span class="pre">name=&quot;userinfo&quot;</span></tt>, so it can be found under the property <tt class="docutils literal"><span class="pre">userinfo</span></tt>.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">userForm</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">forms</span><span class="p">.</span><span class="nx">userinfo</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">userForm</span><span class="p">.</span><span class="nx">method</span><span class="p">);</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">userForm</span><span class="p">.</span><span class="nx">action</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>In this case, the properties <tt class="docutils literal"><span class="pre">method</span></tt> and <tt class="docutils literal"><span class="pre">action</span></tt> that were given to the
+HTML <tt class="docutils literal"><span class="pre">form</span></tt> tag are also present as properties of the JavaScript object. This
+is often the case, but not always: Some HTML properties are spelled differently
+in JavaScript, others are not present at all. <a class="reference internal" href="ch06.html#dom-chapter"><em>The Document-Object Model</em></a> will show a
+way to get at all properties.</p>
+<p>The object for the <tt class="docutils literal"><span class="pre">form</span></tt> tag has a property <tt class="docutils literal"><span class="pre">elements</span></tt>, which refers to an
+object containing the fields of the form, by name.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">nameField</span> <span class="o">=</span> <span class="nx">userForm</span><span class="p">.</span><span class="nx">elements</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+<span class="nx">nameField</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s2">&quot;Eugène&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Text-input objects have a <tt class="docutils literal"><span class="pre">value</span></tt> property, which can be used to read and
+change their content. If you look at the form window after running the above
+code, you&#8217;ll see that the name has been filled in.</p>
+<hr class="docutils" />
+<p>All we have to do now is determine what happens when people click the &#8216;Send!&#8217;
+button. At the moment, it does not do anything at all.  This can be remedied by
+setting its <tt class="docutils literal"><span class="pre">onclick</span></tt> property.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">userForm</span><span class="p">.</span><span class="nx">elements</span><span class="p">.</span><span class="nx">send</span><span class="p">.</span><span class="nx">onclick</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="s2">&quot;Click.&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Just like the actions given to <tt class="docutils literal"><span class="pre">setInterval</span></tt> and <tt class="docutils literal"><span class="pre">setTimeout</span></tt>
+(<a class="reference internal" href="ch11.html#oop-chapter"><em>Object-oriented Programming</em></a>), the value stored in an <tt class="docutils literal"><span class="pre">onclick</span></tt> (or similar) property
+can be either a function or a string of JavaScript code. In this case, we give
+it a function that opens an alert window. Try clicking it.</p>
+<hr class="docutils" />
+<p>Another trick related to form inputs, as well as other things that can be
+&#8216;selected&#8217;, such as buttons and links, is the <tt class="docutils literal"><span class="pre">focus</span></tt> method. When you know
+for sure that a user will want to start typing in a certain text field as soon
+as he enters the page, you can have your script start by placing the cursor in
+it, so he won&#8217;t have to click it or select it in some other way.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">userForm</span><span class="p">.</span><span class="nx">elements</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Because the form sits in another window, it may not be obvious that something
+was selected, depending on the browser you are using.  Some pages also
+automatically make the cursor jump to the next field when it looks like you
+finished filling in one field ― for example, when you type a zip code. This
+should not be overdone ― it makes the page behave in a way the user does not
+expect. If he is used to pressing tab to move the cursor manually, or mistyped
+the last character and wants to remove it, such magic cursor-jumping is very
+annoying.</p>
+<hr class="docutils" />
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">detach</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>Test the validator. When you enter valid information and click the button, the
+form should submit. If the console was still attached to it, this will cause it
+to detach itself, because the page reloads and the JavaScript environment is
+replaced by a new one.</p>
+<p>If you haven&#8217;t closed the form window yet, this will close it.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">form</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="glossary">
+<h2>5.13. Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-client">client</dt>
+<dd>A program that accesses the services offered by a server.</dd>
+<dt id="term-network">network</dt>
+<dd>A collection of computers and hardware components interconnected
+by communications channels enabling the sharing of information and
+resources.</dd>
+<dt id="term-protocol">protocol</dt>
+<dd>A system of digital message formats and rules for exchanging messages
+in and between computing systems.</dd>
+<dt id="term-server">server</dt>
+<dd>A program offers services to client programs.</dd>
+</dl>
+</div>
+<div class="section" id="exercises">
+<h2>5.14. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="exercises/ch05/ch05s01.html#ch05s01"><em>Chapter 5 Exercise Set 1</em></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch06.html" title="6. The Document-Object Model"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="ch04.html" title="4. Error Handling"
+             >previous</a> |</li>
+        <li><a href="index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

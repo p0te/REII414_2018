@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with ...: Lesson n</title>
+<style type="text/css">
+@import url(css/gdw.css);
+</style>
+<script src="js/jquery-current.min.js"></script>
+<script src="js/navigation.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body>
+<header>
+<h1><a href="index.html">Getting Down with ...</a></h1>
+<nav>
+  <a id="s1" href="lesson1.html">lesson 1</a>
+  <a id="s2" href="lesson2.html">lesson 2</a>
+  <a id="s3" href="lesson3.html">lesson 3</a>
+  <a id="s4" href="lesson4.html">lesson 4</a>
+  <a id="s5" href="lesson5.html">lesson 5</a>
+  <a id="s6" href="lesson6.html">lesson 6</a>
+  <a id="s7" href="lesson7.html">lesson 7</a>
+  <a id="s8" href="lesson8.html">lesson 8</a>
+  <a id="s9" href="lesson9.html">lesson 9</a>
+</nav>
+<p id="author">by <span>...</span></p>
+</header>
+
+<h1 id="title">Lesson n:</h1>
+
+<section id="lesson">
+<p>
+Each element in an HTML page defines a rectangular region the browser uses to
+place the element in the browser window.  CSS has a collection of properties
+for formatting the rectangle around each element.  Together these make up what
+is called the <b>CSS box model</b>.
+</p>
+<p>
+The following diagram shows the properties of the box model and how they relate
+to each other:
+</p>
+<p style="text-align: center;">
+<img src="images/lesson6/CSSBoxModel.png" alt="CSS Box Model Diagram">
+</p>
+<p>
+The innermost box holds the HTML element's <b>content</b>.  Between the box
+contents and the element border lies the <b>padding</b>.  Padding size can be
+set on all four sides of the content.  It inherits its color from the
+background-color property of the content.  The <b>margin</b> lies outside the
+border and gets its color from the parent element.
+</p>
+<p>
+The most effective way to understand all this is to practice with it, which we
+begin without delay.
+</p>
+</section>
+
+<section id="exercises">
+<h2>Exercises:</h2>
+<ol>
+  <li>Download
+  <a href="resources/lesson6/nested_boxes.html">nested_boxes.html</a>,
+  then do each of the following to it:
+  <ul>
+    <li>Add the following declarations to the <code>div#box1</code> style
+    already in the style sheet:
+    <pre>
+    margin: 40px;
+    padding: 40px;
+    border: 10px solid #000;
+    background-color: #F0F;
+    </pre>
+    Reload the page and note how it looks.
+    </li>
+    <li>Now add a new style for <code>div#box2</code> (put it directly below
+    the <code>div#box1</code> style) and add these declarations:
+    <pre>
+    margin: 40px;
+    padding: 40px;
+    border: 10px dotted #000;
+    background-color: #FF0;
+    </pre>
+    Again reload the page and observe the changes.
+    </li>
+    <li>Finally, see if you can add a style on your own for the last box that
+    will make your resulting page look something like
+    <a href="screenshots/lesson6/nested_boxes.png">this</a>.</li>
+  </ul></li>
+  <li>Download
+  <a href="resources/lesson6/box_size.html">box_size.html</a>,
+  then do each of the following to it:
+  <ul>
+    <li>Add a new style for the <code>div</code> element (between the
+    <code>h1</code> and <code>hr</code> styles) with the following rules in
+    in the declaration block:
+    <pre>
+    width: 500px;
+    height: 200px;
+    background-color: #F70;
+    </pre>
+    Reload the page and note how it looks.
+    </li>
+    <li>Follow this with a style for <code>div#box2</code> with the following
+    rules:
+    <pre>
+    margin: 50px;
+    padding: 50px;
+    border: 10px solid #000;
+    </pre>
+    Reload and note the changes.
+    </li>
+    <li>Add the following two class styles immediately below the
+    <code>p</code> style that will set the width of the corresponding
+    <code>p</code> and <code>hr</code> elements:
+    <pre>
+    .line1 {
+        width: 500px;
+    }
+    .line2 {
+        width: 720px;
+    }
+    </pre>
+    Since paragraphs are already set to <code>text-align: center;</code>,
+    setting the width will move text to the center of each <code>hr</code>
+    element.  Again reload the page and note how it looks. If all went well it
+    should look something like
+    <a href="screenshots/lesson6/box_size.png">this</a>.</li>
+    </li>
+    <li>
+    Explain why the total width of box 1 is only 500 pixels while box 2 has
+    a total width of 720 pixels.
+    </li>
+  </ul></li>
+</ol>
+</section>
+
+<footer>
+<hr>
+<p id="finished">Congratulations, you have finished lesson <span>n</span>;</p>
+<p><a id="next" href="">next lesson</a> | <a href="index.html">home page</a></p>
+<p class="button">
+<a href="http://validator.w3.org/check/referer">
+<strong> HTML </strong> Valid! </a> &nbsp;
+<a href="http://jigsaw.w3.org/css-validator/check/referer?profile=css3">
+<strong> CSS </strong> Valid! </a>
+</p>
+<p>
+<a href="http://www.ibiblio.org/">
+<img src="http://www.ibiblio.org/hosted/images/sm_hosted_trans.gif"
+width="100" height="30" alt="hosted by ibiblio"></a>
+</p>
+</footer>
+
+</body>
+</html>

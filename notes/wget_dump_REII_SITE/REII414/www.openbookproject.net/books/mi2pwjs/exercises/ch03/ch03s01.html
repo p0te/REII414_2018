@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Chapter 3 Exercise Set 1 &mdash; A Modern Introduction to Programming with JavaScript and jQuery</title>
+    
+    <link rel="stylesheet" href="../../_static/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1st Edition',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="copyright" title="Copyright" href="../../copyright.html" />
+    <link rel="top" title="A Modern Introduction to Programming with JavaScript and jQuery" href="../../index.html" />
+    <link rel="next" title="Chapter 3 Exercise Set 2" href="ch03s02.html" />
+    <link rel="prev" title="Chapter 2 Exercise Set 3" href="../ch02/ch02s03.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ch03s02.html" title="Chapter 3 Exercise Set 2"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../ch02/ch02s03.html" title="Chapter 2 Exercise Set 3"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="chapter-3-exercise-set-1">
+<span id="ch03s01"></span><h1>Chapter 3 Exercise Set 1<a class="headerlink" href="#chapter-3-exercise-set-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="set-of-names">
+<span id="set-of-names-exercise"></span><h2>Set of names<a class="headerlink" href="#set-of-names" title="Permalink to this headline">¶</a></h2>
+<p>The solution for the cat problem talks about a &#8220;set&#8221; of names. A set is a
+collection of values in which no value may occur more than once. If names are
+strings, can you think of a way to use an object to represent a set of names?</p>
+<p>Show how a name can be added to this set, how one can be removed, and how you
+can check whether a name occurs in it.</p>
+</div>
+<div class="section" id="range-n">
+<span id="range-exercise"></span><h2><tt class="docutils literal"><span class="pre">range(n)</span></tt><a class="headerlink" href="#range-n" title="Permalink to this headline">¶</a></h2>
+<p>Write a function <tt class="docutils literal"><span class="pre">range</span></tt> that takes one argument, a positive number, and
+returns an array containing all numbers from 0 up to and including the given
+number.</p>
+<p>An empty array can be created by simply typing <tt class="docutils literal"><span class="pre">[]</span></tt>. Also remember that
+adding properties to an object, and thus also to an array, can be done by
+assigning them a value with the <tt class="docutils literal"><span class="pre">=</span></tt> operator. The <tt class="docutils literal"><span class="pre">length</span></tt> property is
+automatically updated when elements are added.</p>
+</div>
+<div class="section" id="split-and-join">
+<span id="split-and-join-exercise"></span><h2><tt class="docutils literal"><span class="pre">split</span></tt> and <tt class="docutils literal"><span class="pre">join</span></tt><a class="headerlink" href="#split-and-join" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">split</span></tt> and <tt class="docutils literal"><span class="pre">join</span></tt> are not precisely each other&#8217;s inverse.
+<tt class="docutils literal"><span class="pre">string.split(x).join(x)</span></tt> always produces the original value, but
+<tt class="docutils literal"><span class="pre">array.join(x).split(x)</span></tt> does not. Can you give an example of an array where
+<tt class="docutils literal"><span class="pre">.join(&quot;</span> <span class="pre">&quot;).split(&quot;</span> <span class="pre">&quot;)</span></tt> produces a different value?</p>
+</div>
+<div class="section" id="extractdate-s">
+<span id="extract-date-exercise"></span><h2><tt class="docutils literal"><span class="pre">extractDate(s)</span></tt><a class="headerlink" href="#extractdate-s" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;died 04/27/2006: Black Leclère&quot;</span>
+</pre></div>
+</div>
+<p>The date part is always in the exact same place of a paragraph. How convenient.
+Write a function <tt class="docutils literal"><span class="pre">extractDate</span></tt> that takes such a paragraph as its argument,
+extracts the date, and returns it as a date object.</p>
+</div>
+<div class="section" id="between-string-start-end">
+<span id="between-exercise"></span><h2><tt class="docutils literal"><span class="pre">between(string,</span> <span class="pre">start,</span> <span class="pre">end)</span></tt><a class="headerlink" href="#between-string-start-end" title="Permalink to this headline">¶</a></h2>
+<p>The thing that <tt class="docutils literal"><span class="pre">extractMother</span></tt> does can be expressed in a more general way.
+Write a function <tt class="docutils literal"><span class="pre">between</span></tt> that takes three arguments, all of which are
+strings. It will return the part of the first argument that occurs between the
+patterns given by the second and the third arguments.</p>
+<p>So <tt class="docutils literal"><span class="pre">between(&quot;born</span> <span class="pre">11/15/2003</span> <span class="pre">(mother</span> <span class="pre">Spot):</span> <span class="pre">White</span> <span class="pre">Fang&quot;,</span> <span class="pre">&quot;(mother</span> <span class="pre">&quot;,</span> <span class="pre">&quot;)&quot;)</span></tt>
+gives <tt class="docutils literal"><span class="pre">&quot;Spot&quot;</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">between(&quot;bu</span> <span class="pre">]</span> <span class="pre">boo</span> <span class="pre">[</span> <span class="pre">bah</span> <span class="pre">]</span> <span class="pre">gzz&quot;,</span> <span class="pre">&quot;[</span> <span class="pre">&quot;,</span> <span class="pre">&quot;</span> <span class="pre">]&quot;)</span></tt> returns <tt class="docutils literal"><span class="pre">&quot;bah&quot;</span></tt>.</p>
+<p>To make that second test work, it can be useful to know that <tt class="docutils literal"><span class="pre">indexOf</span></tt> can be
+given a second, optional parameter that specifies at which point it should
+start searching.</p>
+</div>
+<div class="section" id="formatdate">
+<span id="format-date-exercise"></span><h2><tt class="docutils literal"><span class="pre">formatDate</span></tt><a class="headerlink" href="#formatdate" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">formatDate</span></tt> function used by <tt class="docutils literal"><span class="pre">catInfo</span></tt> does not add a zero before the
+month and the day part when these are only one digit long. Write a new version
+that does this.</p>
+</div>
+<div class="section" id="oldestcat">
+<span id="oldest-cat-exercise"></span><h2><tt class="docutils literal"><span class="pre">oldestCat</span></tt><a class="headerlink" href="#oldestcat" title="Permalink to this headline">¶</a></h2>
+<p>Write a function <tt class="docutils literal"><span class="pre">oldestCat</span></tt> which, given an object containing cats as its
+argument, returns the name of the oldest living cat.</p>
+</div>
+<div class="section" id="range-start-stop">
+<span id="range2-exercise"></span><h2><tt class="docutils literal"><span class="pre">range(start,</span> <span class="pre">[stop])</span></tt><a class="headerlink" href="#range-start-stop" title="Permalink to this headline">¶</a></h2>
+<p>Extend the <tt class="docutils literal"><span class="pre">range</span></tt> function from <a class="reference internal" href="#range-exercise"><em>range(n)</em></a> to take a second,
+optional argument. If only one argument is given, it behaves as earlier and
+produces a range from 0 to the given number. If two arguments are given, the
+first indicates the start of the range, the second the end.</p>
+</div>
+<div class="section" id="sum">
+<span id="sum-exercise"></span><h2><tt class="docutils literal"><span class="pre">sum</span></tt><a class="headerlink" href="#sum" title="Permalink to this headline">¶</a></h2>
+<p>You may remember this line of code from the introduction:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">print</span><span class="p">(</span><span class="nx">sum</span><span class="p">(</span><span class="nx">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)));</span>
+</pre></div>
+</div>
+<p>We have <tt class="docutils literal"><span class="pre">range</span></tt> now. All we need to make this line work is a <tt class="docutils literal"><span class="pre">sum</span></tt>
+function. This function takes an array of numbers, and returns their sum.
+Write it, it should be easy.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ch03s02.html" title="Chapter 3 Exercise Set 2"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../ch02/ch02s03.html" title="Chapter 2 Exercise Set 3"
+             >previous</a> |</li>
+        <li><a href="../../index.html">A Modern Introduction to Programming with JavaScript and jQuery</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; <a href="../../copyright.html">Copyright</a> 2013, Marijn Haverbeke and Jeffrey Elkner.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

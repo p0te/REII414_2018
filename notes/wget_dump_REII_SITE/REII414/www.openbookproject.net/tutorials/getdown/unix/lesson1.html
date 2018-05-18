@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8">
+<title>Getting Down with the Unix CLI: Lesson 1</title>
+<style type="text/css">
+@import url(gdw.css);
+@import url(lesson.css);
+</style>
+<script src="header.js"></script>
+<script src="footer.js"></script>
+<!--
+Permission is granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 or any later version
+published by the Free Software Foundation; with no Invariant Sections, no
+Front-Cover Texts, and no Back-Cover Texts.  A copy of the license is included
+in the section entitled "GNU Free Documentation License".
+-->
+</head>
+
+<body onload="addHeader(); addFooter()">
+<div id="head"></div>
+
+<h1>Lesson 1: What is the Unix CLI?</h1>
+
+<h2>Graphical user interface</h2>
+<p>If you learned to use a
+<a href="http://en.wikipedia.org/wiki/Personal_computer">personal computer</a>
+within the last fifteen years or so, chances are you interacted with it
+using a
+<a href="http://en.wikipedia.org/wiki/Graphical_user_interface">graphical
+user interface</a>, or GUI (pronounced <i>gooey</i>).  The GUIs of common
+desktop
+<a href="http://en.wikipedia.org/wiki/Desktop_operating_system">operating
+systems</a> are characterized by
+<a href="http://en.wikipedia.org/wiki/WIMP_%28computing%29">windows, icons,
+menus, and a pointer (mouse)</a> that users manipulate to control the launching
+and operation of programs.
+</p>
+
+<h2>Command-line interface</h2>
+<p>
+While GUIs certainly make computers easier to use for the average computer
+user, they introduce greatly increased demands on the computer system, as
+well as increased security and maintainance costs.  On a personal desktop
+system this tradeoff is worth the cost, but on a
+<a href="http://en.wikipedia.org/wiki/Server_%28computing%29">server</a> it
+is frequently not.  Instead, many servers use a
+<a href="http://en.wikipedia.org/wiki/Command_line_interface">command-line
+interface</a>, or CLI instead of a GUI.  Command-line interfaces
+use text
+<a href="http://en.wikipedia.org/wiki/Command_%28computing%29">commands</a>
+that users type at a
+<a href="http://en.wikipedia.org/wiki/Command-line_interface#Command_prompt">
+command prompt</a> (which will be a <code>$ </code> on Ubuntu systems) to
+control and manage applications.
+</p>
+
+<h2>The Unix shell</h2>
+<p>
+A common CLI for
+<a href="http://en.wikipedia.org/wiki/Web_site">websites</a> is the
+<a href="http://en.wikipedia.org/wiki/Unix_shell">Unix shell</a>, which is the
+CLI that we will learn in this tutorial.  A Unix shell is a command-line
+interface to the <a href="http://en.wikipedia.org/wiki/Unix">Unix</a> operating
+system.  Many <a href="http://en.wikipedia.org/wiki/Web_hosting_service">web
+hosting services</a> give customers a unix shell as the way to manage their
+websites. This tutorial has been developed for users of the
+<a href="http://en.wikipedia.org/wiki/Ubuntu_%28operating_system%29">Ubuntu</a>
+distribution of the
+<a href="http://en.wikipedia.org/wiki/GNU/Linux">GNU/Linux</a> operating
+system, but it should prove useful to users of other versions of Unix as well.
+</p>
+
+<h2>Starting the Unix shell</h2>
+<p>
+To start a Unix shell from an Ubuntu GUI desktop environment, look for a
+program named <code>Terminal</code> (or sometimes <code>console</code> or
+<code>xterm</code> on other Unix systems).  Launching this program will give
+you a desktop window that looks something like this:
+</p>
+<p style="text-align: center;">
+<img src="images/lesson1/terminal.png" alt="Terminal screenshot">
+</p>
+<p>
+Colors may be different and you may see a menu and scrollbar, but the important
+elements of the terminal program are:
+</p>
+
+<div class="source" style="width: 800px;">
+<dl>
+<dt>prompt</dt>
+<dd>The <code>$</code> character is called the
+<a href="http://en.wikipedia.org/wiki/Command_Prompt">command prompt</a>. It
+tells you that the Unix <b>command-line interpreter</b> is ready to read and
+process commands.</dd>
+
+<dt>cursor</dt>
+<dd>The flashing square after the prompt is called the
+<a href="http://en.wikipedia.org/wiki/Cursor_%28computers%29">cursor</a>. It
+indicates the position at which text you type at the keyboard will appear.
+</dd>
+</div>
+
+
+<div id="exercises">
+<h2>Exercises:</h2>
+<ol>
+<li>
+Find the terminal program on your computer.  Record in a notebook (the old
+paper and pencil kind) what this program is called on your system and the steps
+you use on to launch it.
+</li>
+
+<li>
+Add definitions in your own words to your notebook for the following new terms:
+<ul>
+    <li>GUI</li>
+    <li>Personal computer</li>
+    <li>Operating system</li>
+    <li>WIMP</li>
+    <li>server</li>
+    <li>CLI</li>
+    <li>command</li>
+    <li>command prompt</li>
+    <li>website</li>
+    <li>Unix shell</li>
+    <li>web hosting service</li>
+    <li>Ubuntu</li>
+    <li>GNU/Linux</li>
+</ul>
+<a href="http://en.wikipedia.org/wiki/Wikipedia">Wikipedia</a> has good entries
+for each of these terms, but you should write short <q>definitions</q> that
+effectively summarize the meanings for your own use.
+</li>
+</ol>
+</div>
+
+<footer>
+<hr>
+<p>Congratulations, you have finished Lesson 1;</p>
+<p><a href="lesson2.html">next lesson</a> |
+<a href="index.html">home page</a></p>
+<div id="foot"></div>
+</footer>
+
+</body>
+</html>

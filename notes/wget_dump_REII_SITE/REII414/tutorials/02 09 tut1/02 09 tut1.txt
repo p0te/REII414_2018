@@ -1,0 +1,17 @@
+1. For each table, identify the primary and foreign key(s). If a table does not have a foreign key, write None.
+EMPLOYEE: PK: EMP_CODE  FK: STORE_CODE
+STORE:    PK: STORE_CODE  FK: REGION_CODE, EMP_CODE
+REGION:   PK: REGION_CODE
+
+2. Do the tables exhibit entity integrity? Explain.
+Yes - all PK's unique and not NULL.
+
+3. Do the tables exhibit referential integrity? Explain.
+Yes - All FK's reference valid data.
+
+4. Create the ERD to show the relationships among EMPLOYEE, STORE and REGION.
+STORE : EMPLOYEE - 1 : M (STORE_CODE), 1 : 1 (EMP_CODE)
+REGION : STORE - 1 : M (REGION_CODE)
+
+
+

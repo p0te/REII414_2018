@@ -1,0 +1,6 @@
+REII414 verslag merkstaat prototipe / report marksheet prototype
+----------------------------------------------------------------
+
+Dokumenteer die probleem (minnerig punte), die ontwerp (die meeste punte), die imlementering en resultaat (tweede meeste punte) en 'n gevolgtrekking (derde meeste punte). Verder moet die skryfstyl goed wees en daar nie taal- en uitlegfoute voorkom nie (nog 'n klompie punte).
+
+Document the problem (fewish marks), the design (the most marks), the implementation and results (second most marks) and a conclusion (third most marks). Furthermore the writing style must be good and there may not be any language or layout errors (another bunch of marks).
